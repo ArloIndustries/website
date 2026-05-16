@@ -29,7 +29,7 @@ export default function Component() {
 	const initRef = useRef(false);
 
 	const quotes = [
-		'“Solving war from first principles”',
+		'“Solving war from first principles.”',
 		// '“All warfare is based on deception.” — Sun Tzu',
 		'“Making Conflict concise and precise.”',
 		'“The eye that sees without being seen.”',
