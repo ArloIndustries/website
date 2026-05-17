@@ -56,10 +56,6 @@ export default function Manifesto() {
 						</p>
 
 						<p>
-							As Sun Tzu observed, there are no constant conditions in warfare. Victory belongs to those who are formless, like water.
-						</p>
-
-						<p>
 							At Arlo Industries, we draw inspiration from nature’s best defender: the <span className={highlightClass}>immune system</span>. We are building the <span className={highlightClass}>battlefield immune system</span>.
 						</p>
 
