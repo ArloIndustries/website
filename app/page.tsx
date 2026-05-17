@@ -87,7 +87,7 @@ export default function Component() {
 	const buttonHover = isDark
 		? 'hover:bg-red-500 hover:text-black hover:border-red-500'
 		: 'hover:bg-white hover:text-black hover:border-white';
-	const tetrahedronColor = isDark ? '#7f1d1d' : '#fca5a5'; // dark red for dark mode, reddish white for light mode
+	const tetrahedronColor = isDark ? '#660000' : '#ff6666'; // dark red for dark mode, reddish white for light mode
 
 	if (!isMounted) {
 		return null;
@@ -116,7 +116,7 @@ export default function Component() {
 								d='M 60 0 L 0 0 0 60'
 								fill='none'
 								stroke={
-									isDark ? 'rgba(239, 68, 68, 0.25)' : 'rgba(255,255,255,0.25)'
+									isDark ? 'rgba(255, 0, 0, 0.25)' : 'rgba(255,255,255,0.25)'
 								}
 								strokeWidth='0.7'
 								className='animate-pulse'
@@ -126,7 +126,7 @@ export default function Component() {
 								d='M 30 0 L 30 60 M 0 30 L 60 30'
 								fill='none'
 								stroke={
-									isDark ? 'rgba(239, 68, 68, 0.15)' : 'rgba(255,255,255,0.15)'
+									isDark ? 'rgba(255, 0, 0, 0.15)' : 'rgba(255,255,255,0.15)'
 								}
 								strokeWidth='0.5'
 								className='animate-pulse'
@@ -147,7 +147,7 @@ export default function Component() {
 								width='2'
 								height='80'
 								fill={
-									isDark ? 'rgba(239, 68, 68, 0.15)' : 'rgba(255,255,255,0.15)'
+									isDark ? 'rgba(255, 0, 0, 0.15)' : 'rgba(255,255,255,0.15)'
 								}
 								className='animate-pulse'
 								style={{ animationDuration: '1.5s', animationDelay: '0.2s' }}
@@ -158,7 +158,7 @@ export default function Component() {
 								width='1'
 								height='80'
 								fill={
-									isDark ? 'rgba(239, 68, 68, 0.1)' : 'rgba(255,255,255,0.1)'
+									isDark ? 'rgba(255, 0, 0, 0.1)' : 'rgba(255,255,255,0.1)'
 								}
 								className='animate-pulse'
 								style={{ animationDuration: '3s', animationDelay: '1s' }}
@@ -169,7 +169,7 @@ export default function Component() {
 								width='3'
 								height='80'
 								fill={
-									isDark ? 'rgba(239, 68, 68, 0.12)' : 'rgba(255,255,255,0.12)'
+									isDark ? 'rgba(255, 0, 0, 0.12)' : 'rgba(255,255,255,0.12)'
 								}
 								className='animate-pulse'
 								style={{ animationDuration: '2.2s', animationDelay: '0.8s' }}
@@ -180,7 +180,7 @@ export default function Component() {
 								width='120'
 								height='1'
 								fill={
-									isDark ? 'rgba(239, 68, 68, 0.1)' : 'rgba(255,255,255,0.1)'
+									isDark ? 'rgba(255, 0, 0, 0.1)' : 'rgba(255,255,255,0.1)'
 								}
 								className='animate-pulse'
 								style={{ animationDuration: '3.5s', animationDelay: '0.6s' }}
@@ -191,7 +191,7 @@ export default function Component() {
 								width='120'
 								height='2'
 								fill={
-									isDark ? 'rgba(239, 68, 68, 0.08)' : 'rgba(255,255,255,0.08)'
+									isDark ? 'rgba(255, 0, 0, 0.08)' : 'rgba(255,255,255,0.08)'
 								}
 								className='animate-pulse'
 								style={{ animationDuration: '4s', animationDelay: '1.5s' }}
@@ -211,7 +211,7 @@ export default function Component() {
 								width='4'
 								height='1'
 								fill={
-									isDark ? 'rgba(239, 68, 68, 0.04)' : 'rgba(255,255,255,0.04)'
+									isDark ? 'rgba(255, 0, 0, 0.04)' : 'rgba(255,255,255,0.04)'
 								}
 								className='animate-pulse'
 								style={{ animationDuration: '1s', animationDelay: '0.1s' }}
@@ -336,8 +336,11 @@ export default function Component() {
 			<footer className='relative z-10 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between w-full pt-8 pb-8 px-6 lg:px-12'>
 				<div className='flex flex-col gap-3'>
 					<div className='flex flex-wrap items-center gap-2'>
-						<div
-							className={`inline-flex items-center gap-2 border px-2 py-[5px] ${
+						<a
+							href='https://www.ycombinator.com/companies/arlo-industries'
+							target='_blank'
+							rel='noopener noreferrer'
+							className={`inline-flex items-center gap-2 border px-2 py-[5px] transition-opacity hover:opacity-80 cursor-pointer ${
 								isDark
 									? 'border-red-500/80 bg-red-950/30'
 									: 'border-white/25 bg-black/25'
@@ -358,7 +361,7 @@ export default function Component() {
 							>
 								Combinator
 							</span>
-						</div>
+						</a>
 						<div
 							className={`inline-flex items-center gap-2 border px-2 py-[5px] ${
 								isDark
@@ -429,7 +432,7 @@ export default function Component() {
 							<path d='M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z' />
 						</svg>
 					</a> */}
-					<a href='mailto:hi@arlo1.com'>
+					<a href='https://www.linkedin.com/in/deoarlo' target='_blank' rel='noopener noreferrer'>
 						<Button
 							variant='outline'
 							size='sm'

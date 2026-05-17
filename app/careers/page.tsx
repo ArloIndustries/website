@@ -137,7 +137,7 @@ export default function Careers() {
 								d='M 60 0 L 0 0 0 60'
 								fill='none'
 								stroke={
-									isDark ? 'rgba(239, 68, 68, 0.15)' : 'rgba(255,255,255,0.15)'
+									isDark ? 'rgba(255, 0, 0, 0.15)' : 'rgba(255,255,255,0.15)'
 								}
 								strokeWidth='0.5'
 								className='animate-pulse'
@@ -156,7 +156,7 @@ export default function Careers() {
 								width='2'
 								height='80'
 								fill={
-									isDark ? 'rgba(239, 68, 68, 0.1)' : 'rgba(255,255,255,0.1)'
+									isDark ? 'rgba(255, 0, 0, 0.1)' : 'rgba(255,255,255,0.1)'
 								}
 								className='animate-pulse'
 								style={{ animationDuration: '2s', animationDelay: '0.5s' }}
@@ -300,7 +300,9 @@ export default function Careers() {
 
 											<div className='lg:ml-8 flex-shrink-0 pt-2'>
 												<a
-													href={`mailto:join@arlo1.com?subject=Application for ${role.title}`}
+													href='https://www.linkedin.com/in/deoarlo'
+													target='_blank'
+													rel='noopener noreferrer'
 													className='inline-block'
 												>
 													<Button
@@ -311,7 +313,7 @@ export default function Careers() {
 																: 'hover:bg-white hover:text-black border-black'
 														} transition-all duration-300 rounded-none group-hover:scale-105`}
 													>
-														Apply Now
+														Join
 														<ArrowUpRight className='ml-2 w-5 h-5' />
 													</Button>
 												</a>

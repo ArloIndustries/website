@@ -46,7 +46,7 @@ export default function Manifesto() {
 								d='M 60 0 L 0 0 0 60'
 								fill='none'
 								stroke={
-									isDark ? 'rgba(239, 68, 68, 0.15)' : 'rgba(255,255,255,0.15)'
+									isDark ? 'rgba(255, 0, 0, 0.15)' : 'rgba(255,255,255,0.15)'
 								}
 								strokeWidth='0.5'
 								className='animate-pulse'
@@ -56,7 +56,7 @@ export default function Manifesto() {
 								d='M 30 0 L 30 60 M 0 30 L 60 30'
 								fill='none'
 								stroke={
-									isDark ? 'rgba(239, 68, 68, 0.08)' : 'rgba(255,255,255,0.08)'
+									isDark ? 'rgba(255, 0, 0, 0.08)' : 'rgba(255,255,255,0.08)'
 								}
 								strokeWidth='0.3'
 								className='animate-pulse'
@@ -76,7 +76,7 @@ export default function Manifesto() {
 								width='2'
 								height='80'
 								fill={
-									isDark ? 'rgba(239, 68, 68, 0.1)' : 'rgba(255,255,255,0.1)'
+									isDark ? 'rgba(255, 0, 0, 0.1)' : 'rgba(255,255,255,0.1)'
 								}
 								className='animate-pulse'
 								style={{ animationDuration: '2s', animationDelay: '0.5s' }}
@@ -87,7 +87,7 @@ export default function Manifesto() {
 								width='1'
 								height='80'
 								fill={
-									isDark ? 'rgba(239, 68, 68, 0.05)' : 'rgba(255,255,255,0.05)'
+									isDark ? 'rgba(255, 0, 0, 0.05)' : 'rgba(255,255,255,0.05)'
 								}
 								className='animate-pulse'
 								style={{ animationDuration: '5s', animationDelay: '2s' }}
@@ -98,7 +98,7 @@ export default function Manifesto() {
 								width='3'
 								height='80'
 								fill={
-									isDark ? 'rgba(239, 68, 68, 0.08)' : 'rgba(255,255,255,0.08)'
+									isDark ? 'rgba(255, 0, 0, 0.08)' : 'rgba(255,255,255,0.08)'
 								}
 								className='animate-pulse'
 								style={{ animationDuration: '3.5s', animationDelay: '1.5s' }}
@@ -109,7 +109,7 @@ export default function Manifesto() {
 								width='120'
 								height='1'
 								fill={
-									isDark ? 'rgba(239, 68, 68, 0.06)' : 'rgba(255,255,255,0.06)'
+									isDark ? 'rgba(255, 0, 0, 0.06)' : 'rgba(255,255,255,0.06)'
 								}
 								className='animate-pulse'
 								style={{ animationDuration: '4.5s', animationDelay: '0.8s' }}
@@ -120,7 +120,7 @@ export default function Manifesto() {
 								width='120'
 								height='2'
 								fill={
-									isDark ? 'rgba(239, 68, 68, 0.04)' : 'rgba(255,255,255,0.04)'
+									isDark ? 'rgba(255, 0, 0, 0.04)' : 'rgba(255,255,255,0.04)'
 								}
 								className='animate-pulse'
 								style={{ animationDuration: '6s', animationDelay: '3s' }}
@@ -139,7 +139,7 @@ export default function Manifesto() {
 								width='4'
 								height='1'
 								fill={
-									isDark ? 'rgba(239, 68, 68, 0.02)' : 'rgba(255,255,255,0.02)'
+									isDark ? 'rgba(255, 0, 0, 0.02)' : 'rgba(255,255,255,0.02)'
 								}
 								className='animate-pulse'
 								style={{ animationDuration: '1.5s', animationDelay: '0.2s' }}
