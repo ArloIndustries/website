@@ -71,7 +71,7 @@ function Terrain({ color = 'white' }: { color: string }) {
 	const chunk2Z = useRef(-120);
 
 	useFrame((state, delta) => {
-		const speed = 12; // Speed of flying over the terrain
+		const speed = 4; // Speed of flying over the terrain
 		chunk1Z.current += delta * speed;
 		chunk2Z.current += delta * speed;
 
