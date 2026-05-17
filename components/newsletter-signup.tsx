@@ -99,7 +99,7 @@ export default function NewsletterSignup({
 						type='email'
 						value={email}
 						onChange={(e) => setEmail(e.target.value)}
-						placeholder='virtus@honos.com'
+						placeholder='your@email.com'
 						required
 						className={`
 							flex-1 px-4 py-3 text-sm font-medium

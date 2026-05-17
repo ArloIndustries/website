@@ -119,55 +119,6 @@ export default function Careers() {
 		<div
 			className={`min-h-screen flex flex-col ${bgColor} ${textColor} relative overflow-hidden transition-colors duration-300`}
 		>
-			{/* Tactical Background */}
-			<div className='absolute inset-0 w-full h-full pointer-events-none'>
-				<svg
-					className='w-full h-full min-h-screen'
-					viewBox='0 0 1200 800'
-					preserveAspectRatio='xMidYMid slice'
-				>
-					<defs>
-						<pattern
-							id='tacticalGrid'
-							width='60'
-							height='60'
-							patternUnits='userSpaceOnUse'
-						>
-							<path
-								d='M 60 0 L 0 0 0 60'
-								fill='none'
-								stroke={
-									isDark ? 'rgba(255, 0, 0, 0.15)' : 'rgba(255,255,255,0.15)'
-								}
-								strokeWidth='0.5'
-								className='animate-pulse'
-								style={{ animationDuration: '3s', animationDelay: '0s' }}
-							/>
-						</pattern>
-						<pattern
-							id='glitchGrid'
-							width='120'
-							height='80'
-							patternUnits='userSpaceOnUse'
-						>
-							<rect
-								x='0'
-								y='0'
-								width='2'
-								height='80'
-								fill={
-									isDark ? 'rgba(255, 0, 0, 0.1)' : 'rgba(255,255,255,0.1)'
-								}
-								className='animate-pulse'
-								style={{ animationDuration: '2s', animationDelay: '0.5s' }}
-							/>
-						</pattern>
-					</defs>
-
-					<rect width='100%' height='100%' fill='url(#tacticalGrid)' />
-					<rect width='100%' height='100%' fill='url(#glitchGrid)' />
-				</svg>
-			</div>
 
 			{/* Back Button */}
 			<div className='relative z-20 pt-8 pb-4 px-6 lg:px-12'>
@@ -300,7 +251,7 @@ export default function Careers() {
 
 											<div className='lg:ml-8 flex-shrink-0 pt-2'>
 												<a
-													href='https://www.linkedin.com/in/deoarlo'
+													href='https://www.ycombinator.com/companies/arlo-industries'
 													target='_blank'
 													rel='noopener noreferrer'
 													className='inline-block'
@@ -323,11 +274,6 @@ export default function Careers() {
 								</div>
 							</div>
 						))}
-					</div>
-					
-					<div className='mt-16 text-center opacity-60 text-sm font-mono'>
-						<p>CLEARANCE REQUIRED FOR SOME ROLES.</p>
-						<p>ARLO INDUSTRIES IS AN EQUAL OPPORTUNITY EMPLOYER.</p>
 					</div>
 				</div>
 			</div>

@@ -11,9 +11,9 @@ function TetrahedronMesh({ color = 'white' }: TetrahedronProps) {
 	const groupRef = useRef<Group>(null!);
 
 	useFrame((state, delta) => {
-		groupRef.current.rotation.x += delta * 0.2;
-		groupRef.current.rotation.y += delta * 0.3;
-		groupRef.current.rotation.z += delta * 0.1;
+		groupRef.current.rotation.x += delta * 0.4;
+		groupRef.current.rotation.y += delta * 0.8;
+		groupRef.current.rotation.z += delta * 0.2;
 	});
 
 	// Regular tetrahedron vertices - all edges equal length, centered at origin
@@ -38,13 +38,31 @@ function TetrahedronMesh({ color = 'white' }: TetrahedronProps) {
 	return (
 		<group ref={groupRef}>
 			{edges.map((edge, index) => (
-				<Line
-					key={index}
-					points={edge}
-					color={color}
-					lineWidth={3}
-					transparent={false}
-				/>
+				<group key={index}>
+					{/* Core solid line */}
+					<Line
+						points={edge}
+						color={color}
+						lineWidth={4}
+						transparent={false}
+					/>
+					{/* Outer glow line */}
+					<Line
+						points={edge}
+						color={color}
+						lineWidth={12}
+						transparent={true}
+						opacity={0.3}
+					/>
+					{/* Large faint glow */}
+					<Line
+						points={edge}
+						color={color}
+						lineWidth={24}
+						transparent={true}
+						opacity={0.1}
+					/>
+				</group>
 			))}
 		</group>
 	);

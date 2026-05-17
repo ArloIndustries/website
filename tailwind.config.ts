@@ -99,10 +99,25 @@ const config: Config = {
 						height: '0',
 					},
 				},
+				'scan-vertical': {
+					'0%': { transform: 'translateY(-100%)' },
+					'100%': { transform: 'translateY(200vh)' },
+				},
+				'scan-horizontal': {
+					'0%': { transform: 'translateX(-100%)' },
+					'100%': { transform: 'translateX(200vw)' },
+				},
+				'grid-flow': {
+					'0%': { backgroundPosition: '0 0' },
+					'100%': { backgroundPosition: '0 60px' },
+				},
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
 				'accordion-up': 'accordion-up 0.2s ease-out',
+				'scan-vertical': 'scan-vertical 6s linear infinite',
+				'scan-horizontal': 'scan-horizontal 8s linear infinite',
+				'grid-flow': 'grid-flow 1.5s linear infinite',
 			},
 		},
 	},

@@ -10,12 +10,12 @@ import { useState, useEffect, useRef } from 'react';
 import { Typewriter } from '@/components/ui/typewriter';
 import NewsletterSignup from '@/components/newsletter-signup';
 
-// Dynamically import the Tetrahedron to avoid SSR issues
-const Tetrahedron = dynamic(() => import('@/components/tetrahedron'), {
+// Dynamically import the 3D terrain to avoid SSR issues
+const MeshTerrainBackground = dynamic(() => import('@/components/mesh-terrain'), {
 	ssr: false,
 	loading: () => (
-		<div className='w-full h-full flex items-center justify-center'>
-			Loading...
+		<div className='w-full h-full flex items-center justify-center opacity-50'>
+			<div className='animate-pulse'>Loading Environment...</div>
 		</div>
 	),
 });
@@ -97,138 +97,8 @@ export default function Component() {
 		<div
 			className={`min-h-screen flex flex-col ${bgColor} ${textColor} relative overflow-hidden transition-colors duration-300`}
 		>
-			{/* Tactical glitchy grid background with CRT effects - Full page coverage */}
-			<div className='absolute inset-0 w-full h-full'>
-				<svg
-					className='w-full h-full min-h-screen'
-					viewBox='0 0 1200 800'
-					preserveAspectRatio='xMidYMid slice'
-				>
-					<defs>
-						{/* Main tactical grid with flicker animation */}
-						<pattern
-							id='tacticalGrid'
-							width='60'
-							height='60'
-							patternUnits='userSpaceOnUse'
-						>
-							<path
-								d='M 60 0 L 0 0 0 60'
-								fill='none'
-								stroke={
-									isDark ? 'rgba(255, 0, 0, 0.25)' : 'rgba(255,255,255,0.25)'
-								}
-								strokeWidth='0.7'
-								className='animate-pulse'
-								style={{ animationDuration: '2s', animationDelay: '0s' }}
-							/>
-							<path
-								d='M 30 0 L 30 60 M 0 30 L 60 30'
-								fill='none'
-								stroke={
-									isDark ? 'rgba(255, 0, 0, 0.15)' : 'rgba(255,255,255,0.15)'
-								}
-								strokeWidth='0.5'
-								className='animate-pulse'
-								style={{ animationDuration: '2.5s', animationDelay: '0.5s' }}
-							/>
-						</pattern>
-
-						{/* Glitch overlay pattern with flicker */}
-						<pattern
-							id='glitchGrid'
-							width='120'
-							height='80'
-							patternUnits='userSpaceOnUse'
-						>
-							<rect
-								x='0'
-								y='0'
-								width='2'
-								height='80'
-								fill={
-									isDark ? 'rgba(255, 0, 0, 0.15)' : 'rgba(255,255,255,0.15)'
-								}
-								className='animate-pulse'
-								style={{ animationDuration: '1.5s', animationDelay: '0.2s' }}
-							/>
-							<rect
-								x='40'
-								y='0'
-								width='1'
-								height='80'
-								fill={
-									isDark ? 'rgba(255, 0, 0, 0.1)' : 'rgba(255,255,255,0.1)'
-								}
-								className='animate-pulse'
-								style={{ animationDuration: '3s', animationDelay: '1s' }}
-							/>
-							<rect
-								x='80'
-								y='0'
-								width='3'
-								height='80'
-								fill={
-									isDark ? 'rgba(255, 0, 0, 0.12)' : 'rgba(255,255,255,0.12)'
-								}
-								className='animate-pulse'
-								style={{ animationDuration: '2.2s', animationDelay: '0.8s' }}
-							/>
-							<rect
-								x='0'
-								y='20'
-								width='120'
-								height='1'
-								fill={
-									isDark ? 'rgba(255, 0, 0, 0.1)' : 'rgba(255,255,255,0.1)'
-								}
-								className='animate-pulse'
-								style={{ animationDuration: '3.5s', animationDelay: '0.6s' }}
-							/>
-							<rect
-								x='0'
-								y='60'
-								width='120'
-								height='2'
-								fill={
-									isDark ? 'rgba(255, 0, 0, 0.08)' : 'rgba(255,255,255,0.08)'
-								}
-								className='animate-pulse'
-								style={{ animationDuration: '4s', animationDelay: '1.5s' }}
-							/>
-						</pattern>
-
-						{/* Subtle scan lines with movement */}
-						<pattern
-							id='scanLines'
-							width='4'
-							height='4'
-							patternUnits='userSpaceOnUse'
-						>
-							<rect
-								x='0'
-								y='0'
-								width='4'
-								height='1'
-								fill={
-									isDark ? 'rgba(255, 0, 0, 0.04)' : 'rgba(255,255,255,0.04)'
-								}
-								className='animate-pulse'
-								style={{ animationDuration: '1s', animationDelay: '0.1s' }}
-							/>
-						</pattern>
-					</defs>
-
-					<rect width='100%' height='100%' fill='url(#tacticalGrid)' />
-					<rect width='100%' height='100%' fill='url(#glitchGrid)' />
-					<rect width='100%' height='100%' fill='url(#scanLines)' />
-				</svg>
-			</div>
-
-			{/* 3D Tetrahedron as Background - Full page size */}
-			<div className='absolute inset-0 w-full h-full flex items-center justify-center pointer-events-none opacity-70'>
-				<Tetrahedron color={tetrahedronColor} />
-			</div>
+			{/* 3D Wireframe Mesh Terrain Background with Prism */}
+			<MeshTerrainBackground color={tetrahedronColor} showPrism={false} />
 
 			{/* Header */}
 			<header className='relative z-10 flex items-center justify-between pt-8 pb-4 px-6 lg:px-12'>
@@ -238,9 +108,7 @@ export default function Component() {
 					aria-label='Arlo Industries – Home'
 				>
 					<Image
-						src={
-							isDark ? `/dark${logoVersion}.png` : `/light${logoVersion}.png`
-						}
+						src={`/logo${logoVersion.toUpperCase()}.png`}
 						alt=''
 						width={120}
 						height={40}
