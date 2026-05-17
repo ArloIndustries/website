@@ -12,10 +12,9 @@ interface MeshTerrainProps {
 }
 
 function Terrain({ color = 'white' }: { color: string }) {
-	const meshRef = useRef<THREE.Mesh>(null!);
-	const materialRef = useRef<THREE.MeshBasicMaterial>(null!);
+	const mesh1Ref = useRef<THREE.Mesh>(null!);
+	const mesh2Ref = useRef<THREE.Mesh>(null!);
 	
-	// Generate a grid texture
 	const texture = useMemo(() => {
 		if (typeof window === 'undefined') return null;
 		const canvas = document.createElement('canvas');
@@ -23,11 +22,9 @@ function Terrain({ color = 'white' }: { color: string }) {
 		canvas.height = 128;
 		const ctx = canvas.getContext('2d')!;
 		
-		// Fill black
 		ctx.fillStyle = '#000000';
 		ctx.fillRect(0, 0, 128, 128);
 		
-		// Draw bright border for the grid lines
 		ctx.strokeStyle = '#ffffff';
 		ctx.lineWidth = 6;
 		ctx.strokeRect(0, 0, 128, 128);
@@ -35,63 +32,88 @@ function Terrain({ color = 'white' }: { color: string }) {
 		const tex = new THREE.CanvasTexture(canvas);
 		tex.wrapS = THREE.RepeatWrapping;
 		tex.wrapT = THREE.RepeatWrapping;
-		tex.repeat.set(60, 60); // Match the plane segments
+		tex.repeat.set(60, 60);
 		return tex;
 	}, []);
 
-	// Create a static, blocky plane geometry
-	const geometry = useMemo(() => {
-		const geo = new THREE.PlaneGeometry(120, 120, 60, 60);
+	const geo1 = useMemo(() => new THREE.PlaneGeometry(120, 120, 60, 60), []);
+	const geo2 = useMemo(() => new THREE.PlaneGeometry(120, 120, 60, 60), []);
+
+	const updateGeometry = (geo: THREE.PlaneGeometry, worldOffsetZ: number) => {
 		const vertices = geo.attributes.position.array;
-		
 		for (let i = 0; i < vertices.length; i += 3) {
 			const x = vertices[i];
-			const y = vertices[i + 1];
+			const localY = vertices[i + 1];
+			// Plane is rotated -PI/2 on X, so local +Y points to world -Z
+			const worldZ = worldOffsetZ - localY;
 			
-			// Blocky grid math (step every 4 units)
 			const blockX = Math.floor(x / 4) * 4;
-			const blockY = Math.floor(y / 4) * 4;
+			const blockZ = Math.floor(worldZ / 4) * 4;
 			
 			let z = 0;
-			z += Math.sin(blockX * 0.15 + blockY * 0.1) * 4;
-			z += Math.cos(blockX * 0.1 - blockY * 0.15) * 4;
+			z += Math.sin(blockX * 0.15 + blockZ * 0.1) * 4;
+			z += Math.cos(blockX * 0.1 - blockZ * 0.15) * 4;
 			
-			// Step the height to make it "squarish/jagged"
 			z = Math.floor(z);
-			
 			vertices[i + 2] = z;
 		}
-		
 		geo.computeVertexNormals();
-		return geo;
-	}, []);
+		geo.attributes.position.needsUpdate = true;
+	};
+
+	// Initialize the two chunks
+	useMemo(() => {
+		updateGeometry(geo1, 0);
+		updateGeometry(geo2, -120);
+	}, [geo1, geo2]);
+
+	const chunk1Z = useRef(0);
+	const chunk2Z = useRef(-120);
 
 	useFrame((state, delta) => {
-		if (texture) {
-			// Scroll the texture to create forward movement illusion
-			texture.offset.y -= delta * 0.4; // adjust speed
+		const speed = 12; // Speed of flying over the terrain
+		chunk1Z.current += delta * speed;
+		chunk2Z.current += delta * speed;
+
+		if (chunk1Z.current > 120) {
+			chunk1Z.current -= 240;
+			updateGeometry(geo1, chunk1Z.current);
 		}
+		if (chunk2Z.current > 120) {
+			chunk2Z.current -= 240;
+			updateGeometry(geo2, chunk2Z.current);
+		}
+
+		if (mesh1Ref.current) mesh1Ref.current.position.z = chunk1Z.current;
+		if (mesh2Ref.current) mesh2Ref.current.position.z = chunk2Z.current;
+	});
+
+	if (!texture) return null;
+
+	const material = new THREE.MeshBasicMaterial({
+		color: color,
+		map: texture,
+		transparent: true,
+		opacity: 1.0,
+		blending: THREE.AdditiveBlending,
+		depthWrite: false,
 	});
 
 	return (
-		<mesh 
-			ref={meshRef} 
-			geometry={geometry} 
-			rotation={[-Math.PI / 2, 0, 0]} 
-			position={[0, -4, 0]}
-		>
-			{texture && (
-				<meshBasicMaterial 
-					ref={materialRef}
-					color={color} 
-					map={texture}
-					transparent={true} 
-					opacity={1.0} // Maximum brightness
-					blending={THREE.AdditiveBlending}
-					depthWrite={false}
-				/>
-			)}
-		</mesh>
+		<group position={[0, -4, 0]}>
+			<mesh 
+				ref={mesh1Ref} 
+				geometry={geo1} 
+				material={material}
+				rotation={[-Math.PI / 2, 0, 0]} 
+			/>
+			<mesh 
+				ref={mesh2Ref} 
+				geometry={geo2} 
+				material={material}
+				rotation={[-Math.PI / 2, 0, 0]} 
+			/>
+		</group>
 	);
 }
 
