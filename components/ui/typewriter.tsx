@@ -46,5 +46,10 @@ export const Typewriter = ({
 		}
 	}, [isStarted, index, text, speed, onFinished, isFinished]);
 
-	return <span className={className}>{displayedText}</span>;
+	return (
+		<span className={className}>
+			{displayedText}
+			<span className="inline-block animate-[pulse_1s_ease-in-out_infinite] text-white ml-0.5 font-mono">_</span>
+		</span>
+	);
 };

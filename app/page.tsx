@@ -29,11 +29,11 @@ export default function Component() {
 	const initRef = useRef(false);
 
 	const quotes = [
-		'“Solving war from first principles.”',
-		// '“All warfare is based on deception.” — Sun Tzu',
-		'“Making Conflict concise and precise.”',
-		'“The eye that sees without being seen.”',
-		// '"A society that separates its scholars from its warriors will have its thinking done by cowards and its fighting by fools.'
+		'Solving war from first principles',
+		// 'All warfare is based on deception — Sun Tzu',
+		'Making Conflict concise and precise',
+		'The eye that sees without being seen',
+		// 'A society that separates its scholars from its warriors will have its thinking done by cowards and its fighting by fools'
 	];
 
 	useEffect(() => {
