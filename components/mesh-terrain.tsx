@@ -14,21 +14,21 @@ interface MeshTerrainProps {
 function Terrain({ color = 'white' }: { color: string }) {
 	const mesh1Ref = useRef<THREE.Mesh>(null!);
 	const mesh2Ref = useRef<THREE.Mesh>(null!);
-	
+
 	const texture = useMemo(() => {
 		if (typeof window === 'undefined') return null;
 		const canvas = document.createElement('canvas');
 		canvas.width = 128;
 		canvas.height = 128;
 		const ctx = canvas.getContext('2d')!;
-		
+
 		ctx.fillStyle = '#000000';
 		ctx.fillRect(0, 0, 128, 128);
-		
+
 		ctx.strokeStyle = '#ffffff';
 		ctx.lineWidth = 6;
 		ctx.strokeRect(0, 0, 128, 128);
-		
+
 		const tex = new THREE.CanvasTexture(canvas);
 		tex.wrapS = THREE.RepeatWrapping;
 		tex.wrapT = THREE.RepeatWrapping;
@@ -46,14 +46,14 @@ function Terrain({ color = 'white' }: { color: string }) {
 			const localY = vertices[i + 1];
 			// Plane is rotated -PI/2 on X, so local +Y points to world -Z
 			const worldZ = worldOffsetZ - localY;
-			
+
 			const blockX = Math.floor(x / 4) * 4;
 			const blockZ = Math.floor(worldZ / 4) * 4;
-			
+
 			let z = 0;
 			z += Math.sin(blockX * 0.15 + blockZ * 0.1) * 4;
 			z += Math.cos(blockX * 0.1 - blockZ * 0.15) * 4;
-			
+
 			z = Math.floor(z);
 			vertices[i + 2] = z;
 		}
@@ -94,24 +94,24 @@ function Terrain({ color = 'white' }: { color: string }) {
 		color: color,
 		map: texture,
 		transparent: true,
-		opacity: 1.0,
+		opacity: 0.7,
 		blending: THREE.AdditiveBlending,
 		depthWrite: false,
 	});
 
 	return (
 		<group position={[0, -4, 0]}>
-			<mesh 
-				ref={mesh1Ref} 
-				geometry={geo1} 
+			<mesh
+				ref={mesh1Ref}
+				geometry={geo1}
 				material={material}
-				rotation={[-Math.PI / 2, 0, 0]} 
+				rotation={[-Math.PI / 2, 0, 0]}
 			/>
-			<mesh 
-				ref={mesh2Ref} 
-				geometry={geo2} 
+			<mesh
+				ref={mesh2Ref}
+				geometry={geo2}
 				material={material}
-				rotation={[-Math.PI / 2, 0, 0]} 
+				rotation={[-Math.PI / 2, 0, 0]}
 			/>
 		</group>
 	);
@@ -124,7 +124,7 @@ function SpinningPrism({ color = 'white' }: { color: string }) {
 		groupRef.current.rotation.x += delta * 0.4;
 		groupRef.current.rotation.y += delta * 0.8;
 		groupRef.current.rotation.z += delta * 0.2;
-		
+
 		groupRef.current.position.y = Math.sin(state.clock.getElapsedTime()) * 0.5;
 	});
 
@@ -160,7 +160,10 @@ function SpinningPrism({ color = 'white' }: { color: string }) {
 	);
 }
 
-export default function MeshTerrainBackground({ color = 'red', showPrism = true }: MeshTerrainProps) {
+export default function MeshTerrainBackground({
+	color = 'red',
+	showPrism = true,
+}: MeshTerrainProps) {
 	const [isMounted, setIsMounted] = useState(false);
 	useEffect(() => setIsMounted(true), []);
 
