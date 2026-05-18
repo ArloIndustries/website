@@ -94,7 +94,7 @@ function Terrain({ color = 'white' }: { color: string }) {
 		color: color,
 		map: texture,
 		transparent: true,
-		opacity: 0.7,
+		opacity: 0.6,
 		blending: THREE.AdditiveBlending,
 		depthWrite: false,
 	});
