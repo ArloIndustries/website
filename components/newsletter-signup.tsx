@@ -88,12 +88,17 @@ export default function NewsletterSignup({
 		return null;
 	}
 
+	const inputBorder = isDark
+		? 'border-red-500'
+		: 'border-red-900/40';
+	const buttonBorder = isDark ? 'border-red-500' : 'border-black';
+
 	return (
-		<div className={`w-full max-w-md mx-auto ${className}`}>
+		<div className={`w-full ${className}`}>
 			{status === 'idle' && (
 				<form
 					onSubmit={handleSubmit}
-					className='flex flex-col sm:flex-row gap-3'
+					className='flex w-full items-stretch'
 				>
 					<input
 						type='email'
@@ -102,13 +107,14 @@ export default function NewsletterSignup({
 						placeholder='your@email.com'
 						required
 						className={`
-							flex-1 px-4 py-3 text-sm font-medium
+							min-w-0 flex-1 px-3 py-2.5 text-sm font-medium
 							${
 								isDark
-									? 'bg-black text-white border-red-500 placeholder-gray-400'
-									: 'bg-red-950/35 text-white border-red-900/40 placeholder-red-200/45 shadow-[inset_0_1px_2px_rgba(0,0,0,0.15)]'
+									? 'bg-black text-white placeholder-gray-400'
+									: 'bg-red-950/35 text-white placeholder-red-200/45 shadow-[inset_0_1px_2px_rgba(0,0,0,0.15)]'
 							}
-							border-2 focus:outline-none focus:ring-2 focus:ring-red-500
+							border-2 border-r-0 ${inputBorder}
+							focus:outline-none focus:ring-2 focus:ring-red-500 focus:z-10
 							transition-colors
 						`}
 						style={{ fontFamily: 'Inter, sans-serif' }}
@@ -116,11 +122,11 @@ export default function NewsletterSignup({
 					<button
 						type='submit'
 						className={`
-							px-6 py-3 text-sm font-bold tracking-wide uppercase
+							shrink-0 px-4 py-2.5 text-xs sm:text-sm font-bold tracking-wide uppercase
 							${
 								isDark
-									? 'bg-red-500 text-black border-2 border-red-500 hover:bg-white hover:text-red-500 hover:border-white'
-									: 'bg-black text-white border-2 border-black hover:bg-zinc-900 hover:border-zinc-900'
+									? `bg-red-500 text-black border-2 ${buttonBorder} hover:bg-white hover:text-red-500 hover:border-white`
+									: `bg-black text-white border-2 ${buttonBorder} hover:bg-zinc-900 hover:border-zinc-900`
 							}
 							transition-colors whitespace-nowrap
 						`}
@@ -136,7 +142,7 @@ export default function NewsletterSignup({
 					<button
 						disabled
 						className={`
-							px-6 py-3 text-sm font-bold tracking-wide uppercase
+							w-full px-4 py-2.5 text-sm font-bold tracking-wide uppercase
 							bg-red-500 text-white border-2 border-red-500
 							opacity-75 cursor-not-allowed
 						`}
@@ -151,7 +157,7 @@ export default function NewsletterSignup({
 				<div className='text-center'>
 					<p
 						className={`
-						text-sm font-medium mb-3
+						text-xs font-medium mb-2
 						text-white
 					`}
 						style={{ fontFamily: 'Inter, sans-serif' }}
@@ -176,7 +182,7 @@ export default function NewsletterSignup({
 				<div className='text-center'>
 					<p
 						className={`
-						text-sm font-medium mb-3
+						text-xs font-medium mb-2
 						${isDark ? 'text-red-400' : 'text-red-100'}
 					`}
 						style={{ fontFamily: 'Inter, sans-serif' }}

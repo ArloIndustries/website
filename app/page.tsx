@@ -8,17 +8,20 @@ import dynamic from 'next/dynamic';
 import { useTheme } from 'next-themes';
 import { useState, useEffect, useRef } from 'react';
 import { Typewriter } from '@/components/ui/typewriter';
-import NewsletterSignup from '@/components/newsletter-signup';
+import HomeCtaColumn from '@/components/home-cta-column';
 
 // Dynamically import the 3D terrain to avoid SSR issues
-const MeshTerrainBackground = dynamic(() => import('@/components/mesh-terrain'), {
-	ssr: false,
-	loading: () => (
-		<div className='w-full h-full flex items-center justify-center opacity-50'>
-			<div className='animate-pulse'>Loading Environment...</div>
-		</div>
-	),
-});
+const MeshTerrainBackground = dynamic(
+	() => import('@/components/mesh-terrain'),
+	{
+		ssr: false,
+		loading: () => (
+			<div className='w-full h-full flex items-center justify-center opacity-50'>
+				<div className='animate-pulse'>Loading Environment...</div>
+			</div>
+		),
+	},
+);
 
 export default function Component() {
 	const { theme } = useTheme();
@@ -29,11 +32,9 @@ export default function Component() {
 	const initRef = useRef(false);
 
 	const quotes = [
-		'Solving war from first principles',
-		// 'All warfare is based on deception — Sun Tzu',
-		'Making Conflict concise and precise',
-		'The eye that sees without being seen',
-		// 'A society that separates its scholars from its warriors will have its thinking done by cowards and its fighting by fools'
+		'Passive Aerial Sensing Mesh to track drones and missiles',
+		// 'Solving war from first principles',
+		// 'Making Conflict concise and precise',
 	];
 
 	useEffect(() => {
@@ -118,6 +119,18 @@ export default function Component() {
 
 				<nav className='hidden md:flex items-center gap-8'>
 					<Link
+						href='/mentat'
+						className={`${hoverColor} transition-colors font-medium tracking-wide text-sm lg:text-base`}
+					>
+						MENTAT
+					</Link>
+					<Link
+						href='/careers'
+						className={`${hoverColor} transition-colors font-medium tracking-wide text-sm lg:text-base`}
+					>
+						CAREERS
+					</Link>
+					<Link
 						href='/blog'
 						className={`${hoverColor} transition-colors font-medium tracking-wide text-sm lg:text-base`}
 					>
@@ -129,14 +142,6 @@ export default function Component() {
 					>
 						PRESS
 					</Link>
-					<a
-						href='https://www.ycombinator.com/companies/arlo-industries/jobs'
-						target='_blank'
-						rel='noopener noreferrer'
-						className={`${hoverColor} transition-colors font-medium tracking-wide text-sm lg:text-base`}
-					>
-						CAREERS
-					</a>
 				</nav>
 
 				<Button
@@ -175,15 +180,20 @@ export default function Component() {
 						>
 							PRESS
 						</Link>
-						<a
-							href='https://www.ycombinator.com/companies/arlo-industries/jobs'
-							target='_blank'
-							rel='noopener noreferrer'
+						<Link
+							href='/mentat'
+							className={`block ${hoverColor} transition-colors font-medium tracking-wide text-base py-2`}
+							onClick={() => setMobileMenuOpen(false)}
+						>
+							MENTAT
+						</Link>
+						<Link
+							href='/careers'
 							className={`block ${hoverColor} transition-colors font-medium tracking-wide text-base py-2`}
 							onClick={() => setMobileMenuOpen(false)}
 						>
 							CAREERS
-						</a>
+						</Link>
 					</div>
 				</div>
 			)}
@@ -200,20 +210,9 @@ export default function Component() {
 					</h1>
 				</div>
 
-				{/* Right Content - Description */}
-				<div className='flex-1 max-w-md z-10'>
-					{/* <p className='text-base lg:text-lg leading-relaxed opacity-90 font-medium'>
-						<Typewriter
-							text="Europe is building the drone wall, America is building the golden dome, the world is preparing for the future of drone warfare. It's already here. The problem is, there are too many interceptor drones and too little sensing architecture. We are building Mentat - the world's first optical radar mesh which outperforms current solution by 2-3x the range while being multiple times more cost effective."
-							speed={10}
-							startDelay={1000} // Start after 1 second
-						/>
-					</p> */}
-
-					{/* Newsletter Signup under description */}
-					<div className='mt-8'>
-						<NewsletterSignup />
-					</div>
+				{/* Right Content — YC upvote + newsletter */}
+				<div className='flex-1 max-w-md z-10 flex flex-col items-center justify-center w-full'>
+					<HomeCtaColumn />
 				</div>
 			</main>
 
