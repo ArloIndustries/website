@@ -95,6 +95,9 @@ export default function SiteHeader({
 		? 'text-red-500 hover:bg-red-500 hover:text-black'
 		: 'text-white hover:bg-red-500 hover:text-black';
 
+	const mentatLink = SITE_NAV_LINKS.find((link) => link.emphasize);
+	const secondaryLinks = SITE_NAV_LINKS.filter((link) => !link.emphasize);
+
 	const logoSrc = blinkLogo
 		? `/logo${logoVersion.toUpperCase()}.png`
 		: '/logoA.png';
@@ -121,6 +124,19 @@ export default function SiteHeader({
 				</Link>
 
 				<div className='flex min-w-0 flex-1 items-center justify-end gap-3 md:gap-8'>
+					{/* Mobile-only prominent Mentat link */}
+					{mentatLink && (
+						<span className='md:hidden'>
+							{renderNavLink(
+								mentatLink,
+								outlineCtaClass(
+									isDark,
+									'px-3 py-1.5 text-sm font-bold tracking-wide',
+								),
+							)}
+						</span>
+					)}
+
 					{trailing}
 
 					<nav
@@ -172,7 +188,7 @@ export default function SiteHeader({
 							}`}
 						>
 							<ul className='flex flex-col gap-1 p-2'>
-								{SITE_NAV_LINKS.map((link) => (
+								{secondaryLinks.map((link) => (
 									<li key={link.href}>
 										{renderNavLink(
 											link,

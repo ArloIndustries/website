@@ -68,17 +68,22 @@ export default function CareersPage() {
 				</header>
 
 				{heroImage && (
-					<figure
-						className={`relative w-full aspect-[16/10] mb-14 lg:mb-20 border-2 overflow-hidden ${borderColor}`}
-					>
-						<Image
-							src={careersImageUrl(heroImage)}
-							alt='Arlo Industries team'
-							fill
-							className={photoClass}
-							priority
-							unoptimized
-						/>
+					<figure className='w-full mb-14 lg:mb-20 text-center'>
+						<div
+							className={`relative w-full aspect-[16/10] border-2 overflow-hidden ${borderColor}`}
+						>
+							<Image
+								src={careersImageUrl(heroImage)}
+								alt='Arlo Industries team'
+								fill
+								className={photoClass}
+								priority
+								unoptimized
+							/>
+						</div>
+						<figcaption className='mt-3 text-sm lg:text-base opacity-80'>
+							<em>* men and women</em>
+						</figcaption>
 					</figure>
 				)}
 
