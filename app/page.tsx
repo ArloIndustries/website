@@ -123,12 +123,14 @@ export default function Component() {
 					>
 						MANIFESTO
 					</Link>
-					<Link
-						href='/careers'
+					<a
+						href='https://www.ycombinator.com/companies/arlo-industries/jobs'
+						target='_blank'
+						rel='noopener noreferrer'
 						className={`${hoverColor} transition-colors font-medium tracking-wide text-sm lg:text-base`}
 					>
 						CAREERS
-					</Link>
+					</a>
 				</nav>
 
 				<Button
@@ -160,13 +162,15 @@ export default function Component() {
 						>
 							MANIFESTO
 						</Link>
-						<Link
-							href='/careers'
+						<a
+							href='https://www.ycombinator.com/companies/arlo-industries/jobs'
+							target='_blank'
+							rel='noopener noreferrer'
 							className={`block ${hoverColor} transition-colors font-medium tracking-wide text-base py-2`}
 							onClick={() => setMobileMenuOpen(false)}
 						>
 							CAREERS
-						</Link>
+						</a>
 					</div>
 				</div>
 			)}
@@ -300,19 +304,18 @@ export default function Component() {
 							<path d='M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z' />
 						</svg>
 					</a> */}
-					<a href='https://www.linkedin.com/in/deoarlo' target='_blank' rel='noopener noreferrer'>
-						<Button
-							variant='outline'
-							size='sm'
-							className={
-								isDark
-									? `${buttonBorder} ${buttonText} ${buttonHover} bg-transparent font-medium tracking-wide rounded-none transition-colors text-sm lg:text-base`
-									: 'rounded-none font-medium tracking-wide text-sm !border-2 !border-white/90 !bg-black/30 !text-white transition-colors hover:!bg-black hover:!text-white hover:!border-black lg:text-base'
-							}
-						>
-							GET IN TOUCH
-						</Button>
-					</a>
+					<Button
+						variant='outline'
+						size='sm'
+						asChild
+						className={
+							isDark
+								? `${buttonBorder} ${buttonText} ${buttonHover} bg-transparent font-medium tracking-wide rounded-none transition-colors text-sm lg:text-base`
+								: 'rounded-none font-medium tracking-wide text-sm !border-2 !border-white/90 !bg-black/30 !text-white transition-colors hover:!bg-black hover:!text-white hover:!border-black lg:text-base'
+						}
+					>
+						<a href='mailto:hi@arlo1.com'>GET IN TOUCH</a>
+					</Button>
 				</div>
 			</footer>
 		</div>

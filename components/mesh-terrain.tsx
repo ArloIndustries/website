@@ -88,16 +88,19 @@ function Terrain({ color = 'white' }: { color: string }) {
 		if (mesh2Ref.current) mesh2Ref.current.position.z = chunk2Z.current;
 	});
 
-	if (!texture) return null;
+	const material = useMemo(() => {
+		if (!texture) return null;
+		return new THREE.MeshBasicMaterial({
+			color,
+			map: texture,
+			transparent: true,
+			opacity: 0.6,
+			blending: THREE.AdditiveBlending,
+			depthWrite: false,
+		});
+	}, [color, texture]);
 
-	const material = new THREE.MeshBasicMaterial({
-		color: color,
-		map: texture,
-		transparent: true,
-		opacity: 0.6,
-		blending: THREE.AdditiveBlending,
-		depthWrite: false,
-	});
+	if (!texture || !material) return null;
 
 	return (
 		<group position={[0, -4, 0]}>

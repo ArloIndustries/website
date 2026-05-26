@@ -152,7 +152,7 @@ export default function NewsletterSignup({
 					<p
 						className={`
 						text-sm font-medium mb-3
-						${isDark ? 'text-white' : 'text-black'}
+						text-white
 					`}
 						style={{ fontFamily: 'Inter, sans-serif' }}
 					>
@@ -163,7 +163,7 @@ export default function NewsletterSignup({
 						className={`
 							text-sm font-medium underline hover:no-underline
 							transition-all cursor-pointer bg-transparent border-none
-							${isDark ? 'text-gray-400 hover:text-white' : 'text-gray-600 hover:text-black'}
+							${isDark ? 'text-gray-400 hover:text-white' : 'text-white/70 hover:text-white'}
 						`}
 						style={{ fontFamily: 'Inter, sans-serif' }}
 					>
@@ -177,7 +177,7 @@ export default function NewsletterSignup({
 					<p
 						className={`
 						text-sm font-medium mb-3
-						${isDark ? 'text-red-400' : 'text-red-600'}
+						${isDark ? 'text-red-400' : 'text-red-100'}
 					`}
 						style={{ fontFamily: 'Inter, sans-serif' }}
 					>
@@ -188,7 +188,7 @@ export default function NewsletterSignup({
 						className={`
 							text-sm font-medium underline hover:no-underline
 							transition-all cursor-pointer bg-transparent border-none
-							${isDark ? 'text-gray-400 hover:text-white' : 'text-gray-600 hover:text-black'}
+							${isDark ? 'text-gray-400 hover:text-white' : 'text-white/70 hover:text-white'}
 						`}
 						style={{ fontFamily: 'Inter, sans-serif' }}
 					>

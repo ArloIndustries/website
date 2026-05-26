@@ -689,7 +689,7 @@ export default function DeckExperience() {
 						className={`${styles.mono} ${styles.white}`}
 						style={{ fontSize: 16, lineHeight: 1.26, marginTop: 16 }}
 					>
-						With each node the performance performance grows exponentially,
+						With each node the performance grows exponentially,
 						while cost linearly.
 					</p>
 				</Box>
