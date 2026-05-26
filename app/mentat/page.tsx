@@ -3,7 +3,7 @@
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import BlogPageShell from '@/components/blog-page-shell';
-import { MENTAT_LOGO_URL } from '@/lib/mentat';
+import { MENTAT_LOGO_URL, MENTAT_MESH_VIDEO_URL } from '@/lib/mentat';
 import { useTheme } from 'next-themes';
 
 const MentatViewer = dynamic(() => import('@/components/mentat-viewer'), {
@@ -87,7 +87,7 @@ export default function MentatPage() {
 						</ul>
 					</section>
 
-					<section className='space-y-3 pb-4'>
+					<section className='space-y-3'>
 						<h2 className={sectionHeadingClass}>WHY NOW</h2>
 						<p className={bodyClass}>
 							The need is most urgent today. Shahed and other stealthy drones
@@ -96,6 +96,24 @@ export default function MentatPage() {
 							never built to handle.
 						</p>
 					</section>
+
+					<div
+						className={`overflow-hidden border-2 ${
+							isDark ? 'border-red-900' : 'border-red-800'
+						}`}
+					>
+						<video
+							src={MENTAT_MESH_VIDEO_URL}
+							className='w-full h-auto'
+							autoPlay
+							loop
+							muted
+							playsInline
+							preload='metadata'
+						>
+							Your browser does not support the video tag.
+						</video>
+					</div>
 				</div>
 			</div>
 		</BlogPageShell>

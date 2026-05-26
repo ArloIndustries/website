@@ -66,12 +66,11 @@ function MentatModel({ isDark }: MentatModelProps) {
 type MentatSceneProps = {
 	isDark: boolean;
 	groupRef: React.RefObject<Group | null>;
-	draggingRef: React.RefObject<boolean>;
 };
 
-function MentatScene({ isDark, groupRef, draggingRef }: MentatSceneProps) {
+function MentatScene({ isDark, groupRef }: MentatSceneProps) {
 	useFrame((_, delta) => {
-		if (!groupRef.current || draggingRef.current) return;
+		if (!groupRef.current) return;
 		groupRef.current.rotation.z += delta * 0.45;
 	});
 
@@ -95,36 +94,16 @@ type MentatViewerProps = {
 };
 
 export default function MentatViewer({ isDark, className = '' }: MentatViewerProps) {
-	const dragging = useRef(false);
 	const groupRef = useRef<Group>(null);
 
 	return (
-		<div
-			className={`h-full w-full touch-none cursor-grab active:cursor-grabbing ${className}`}
-			onPointerDown={() => {
-				dragging.current = true;
-			}}
-			onPointerUp={() => {
-				dragging.current = false;
-			}}
-			onPointerLeave={() => {
-				dragging.current = false;
-			}}
-			onPointerMove={(e) => {
-				if (!dragging.current || !groupRef.current) return;
-				groupRef.current.rotation.z += e.movementX * 0.008;
-			}}
-		>
+		<div className={`h-full w-full touch-none ${className}`}>
 			<Canvas
 				camera={{ fov: 38, near: 0.01, far: 1000 }}
 				gl={{ alpha: true, antialias: true }}
 				style={{ background: 'transparent' }}
 			>
-				<MentatScene
-					isDark={isDark}
-					groupRef={groupRef}
-					draggingRef={dragging}
-				/>
+				<MentatScene isDark={isDark} groupRef={groupRef} />
 			</Canvas>
 		</div>
 	);
