@@ -83,6 +83,7 @@ export default function Component() {
 	const bgColor = isDark ? 'bg-black' : 'bg-red-600';
 	const textColor = isDark ? 'text-red-500' : 'text-black';
 	const hoverColor = isDark ? 'hover:text-red-700' : 'hover:text-red-900';
+	const navLinkClass = `font-bold tracking-wide text-base lg:text-lg ${hoverColor} transition-colors`;
 	const buttonBorder = isDark ? 'border-red-500' : 'border-red-900';
 	const buttonText = isDark ? 'text-red-500' : 'text-red-900';
 	const buttonHover = isDark
@@ -118,28 +119,16 @@ export default function Component() {
 				</Link>
 
 				<nav className='hidden md:flex items-center gap-8'>
-					<Link
-						href='/mentat'
-						className={`${hoverColor} transition-colors font-medium tracking-wide text-sm lg:text-base`}
-					>
+					<Link href='/mentat' className={navLinkClass}>
 						MENTAT
 					</Link>
-					<Link
-						href='/careers'
-						className={`${hoverColor} transition-colors font-medium tracking-wide text-sm lg:text-base`}
-					>
+					<Link href='/careers' className={navLinkClass}>
 						CAREERS
 					</Link>
-					<Link
-						href='/blog'
-						className={`${hoverColor} transition-colors font-medium tracking-wide text-sm lg:text-base`}
-					>
+					<Link href='/blog' className={navLinkClass}>
 						BLOG
 					</Link>
-					<Link
-						href='/press'
-						className={`${hoverColor} transition-colors font-medium tracking-wide text-sm lg:text-base`}
-					>
+					<Link href='/press' className={navLinkClass}>
 						PRESS
 					</Link>
 				</nav>
@@ -168,28 +157,28 @@ export default function Component() {
 					>
 						<Link
 							href='/blog'
-							className={`block ${hoverColor} transition-colors font-medium tracking-wide text-base py-2`}
+							className={`block py-2 ${navLinkClass}`}
 							onClick={() => setMobileMenuOpen(false)}
 						>
 							BLOG
 						</Link>
 						<Link
 							href='/press'
-							className={`block ${hoverColor} transition-colors font-medium tracking-wide text-base py-2`}
+							className={`block py-2 ${navLinkClass}`}
 							onClick={() => setMobileMenuOpen(false)}
 						>
 							PRESS
 						</Link>
 						<Link
 							href='/mentat'
-							className={`block ${hoverColor} transition-colors font-medium tracking-wide text-base py-2`}
+							className={`block py-2 ${navLinkClass}`}
 							onClick={() => setMobileMenuOpen(false)}
 						>
 							MENTAT
 						</Link>
 						<Link
 							href='/careers'
-							className={`block ${hoverColor} transition-colors font-medium tracking-wide text-base py-2`}
+							className={`block py-2 ${navLinkClass}`}
 							onClick={() => setMobileMenuOpen(false)}
 						>
 							CAREERS
