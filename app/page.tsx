@@ -118,10 +118,16 @@ export default function Component() {
 
 				<nav className='hidden md:flex items-center gap-8'>
 					<Link
-						href='/manifesto'
+						href='/blog'
 						className={`${hoverColor} transition-colors font-medium tracking-wide text-sm lg:text-base`}
 					>
-						MANIFESTO
+						BLOG
+					</Link>
+					<Link
+						href='/press'
+						className={`${hoverColor} transition-colors font-medium tracking-wide text-sm lg:text-base`}
+					>
+						PRESS
 					</Link>
 					<a
 						href='https://www.ycombinator.com/companies/arlo-industries/jobs'
@@ -156,11 +162,18 @@ export default function Component() {
 						} px-6 py-4`}
 					>
 						<Link
-							href='/manifesto'
+							href='/blog'
 							className={`block ${hoverColor} transition-colors font-medium tracking-wide text-base py-2`}
 							onClick={() => setMobileMenuOpen(false)}
 						>
-							MANIFESTO
+							BLOG
+						</Link>
+						<Link
+							href='/press'
+							className={`block ${hoverColor} transition-colors font-medium tracking-wide text-base py-2`}
+							onClick={() => setMobileMenuOpen(false)}
+						>
+							PRESS
 						</Link>
 						<a
 							href='https://www.ycombinator.com/companies/arlo-industries/jobs'
