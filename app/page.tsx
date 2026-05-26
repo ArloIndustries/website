@@ -89,7 +89,7 @@ export default function Component() {
 			{/* 3D Wireframe Mesh Terrain Background with Prism */}
 			<MeshTerrainBackground color={tetrahedronColor} showPrism={false} />
 
-			<SiteHeader blinkLogo />
+			<SiteHeader />
 
 			{/* Main Content - Full Screen */}
 			<main className='relative z-10 flex-grow flex flex-col lg:flex-row items-center justify-center lg:justify-between gap-8 lg:gap-0 px-6 lg:px-12 py-12 lg:py-24'>

@@ -10,8 +10,6 @@ import { outlineCtaClass } from '@/lib/outline-cta';
 import { SITE_NAV_LINKS, type SiteNavLink } from '@/lib/site-nav';
 
 type SiteHeaderProps = {
-	/** Home page logo blink between A/B variants */
-	blinkLogo?: boolean;
 	/** Optional actions (e.g. press “Download all”) shown before the mobile menu button */
 	trailing?: ReactNode;
 };
@@ -36,10 +34,7 @@ function renderNavLink(
 	);
 }
 
-export default function SiteHeader({
-	blinkLogo = false,
-	trailing,
-}: SiteHeaderProps) {
+export default function SiteHeader({ trailing }: SiteHeaderProps) {
 	const { theme } = useTheme();
 	const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 	const [isMounted, setIsMounted] = useState(false);
@@ -50,14 +45,12 @@ export default function SiteHeader({
 	}, []);
 
 	useEffect(() => {
-		if (!blinkLogo) return;
-
 		const interval = setInterval(() => {
 			setLogoVersion((prev) => (prev === 'a' ? 'b' : 'a'));
 		}, 500);
 
 		return () => clearInterval(interval);
-	}, [blinkLogo]);
+	}, []);
 
 	useEffect(() => {
 		if (!mobileMenuOpen) return;
@@ -98,9 +91,7 @@ export default function SiteHeader({
 	const mentatLink = SITE_NAV_LINKS.find((link) => link.emphasize);
 	const secondaryLinks = SITE_NAV_LINKS.filter((link) => !link.emphasize);
 
-	const logoSrc = blinkLogo
-		? `/logo${logoVersion.toUpperCase()}.png`
-		: '/logoA.png';
+	const logoSrc = `/logo${logoVersion.toUpperCase()}.png`;
 
 	return (
 		<>
