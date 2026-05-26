@@ -12,7 +12,7 @@ export default function BlogPage() {
 	const borderColor = isDark ? 'border-red-900 hover:border-red-700' : 'border-red-800 hover:border-black';
 
 	return (
-		<BlogPageShell backHref='/' backLabel='Back'>
+		<BlogPageShell>
 			<div className='max-w-3xl mx-auto'>
 				<header className='text-center mb-12 lg:mb-16'>
 					<h1 className='text-4xl lg:text-6xl font-bold mb-4'>BLOG</h1>

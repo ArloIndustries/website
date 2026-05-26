@@ -45,7 +45,7 @@ export default function CareersPage() {
 	}`;
 
 	return (
-		<BlogPageShell backHref='/' backLabel='Back'>
+		<BlogPageShell>
 			<div className='max-w-4xl mx-auto'>
 				<header className='text-center mb-10 lg:mb-14'>
 					<h1 className='text-4xl lg:text-6xl font-bold leading-tight mb-20'>

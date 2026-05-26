@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useTheme } from 'next-themes';
+import { outlineCtaClass } from '@/lib/outline-cta';
 
 interface NewsletterSignupProps {
 	className?: string;
@@ -88,10 +89,11 @@ export default function NewsletterSignup({
 		return null;
 	}
 
-	const inputBorder = isDark
-		? 'border-red-500'
-		: 'border-red-900/40';
-	const buttonBorder = isDark ? 'border-red-500' : 'border-black';
+	const inputBorder = isDark ? 'border-red-500' : 'border-white/90';
+	const submitClass = outlineCtaClass(
+		isDark,
+		'shrink-0 px-4 py-2.5 text-xs sm:text-sm font-bold tracking-wide uppercase whitespace-nowrap border-l-0',
+	);
 
 	return (
 		<div className={`w-full ${className}`}>
@@ -111,7 +113,7 @@ export default function NewsletterSignup({
 							${
 								isDark
 									? 'bg-black text-white placeholder-gray-400'
-									: 'bg-red-950/35 text-white placeholder-red-200/45 shadow-[inset_0_1px_2px_rgba(0,0,0,0.15)]'
+									: 'bg-black/30 text-white placeholder-red-200/45'
 							}
 							border-2 border-r-0 ${inputBorder}
 							focus:outline-none focus:ring-2 focus:ring-red-500 focus:z-10
@@ -121,15 +123,7 @@ export default function NewsletterSignup({
 					/>
 					<button
 						type='submit'
-						className={`
-							shrink-0 px-4 py-2.5 text-xs sm:text-sm font-bold tracking-wide uppercase
-							${
-								isDark
-									? `bg-red-500 text-black border-2 ${buttonBorder} hover:bg-white hover:text-red-500 hover:border-white`
-									: `bg-black text-white border-2 ${buttonBorder} hover:bg-zinc-900 hover:border-zinc-900`
-							}
-							transition-colors whitespace-nowrap
-						`}
+						className={submitClass}
 						style={{ fontFamily: 'Inter, sans-serif' }}
 					>
 						Stay Updated
@@ -141,11 +135,10 @@ export default function NewsletterSignup({
 				<div className='flex justify-center'>
 					<button
 						disabled
-						className={`
-							w-full px-4 py-2.5 text-sm font-bold tracking-wide uppercase
-							bg-red-500 text-white border-2 border-red-500
-							opacity-75 cursor-not-allowed
-						`}
+						className={outlineCtaClass(
+							isDark,
+							'w-full px-4 py-2.5 text-sm font-bold tracking-wide uppercase opacity-75 cursor-not-allowed',
+						)}
 						style={{ fontFamily: 'Inter, sans-serif' }}
 					>
 						Please wait...

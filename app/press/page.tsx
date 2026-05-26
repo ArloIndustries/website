@@ -1,8 +1,8 @@
 'use client';
 
-import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowLeft, Download, Loader2 } from 'lucide-react';
+import { Download, Loader2 } from 'lucide-react';
+import SiteHeader from '@/components/site-header';
 import { Button } from '@/components/ui/button';
 import { useTheme } from 'next-themes';
 import { useCallback, useEffect, useState } from 'react';
@@ -42,7 +42,6 @@ export default function PressPage() {
 	const isDark = theme === 'dark';
 	const bgColor = isDark ? 'bg-black' : 'bg-red-600';
 	const textColor = isDark ? 'text-red-500' : 'text-black';
-	const hoverColor = isDark ? 'hover:text-red-700' : 'hover:text-red-900';
 	const borderColor = isDark ? 'border-red-900' : 'border-red-800';
 	const cardBg = isDark ? 'bg-red-950/40' : 'bg-red-950/25';
 	const previewBg = 'bg-white';
@@ -79,6 +78,33 @@ export default function PressPage() {
 		}
 	}, [files, downloadingAll]);
 
+	const downloadAllButtonClass = `rounded-none border-2 font-bold tracking-wide uppercase text-sm shrink-0 ${
+		isDark
+			? 'bg-red-500 text-black border-red-500 hover:bg-white hover:text-red-500 hover:border-white disabled:opacity-50'
+			: 'bg-black text-white border-black hover:bg-zinc-900 disabled:opacity-50'
+	}`;
+
+	const downloadAllButton = (
+		<Button
+			type='button'
+			onClick={downloadAll}
+			disabled={loadingFiles || files.length === 0 || downloadingAll}
+			className={downloadAllButtonClass}
+		>
+			{downloadingAll ? (
+				<>
+					<Loader2 className='w-4 h-4 mr-2 animate-spin' />
+					Preparing…
+				</>
+			) : (
+				<>
+					<Download className='w-4 h-4 mr-2' />
+					Download all
+				</>
+			)}
+		</Button>
+	);
+
 	if (!isMounted) {
 		return null;
 	}
@@ -87,40 +113,11 @@ export default function PressPage() {
 		<div
 			className={`min-h-screen flex flex-col ${bgColor} ${textColor} relative overflow-hidden transition-colors duration-300`}
 		>
-			<div className='relative z-10 pt-8 pb-4 px-6 lg:px-12 flex flex-wrap items-center justify-between gap-4'>
-				<Link href='/'>
-					<Button
-						variant='ghost'
-						className={`flex items-center gap-2 ${hoverColor} transition-colors rounded-none text-sm lg:text-base`}
-					>
-						<ArrowLeft className='w-4 h-4' />
-						Back
-					</Button>
-				</Link>
-
-				<Button
-					type='button'
-					onClick={downloadAll}
-					disabled={loadingFiles || files.length === 0 || downloadingAll}
-					className={`rounded-none border-2 font-bold tracking-wide uppercase text-sm ${
-						isDark
-							? 'bg-red-500 text-black border-red-500 hover:bg-white hover:text-red-500 hover:border-white disabled:opacity-50'
-							: 'bg-black text-white border-black hover:bg-zinc-900 disabled:opacity-50'
-					}`}
-				>
-					{downloadingAll ? (
-						<>
-							<Loader2 className='w-4 h-4 mr-2 animate-spin' />
-							Preparing…
-						</>
-					) : (
-						<>
-							<Download className='w-4 h-4 mr-2' />
-							Download all
-						</>
-					)}
-				</Button>
-			</div>
+			<SiteHeader
+				trailing={
+					<span className='hidden sm:inline-flex'>{downloadAllButton}</span>
+				}
+			/>
 
 			<div className='relative z-10 flex-grow px-6 pb-16 lg:px-12 lg:pb-24'>
 				<div className='max-w-6xl mx-auto'>
@@ -130,6 +127,11 @@ export default function PressPage() {
 							Official Arlo Industries logos and brand assets. Download
 							individual files or grab the full press kit as a ZIP.
 						</p>
+						<div className='mt-6 flex justify-center sm:hidden'>
+							<span className='w-full max-w-xs [&_button]:w-full'>
+								{downloadAllButton}
+							</span>
+						</div>
 					</header>
 
 					{loadingFiles && (
@@ -147,7 +149,7 @@ export default function PressPage() {
 					)}
 
 					{!loadingFiles && files.length > 0 && (
-						<ul className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6'>
+						<ul className='grid grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6'>
 							{files.map((filename) => (
 								<li
 									key={filename}

@@ -1,14 +1,13 @@
 'use client';
 
 import Link from 'next/link';
-import { Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import Image from 'next/image';
 import dynamic from 'next/dynamic';
 import { useTheme } from 'next-themes';
 import { useState, useEffect, useRef } from 'react';
 import { Typewriter } from '@/components/ui/typewriter';
 import HomeCtaColumn from '@/components/home-cta-column';
+import SiteHeader from '@/components/site-header';
 
 // Dynamically import the 3D terrain to avoid SSR issues
 const MeshTerrainBackground = dynamic(
@@ -25,10 +24,8 @@ const MeshTerrainBackground = dynamic(
 
 export default function Component() {
 	const { theme } = useTheme();
-	const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 	const [isMounted, setIsMounted] = useState(false);
 	const [quoteIndex, setQuoteIndex] = useState(0);
-	const [logoVersion, setLogoVersion] = useState<'a' | 'b'>('a');
 	const initRef = useRef(false);
 
 	const quotes = [
@@ -70,20 +67,10 @@ export default function Component() {
 		});
 	};
 
-	// Toggle logo version every 0.5 seconds for blinking effect
-	useEffect(() => {
-		const interval = setInterval(() => {
-			setLogoVersion((prev) => (prev === 'a' ? 'b' : 'a'));
-		}, 500);
-
-		return () => clearInterval(interval);
-	}, []);
-
 	const isDark = theme === 'dark';
 	const bgColor = isDark ? 'bg-black' : 'bg-red-600';
 	const textColor = isDark ? 'text-red-500' : 'text-black';
 	const hoverColor = isDark ? 'hover:text-red-700' : 'hover:text-red-900';
-	const navLinkClass = `font-bold tracking-wide text-base lg:text-lg ${hoverColor} transition-colors`;
 	const buttonBorder = isDark ? 'border-red-500' : 'border-red-900';
 	const buttonText = isDark ? 'text-red-500' : 'text-red-900';
 	const buttonHover = isDark
@@ -102,90 +89,7 @@ export default function Component() {
 			{/* 3D Wireframe Mesh Terrain Background with Prism */}
 			<MeshTerrainBackground color={tetrahedronColor} showPrism={false} />
 
-			{/* Header */}
-			<header className='relative z-10 flex items-center justify-between pt-8 pb-4 px-6 lg:px-12'>
-				<Link
-					href='/'
-					className='flex items-center gap-3 hover:opacity-80 transition-opacity'
-					aria-label='Arlo Industries – Home'
-				>
-					<Image
-						src={`/logo${logoVersion.toUpperCase()}.png`}
-						alt=''
-						width={120}
-						height={40}
-						className='h-8 w-auto'
-					/>
-				</Link>
-
-				<nav className='hidden md:flex items-center gap-8'>
-					<Link href='/mentat' className={navLinkClass}>
-						MENTAT
-					</Link>
-					<Link href='/careers' className={navLinkClass}>
-						CAREERS
-					</Link>
-					<Link href='/blog' className={navLinkClass}>
-						BLOG
-					</Link>
-					<Link href='/press' className={navLinkClass}>
-						PRESS
-					</Link>
-				</nav>
-
-				<Button
-					variant='ghost'
-					size='icon'
-					className='md:hidden'
-					onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-				>
-					{mobileMenuOpen ? (
-						<X className='w-6 h-6' />
-					) : (
-						<Menu className='w-6 h-6' />
-					)}
-				</Button>
-			</header>
-
-			{/* Mobile Menu */}
-			{mobileMenuOpen && (
-				<div className='relative z-20 md:hidden'>
-					<div
-						className={`${bgColor} border-t ${
-							isDark ? 'border-red-900' : 'border-red-800'
-						} px-6 py-4`}
-					>
-						<Link
-							href='/blog'
-							className={`block py-2 ${navLinkClass}`}
-							onClick={() => setMobileMenuOpen(false)}
-						>
-							BLOG
-						</Link>
-						<Link
-							href='/press'
-							className={`block py-2 ${navLinkClass}`}
-							onClick={() => setMobileMenuOpen(false)}
-						>
-							PRESS
-						</Link>
-						<Link
-							href='/mentat'
-							className={`block py-2 ${navLinkClass}`}
-							onClick={() => setMobileMenuOpen(false)}
-						>
-							MENTAT
-						</Link>
-						<Link
-							href='/careers'
-							className={`block py-2 ${navLinkClass}`}
-							onClick={() => setMobileMenuOpen(false)}
-						>
-							CAREERS
-						</Link>
-					</div>
-				</div>
-			)}
+			<SiteHeader blinkLogo />
 
 			{/* Main Content - Full Screen */}
 			<main className='relative z-10 flex-grow flex flex-col lg:flex-row items-center justify-center lg:justify-between gap-8 lg:gap-0 px-6 lg:px-12 py-12 lg:py-24'>
@@ -213,23 +117,27 @@ export default function Component() {
 							href='https://www.ycombinator.com/companies/arlo-industries'
 							target='_blank'
 							rel='noopener noreferrer'
-							className={`inline-flex items-center gap-2 border px-2 py-[5px] transition-opacity hover:opacity-80 cursor-pointer ${
+							className={`group inline-flex items-center gap-2 border px-2 py-[5px] cursor-pointer transition-colors ${
 								isDark
-									? 'border-red-500/80 bg-red-950/30'
-									: 'border-white/25 bg-black/25'
+									? 'border-red-500/80 bg-red-950/30 hover:border-red-500 hover:bg-red-500'
+									: 'border-white/25 bg-black/25 hover:border-red-500 hover:bg-red-500'
 							}`}
 						>
 							<span
-								className={`flex h-[19px] w-[19px] shrink-0 items-center justify-center text-[11px] font-bold leading-none sm:text-[12px] bg-red-500 ${
-									isDark ? 'text-black' : 'text-white'
+								className={`flex h-[19px] w-[19px] shrink-0 items-center justify-center text-[11px] font-bold leading-none sm:text-[12px] bg-red-500 transition-colors ${
+									isDark
+										? 'text-black group-hover:text-black'
+										: 'text-white group-hover:text-black'
 								}`}
 								aria-hidden
 							>
 								Y
 							</span>
 							<span
-								className={`text-[12px] font-medium tracking-wide sm:text-[14px] ${
-									isDark ? `${textColor} opacity-95` : 'text-white/95'
+								className={`text-[12px] font-medium tracking-wide sm:text-[14px] transition-colors ${
+									isDark
+										? `${textColor} opacity-95 group-hover:text-black group-hover:opacity-100`
+										: 'text-white/95 group-hover:text-black'
 								}`}
 							>
 								Combinator
@@ -269,7 +177,7 @@ export default function Component() {
 
 				<div className='flex items-center gap-4'>
 					<a
-						href='https://www.linkedin.com/company/arlo1/'
+						href='https://www.linkedin.com/in/deoarlo/'
 						target='_blank'
 						rel='noopener noreferrer'
 						className={`transition-colors ${
@@ -315,7 +223,13 @@ export default function Component() {
 								: 'rounded-none font-medium tracking-wide text-sm !border-2 !border-white/90 !bg-black/30 !text-white transition-colors hover:!bg-black hover:!text-white hover:!border-black lg:text-base'
 						}
 					>
-						<a href='mailto:hi@arlo1.com'>GET IN TOUCH</a>
+						<a
+							href='https://www.linkedin.com/in/deoarlo/'
+							target='_blank'
+							rel='noopener noreferrer'
+						>
+							GET IN TOUCH
+						</a>
 					</Button>
 				</div>
 			</footer>

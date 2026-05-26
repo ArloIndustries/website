@@ -42,7 +42,7 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
 	const { slug } = use(params);
 
 	return (
-		<BlogPageShell backHref='/blog' backLabel='Back to blog'>
+		<BlogPageShell>
 			<BlogPostContent slug={slug} />
 		</BlogPageShell>
 	);

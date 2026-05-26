@@ -33,7 +33,7 @@ export default function MentatPage() {
 	const isDark = theme === 'dark';
 
 	return (
-		<BlogPageShell backHref='/' backLabel='Back'>
+		<BlogPageShell>
 			<div className='max-w-3xl mx-auto'>
 				<header className='text-center mb-6 lg:mb-8'>
 					<div className={`${titleRowClass} mb-16 lg:mb-24`}>

@@ -32,23 +32,24 @@ export default function YcLaunchUpvote({ className = '' }: YcLaunchUpvoteProps) 
 				group flex w-full items-stretch border-2 transition-colors
 				${
 					isDark
-						? 'border-red-500 bg-black hover:bg-red-950/60'
-						: 'border-black bg-black/30 hover:bg-black/45'
+						? 'border-red-500 bg-black hover:bg-red-500 hover:text-black'
+						: 'border-white/90 bg-black/30 hover:border-red-500 hover:bg-red-500 hover:text-black'
 				}
 				${className}
 			`}
 			aria-label='Upvote Arlo Industries on Y Combinator Launch'
 		>
 			<span
-				className={`flex shrink-0 items-center justify-center border-r-2 px-3 py-2.5 text-sm font-bold leading-none bg-red-500 ${
-					isDark ? 'border-red-500 text-black' : 'border-black text-white'
+				className={`flex shrink-0 items-center justify-center border-r-2 px-3 py-2.5 text-sm font-bold leading-none bg-red-500 text-black transition-colors ${
+					isDark ? 'border-red-500' : 'border-white/90'
 				}`}
+				aria-hidden
 			>
 				Y
 			</span>
 			<span
-				className={`flex min-w-0 flex-1 items-center justify-between gap-2 px-3 py-2.5 text-xs font-bold tracking-wide uppercase sm:text-sm ${
-					isDark ? 'text-red-500 group-hover:text-white' : 'text-white'
+				className={`flex min-w-0 flex-1 items-center justify-between gap-2 px-3 py-2.5 text-xs font-bold tracking-wide uppercase sm:text-sm transition-colors ${
+					isDark ? 'text-red-500 group-hover:text-black' : 'text-white group-hover:text-black'
 				}`}
 			>
 				<span className='truncate'>Upvote YC launch</span>
