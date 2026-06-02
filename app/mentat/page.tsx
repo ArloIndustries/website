@@ -1,19 +1,8 @@
 'use client';
 
-import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import BlogPageShell from '@/components/blog-page-shell';
-import { MENTAT_LOGO_URL, MENTAT_MESH_VIDEO_URL } from '@/lib/mentat';
-import { useTheme } from 'next-themes';
-
-const MentatViewer = dynamic(() => import('@/components/mentat-viewer'), {
-	ssr: false,
-	loading: () => (
-		<div className='flex h-full w-full items-center justify-center text-sm opacity-60'>
-			Loading model…
-		</div>
-	),
-});
+import { MENTAT_3D_GIF_URL, MENTAT_LOGO_URL, MENTAT_VID_URL } from '@/lib/mentat';
 
 const FEATURES = [
 	'Passive optical sensing',
@@ -29,9 +18,6 @@ const sectionHeadingClass =
 const bodyClass = 'text-sm lg:text-base opacity-90 leading-relaxed text-justify';
 
 export default function MentatPage() {
-	const { theme } = useTheme();
-	const isDark = theme === 'dark';
-
 	return (
 		<BlogPageShell>
 			<div className='max-w-3xl mx-auto'>
@@ -53,8 +39,12 @@ export default function MentatPage() {
 					</p>
 				</header>
 
-				<div className='relative mx-auto mb-8 lg:mb-12 h-[300px] sm:h-[380px] lg:h-[440px] max-w-2xl'>
-					<MentatViewer isDark={isDark} />
+				<div className='mx-auto mb-8 lg:mb-12 max-w-2xl'>
+					<img
+						src={MENTAT_VID_URL}
+						alt='Mentat mesh visualization'
+						className='w-full h-auto'
+					/>
 				</div>
 
 				<div className='space-y-10 text-left'>
@@ -97,22 +87,12 @@ export default function MentatPage() {
 						</p>
 					</section>
 
-					<div
-						className={`overflow-hidden border-2 ${
-							isDark ? 'border-red-900' : 'border-red-800'
-						}`}
-					>
-						<video
-							src={MENTAT_MESH_VIDEO_URL}
+					<div className='mx-auto max-w-2xl'>
+						<img
+							src={MENTAT_3D_GIF_URL}
+							alt='Mentat node 3D model'
 							className='w-full h-auto'
-							autoPlay
-							loop
-							muted
-							playsInline
-							preload='metadata'
-						>
-							Your browser does not support the video tag.
-						</video>
+						/>
 					</div>
 				</div>
 			</div>
