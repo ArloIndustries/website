@@ -29,7 +29,7 @@ export default function Component() {
 	const initRef = useRef(false);
 
 	const quotes = [
-		'Passive Aerial Sensing Mesh to track drones and missiles',
+		'Track drones and missiles without radars',
 		// 'Solving war from first principles',
 		// 'Making Conflict concise and precise',
 	];
@@ -117,59 +117,52 @@ export default function Component() {
 							href='https://www.ycombinator.com/companies/arlo-industries'
 							target='_blank'
 							rel='noopener noreferrer'
-							className={`group inline-flex items-center gap-2 border px-2 py-[5px] cursor-pointer transition-colors ${
-								isDark
+							className={`group inline-flex items-center gap-2 border px-2 py-[5px] cursor-pointer transition-colors ${isDark
 									? 'border-red-500/80 bg-red-950/30 hover:border-red-500 hover:bg-red-500'
 									: 'border-white/25 bg-black/25 hover:border-red-500 hover:bg-red-500'
-							}`}
+								}`}
 						>
 							<span
-								className={`flex h-[19px] w-[19px] shrink-0 items-center justify-center text-[11px] font-bold leading-none sm:text-[12px] bg-red-500 transition-colors ${
-									isDark
+								className={`flex h-[19px] w-[19px] shrink-0 items-center justify-center text-[11px] font-bold leading-none sm:text-[12px] bg-red-500 transition-colors ${isDark
 										? 'text-black group-hover:text-black'
 										: 'text-white group-hover:text-black'
-								}`}
+									}`}
 								aria-hidden
 							>
 								Y
 							</span>
 							<span
-								className={`text-[12px] font-medium tracking-wide sm:text-[14px] transition-colors ${
-									isDark
+								className={`text-[12px] font-medium tracking-wide sm:text-[14px] transition-colors ${isDark
 										? `${textColor} opacity-95 group-hover:text-black group-hover:opacity-100`
 										: 'text-white/95 group-hover:text-black'
-								}`}
+									}`}
 							>
 								Combinator
 							</span>
 						</a>
 						<div
-							className={`inline-flex items-center gap-2 border px-2 py-[5px] ${
-								isDark
+							className={`inline-flex items-center gap-2 border px-2 py-[5px] ${isDark
 									? 'border-red-500/80 bg-red-950/30'
 									: 'border-white/25 bg-black/25'
-							}`}
+								}`}
 						>
 							<span
-								className={`shrink-0 bg-red-500 px-[5px] py-0.5 text-[11px] font-bold leading-none tracking-tight sm:text-[12px] sm:px-[7px] ${
-									isDark ? 'text-black' : 'text-white'
-								}`}
+								className={`shrink-0 bg-red-500 px-[5px] py-0.5 text-[11px] font-bold leading-none tracking-tight sm:text-[12px] sm:px-[7px] ${isDark ? 'text-black' : 'text-white'
+									}`}
 							>
 								NVIDIA
 							</span>
 							<span
-								className={`text-[12px] font-medium tracking-wide sm:text-[14px] ${
-									isDark ? `${textColor} opacity-95` : 'text-white/95'
-								}`}
+								className={`text-[12px] font-medium tracking-wide sm:text-[14px] ${isDark ? `${textColor} opacity-95` : 'text-white/95'
+									}`}
 							>
 								Inception
 							</span>
 						</div>
 					</div>
 					<p
-						className={`text-sm lg:text-base font-medium ${
-							isDark ? `opacity-60 ${textColor}` : 'text-white/65'
-						}`}
+						className={`text-sm lg:text-base font-medium ${isDark ? `opacity-60 ${textColor}` : 'text-white/65'
+							}`}
 					>
 						© 2025 Arlo Industries Inc.
 					</p>
@@ -180,11 +173,10 @@ export default function Component() {
 						href='https://www.linkedin.com/in/deoarlo/'
 						target='_blank'
 						rel='noopener noreferrer'
-						className={`transition-colors ${
-							isDark
+						className={`transition-colors ${isDark
 								? `${textColor} ${hoverColor}`
 								: 'text-white hover:text-red-200'
-						}`}
+							}`}
 						aria-label='LinkedIn'
 					>
 						<svg
