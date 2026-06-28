@@ -113,11 +113,7 @@ export default function PressPage() {
 		<div
 			className={`min-h-screen flex flex-col ${bgColor} ${textColor} relative overflow-hidden transition-colors duration-300`}
 		>
-			<SiteHeader
-				trailing={
-					<span className='hidden sm:inline-flex'>{downloadAllButton}</span>
-				}
-			/>
+			<SiteHeader />
 
 			<div className='relative z-10 flex-grow px-6 pb-16 lg:px-12 lg:pb-24'>
 				<div className='max-w-6xl mx-auto'>
@@ -127,10 +123,8 @@ export default function PressPage() {
 							Official Arlo Industries logos and brand assets. Download
 							individual files or grab the full press kit as a ZIP.
 						</p>
-						<div className='mt-6 flex justify-center sm:hidden'>
-							<span className='w-full max-w-xs [&_button]:w-full'>
-								{downloadAllButton}
-							</span>
+						<div className='mt-6 flex justify-center'>
+							{downloadAllButton}
 						</div>
 					</header>
 
