@@ -11,7 +11,7 @@ export async function GET() {
 		const files = entries
 			.filter((e) => e.isFile() && ASSET_EXT.test(e.name))
 			.map((e) => e.name)
-			.sort((a, b) => a.localeCompare(b));
+			.sort((a, b) => b.localeCompare(a));
 
 		return NextResponse.json({ files });
 	} catch {
