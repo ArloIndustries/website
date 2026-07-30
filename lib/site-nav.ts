@@ -8,6 +8,7 @@ export type SiteNavLink = {
 
 export const SITE_NAV_LINKS: SiteNavLink[] = [
 	{ href: '/mentat', label: 'MENTAT', emphasize: true },
+	{ href: '/simulator', label: 'SIMULATOR' },
 	{ href: '/careers', label: 'CAREERS' },
 	{ href: '/blog', label: 'BLOG' },
 	{ href: '/press', label: 'PRESS' },
