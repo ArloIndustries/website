@@ -56,6 +56,43 @@ const PRESETS: { label: string; center: LatLng; zoom: number; area: LatLng[] }[]
 			[35.045, -118.2],
 		],
 	},
+	{
+		label: 'CITY · KYIV',
+		center: [50.45, 30.523],
+		zoom: 11,
+		area: [
+			[50.49, 30.44],
+			[50.5, 30.56],
+			[50.46, 30.63],
+			[50.4, 30.6],
+			[50.39, 30.48],
+			[50.44, 30.42],
+		],
+	},
+	{
+		label: 'AIRPORT · JFK',
+		center: [40.6413, -73.7781],
+		zoom: 13,
+		area: [
+			[40.665, -73.822],
+			[40.667, -73.755],
+			[40.63, -73.745],
+			[40.618, -73.79],
+			[40.64, -73.83],
+		],
+	},
+	{
+		label: 'DMZ · KOREA',
+		center: [37.9, 126.78],
+		zoom: 11,
+		area: [
+			[37.96, 126.58],
+			[37.93, 126.78],
+			[37.85, 126.98],
+			[37.79, 126.9],
+			[37.87, 126.6],
+		],
+	},
 ];
 
 /* ------------------------------------------------------------------ */
@@ -464,8 +501,7 @@ export default function CoverageSimulator() {
 						className='arlo-slider'
 					/>
 					<div className='text-[10px] leading-snug opacity-60'>
-						Range at which a node reliably detects and tracks a small UAS.
-						Larger threats are picked up much further out.
+						Assured tracking range against small UAS.
 					</div>
 				</div>
 
@@ -484,16 +520,19 @@ export default function CoverageSimulator() {
 						className='arlo-slider'
 					/>
 					<div className='text-[10px] leading-snug opacity-60'>
-						Minimum nodes covering every point of sky. Higher redundancy gives
-						better accuracy and keeps coverage intact if nodes are lost.
+						Nodes on every target. More nodes, more accuracy.
 					</div>
 				</div>
 
 				<div className='flex flex-col gap-1'>
 					<div className='text-xs tracking-wider opacity-70'>PRESET SCENARIOS</div>
-					<div className='flex flex-col gap-1'>
+					<div className='grid grid-cols-2 gap-1'>
 						{PRESETS.map((p, i) => (
-							<button key={p.label} className={panelBtn} onClick={() => loadPreset(i)}>
+							<button
+								key={p.label}
+								className={`${panelBtn} !px-2 text-xs`}
+								onClick={() => loadPreset(i)}
+							>
 								{p.label}
 							</button>
 						))}

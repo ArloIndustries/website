@@ -114,14 +114,14 @@ export default function Component() {
 				<main className='relative z-10 flex-grow flex flex-col lg:flex-row items-center justify-center lg:justify-between gap-8 lg:gap-0 px-6 lg:px-12 py-12 lg:py-24'>
 					{/* Left Content - Title */}
 					<div className='flex-1 max-w-2xl z-10'>
-						<div
-							className={`w-fit p-5 lg:p-7 backdrop-blur-md ${
-								isDark
-									? 'bg-black/60 shadow-[0_0_40px_rgba(0,0,0,0.6)]'
-									: 'bg-red-600/60 shadow-[0_0_40px_rgba(0,0,0,0.2)]'
-							}`}
-						>
-							<div className='cursor-pointer' onClick={handleNextQuote}>
+						<div className='relative w-fit'>
+							<div
+								aria-hidden
+								className={`arlo-hero-veil absolute -inset-8 lg:-inset-12 backdrop-blur-md ${
+									isDark ? 'bg-black/55' : 'bg-red-600/55'
+								}`}
+							/>
+							<div className='relative cursor-pointer' onClick={handleNextQuote}>
 								<h1 className='text-4xl lg:text-6xl xl:text-7xl font-black leading-tight tracking-tight'>
 									<Typewriter
 										key={quoteIndex}
@@ -131,13 +131,13 @@ export default function Component() {
 								</h1>
 							</div>
 							<p
-								className={`mt-6 max-w-xl text-base lg:text-lg leading-relaxed ${mutedText}`}
+								className={`relative mt-6 max-w-xl text-base lg:text-lg leading-relaxed ${mutedText}`}
 							>
 								A decentralised grid of passive nodes delivering real-time 3D
 								tracking of drones and missiles. Nothing to jam. Nothing to
 								detect.
 							</p>
-							<div className='mt-8 flex flex-wrap items-center gap-4'>
+							<div className='relative mt-8 flex flex-wrap items-center gap-4'>
 								<Button
 									variant='outline'
 									size='lg'
@@ -203,35 +203,6 @@ export default function Component() {
 							</p>
 						</div>
 					))}
-				</div>
-			</section>
-
-			{/* Simulator CTA */}
-			<section
-				className={`relative z-10 border-t-2 ${sectionBorder} px-6 lg:px-12 py-16 lg:py-24`}
-			>
-				<div className='flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8'>
-					<div className='max-w-2xl'>
-						<div className={`text-xs tracking-[0.35em] ${mutedText}`}>
-							INTERACTIVE
-						</div>
-						<h2 className='mt-2 text-3xl lg:text-5xl font-black tracking-tight'>
-							How many nodes to cover your site?
-						</h2>
-						<p className={`mt-4 text-base lg:text-lg leading-relaxed ${mutedText}`}>
-							Draw any area on the map: an airfield, a port, a city district.
-							The coverage planner instantly packs the grid for you with node
-							count, spacing, and tracking redundancy.
-						</p>
-					</div>
-					<Button
-						variant='outline'
-						size='lg'
-						asChild
-						className={`rounded-none font-bold tracking-wider text-base lg:text-lg px-8 py-6 bg-transparent transition-colors shrink-0 ${buttonBorder} ${buttonText} ${buttonHover}`}
-					>
-						<Link href='/simulator'>LAUNCH SIMULATOR</Link>
-					</Button>
 				</div>
 			</section>
 
