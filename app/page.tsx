@@ -25,18 +25,18 @@ const DefenseGridBackground = dynamic(
 const CAPABILITIES = [
 	{
 		index: '01',
-		title: 'PASSIVE DETECTION',
-		body: 'Camera-only sensor nodes watch the sky continuously. Zero RF emissions — nothing for anti-radiation seekers to home on, nothing to jam.',
+		title: 'PASSIVE & UNDETECTABLE',
+		body: 'Zero RF emissions. Nothing to jam, nothing to detect, nothing for anti-radiation weapons to home on. Your defenses see the sky without ever revealing themselves.',
 	},
 	{
 		index: '02',
-		title: 'MESH TRACKING',
-		body: 'Every object is seen by multiple nodes at once and triangulated into a single 3D trajectory — drone, missile, or bird — at city scale, in real time.',
+		title: 'REAL-TIME 3D TRACKING',
+		body: 'Live 3D position, velocity, and heading for every target, from a single low-RCS drone to a full swarm. Low-latency data that feeds straight into your interceptors and effectors.',
 	},
 	{
 		index: '03',
-		title: 'DEPLOY IN HOURS',
-		body: 'Nodes are cheap, self-locating, and network themselves. Coverage scales by adding hardware, not integration programs.',
+		title: 'RESILIENT & SCALABLE',
+		body: 'No single point of failure: coverage holds even when nodes are lost. Man-portable, quick to deploy, GNSS-denied capable, and up to 10x cheaper than alternatives.',
 	},
 ];
 
@@ -114,34 +114,42 @@ export default function Component() {
 				<main className='relative z-10 flex-grow flex flex-col lg:flex-row items-center justify-center lg:justify-between gap-8 lg:gap-0 px-6 lg:px-12 py-12 lg:py-24'>
 					{/* Left Content - Title */}
 					<div className='flex-1 max-w-2xl z-10'>
-						<div className='cursor-pointer' onClick={handleNextQuote}>
-							<h1 className='text-4xl lg:text-6xl xl:text-7xl font-black leading-tight tracking-tight'>
-								<Typewriter
-									key={quoteIndex}
-									text={quotes[quoteIndex]}
-									speed={30}
-								/>
-							</h1>
-						</div>
-						<p
-							className={`mt-6 max-w-xl text-base lg:text-lg leading-relaxed ${mutedText}`}
+						<div
+							className={`w-fit p-5 lg:p-7 backdrop-blur-md ${
+								isDark
+									? 'bg-black/60 shadow-[0_0_40px_rgba(0,0,0,0.6)]'
+									: 'bg-red-600/60 shadow-[0_0_40px_rgba(0,0,0,0.2)]'
+							}`}
 						>
-							A distributed grid of passive optical nodes that detects,
-							triangulates and hands off every object in the sky — with no
-							emissions to jam or target.
-						</p>
-						<div className='mt-8 flex flex-wrap items-center gap-4'>
-							<Button
-								variant='outline'
-								size='lg'
-								asChild
-								className={`rounded-none font-bold tracking-wider text-sm lg:text-base bg-transparent transition-colors ${buttonBorder} ${buttonText} ${buttonHover}`}
+							<div className='cursor-pointer' onClick={handleNextQuote}>
+								<h1 className='text-4xl lg:text-6xl xl:text-7xl font-black leading-tight tracking-tight'>
+									<Typewriter
+										key={quoteIndex}
+										text={quotes[quoteIndex]}
+										speed={30}
+									/>
+								</h1>
+							</div>
+							<p
+								className={`mt-6 max-w-xl text-base lg:text-lg leading-relaxed ${mutedText}`}
 							>
-								<Link href='/simulator'>▸ PLAN YOUR COVERAGE</Link>
-							</Button>
-							<span className={`text-xs tracking-[0.25em] ${mutedText}`}>
-								LIVE SIMULATION RUNNING ABOVE
-							</span>
+								A decentralised grid of passive nodes delivering real-time 3D
+								tracking of drones and missiles. Nothing to jam. Nothing to
+								detect.
+							</p>
+							<div className='mt-8 flex flex-wrap items-center gap-4'>
+								<Button
+									variant='outline'
+									size='lg'
+									asChild
+									className={`rounded-none font-bold tracking-wider text-sm lg:text-base bg-transparent transition-colors ${buttonBorder} ${buttonText} ${buttonHover}`}
+								>
+									<Link href='/simulator'>▸ PLAN YOUR COVERAGE</Link>
+								</Button>
+								<span className={`text-xs tracking-[0.25em] ${mutedText}`}>
+									LIVE SIMULATION RUNNING ABOVE
+								</span>
+							</div>
 						</div>
 					</div>
 
@@ -211,9 +219,9 @@ export default function Component() {
 							How many nodes to cover your site?
 						</h2>
 						<p className={`mt-4 text-base lg:text-lg leading-relaxed ${mutedText}`}>
-							Draw any area on the map — an airfield, a port, a city district —
-							and the coverage planner packs the grid for you: node count,
-							spacing, and tracking redundancy, instantly.
+							Draw any area on the map: an airfield, a port, a city district.
+							The coverage planner instantly packs the grid for you with node
+							count, spacing, and tracking redundancy.
 						</p>
 					</div>
 					<Button

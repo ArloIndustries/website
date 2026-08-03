@@ -41,8 +41,8 @@ export default function SimulatorPage() {
 				</h1>
 				<p className='max-w-3xl text-sm opacity-70 lg:text-base'>
 					Draw the area you need to defend. The planner packs Arlo nodes so
-					every point of sky is watched by enough passive sensors to
-					triangulate drones and missiles in 3D — no radar required.
+					every point of sky gets persistent, real-time 3D tracking of drones
+					and missiles. No radar required.
 				</p>
 			</div>
 			<div className='relative flex-1 border-t-2 border-red-500/60'>

@@ -464,8 +464,8 @@ export default function CoverageSimulator() {
 						className='arlo-slider'
 					/>
 					<div className='text-[10px] leading-snug opacity-60'>
-						Range at which a small UAS still spans the minimum pixel size on the
-						node&apos;s sensors.
+						Range at which a node reliably detects and tracks a small UAS.
+						Larger threats are picked up much further out.
 					</div>
 				</div>
 
@@ -484,8 +484,8 @@ export default function CoverageSimulator() {
 						className='arlo-slider'
 					/>
 					<div className='text-[10px] leading-snug opacity-60'>
-						Minimum nodes observing every point. 2× or more enables passive 3D
-						triangulation — no radar emissions.
+						Minimum nodes covering every point of sky. Higher redundancy gives
+						better accuracy and keeps coverage intact if nodes are lost.
 					</div>
 				</div>
 
@@ -520,22 +520,22 @@ export default function CoverageSimulator() {
 					{[
 						{
 							label: 'AREA',
-							value: stats ? `${stats.areaKm2.toFixed(2)} KM²` : '——',
+							value: stats ? `${stats.areaKm2.toFixed(2)} KM²` : '--',
 						},
 						{
 							label: 'NODES REQUIRED',
 							value: stats
 								? `${stats.nodeCount}${stats.truncated ? '+' : ''}`
-								: '——',
+								: '--',
 							highlight: true,
 						},
 						{
 							label: 'NODE SPACING',
-							value: stats ? `${Math.round(stats.spacingM)} M` : '——',
+							value: stats ? `${Math.round(stats.spacingM)} M` : '--',
 						},
 						{
 							label: 'REDUNDANCY',
-							value: stats ? `${redundancy}× / ${radiusKm.toFixed(2)} KM` : '——',
+							value: stats ? `${redundancy}× / ${radiusKm.toFixed(2)} KM` : '--',
 						},
 					].map((s) => (
 						<div key={s.label} className='bg-black/90 px-3 py-2 backdrop-blur-sm'>
@@ -554,8 +554,8 @@ export default function CoverageSimulator() {
 				</div>
 				{stats?.truncated && (
 					<div className='mt-1 bg-black/80 px-2 py-1 text-center text-[11px] text-red-400'>
-						Area exceeds {MAX_NODES}-node display limit — shrink the area or
-						increase detection radius.
+						Area exceeds the {MAX_NODES}-node display limit. Shrink the area
+						or increase detection radius.
 					</div>
 				)}
 			</div>
