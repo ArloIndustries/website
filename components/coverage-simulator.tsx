@@ -33,18 +33,6 @@ const PRESETS: { label: string; center: LatLng; zoom: number; area: LatLng[] }[]
 		],
 	},
 	{
-		label: 'PORT · OAKLAND',
-		center: [37.7955, -122.31],
-		zoom: 13,
-		area: [
-			[37.812, -122.336],
-			[37.809, -122.288],
-			[37.788, -122.283],
-			[37.779, -122.322],
-			[37.797, -122.342],
-		],
-	},
-	{
 		label: 'FOB · MOJAVE',
 		center: [35.05, -118.15],
 		zoom: 12,
@@ -83,14 +71,16 @@ const PRESETS: { label: string; center: LatLng; zoom: number; area: LatLng[] }[]
 	},
 	{
 		label: 'DMZ · KOREA',
-		center: [37.9, 126.78],
+		center: [37.83, 126.8],
 		zoom: 11,
+		// Entire polygon must stay on South Korean territory (Paju corridor,
+		// south of the DMZ and the Imjin River) — no nodes north of the border.
 		area: [
-			[37.96, 126.58],
-			[37.93, 126.78],
-			[37.85, 126.98],
-			[37.79, 126.9],
-			[37.87, 126.6],
+			[37.885, 126.735],
+			[37.87, 126.85],
+			[37.8, 126.92],
+			[37.75, 126.8],
+			[37.79, 126.71],
 		],
 	},
 ];
