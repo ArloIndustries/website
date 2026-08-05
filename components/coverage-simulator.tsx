@@ -21,19 +21,7 @@ const MAX_NODES = 3000;
 
 const PRESETS: { label: string; center: LatLng; zoom: number; area: LatLng[] }[] = [
 	{
-		label: 'AIRFIELD · SFO',
-		center: [37.6213, -122.379],
-		zoom: 13,
-		area: [
-			[37.636, -122.404],
-			[37.639, -122.375],
-			[37.619, -122.357],
-			[37.602, -122.375],
-			[37.609, -122.401],
-		],
-	},
-	{
-		label: 'FOB · MOJAVE',
+		label: 'MOJAVE',
 		center: [35.05, -118.15],
 		zoom: 12,
 		area: [
@@ -45,7 +33,7 @@ const PRESETS: { label: string; center: LatLng; zoom: number; area: LatLng[] }[]
 		],
 	},
 	{
-		label: 'CITY · KYIV',
+		label: 'KYIV',
 		center: [50.45, 30.523],
 		zoom: 11,
 		area: [
@@ -58,7 +46,7 @@ const PRESETS: { label: string; center: LatLng; zoom: number; area: LatLng[] }[]
 		],
 	},
 	{
-		label: 'AIRPORT · JFK',
+		label: 'JFK',
 		center: [40.6413, -73.7781],
 		zoom: 13,
 		area: [
@@ -70,7 +58,7 @@ const PRESETS: { label: string; center: LatLng; zoom: number; area: LatLng[] }[]
 		],
 	},
 	{
-		label: 'DMZ · KOREA',
+		label: 'KOREA',
 		center: [37.83, 126.8],
 		zoom: 11,
 		// Entire polygon must stay on South Korean territory (Paju corridor,
@@ -412,30 +400,6 @@ export default function CoverageSimulator() {
 	}, [polygon, radiusKm, redundancy]);
 
 	/* ---------- export ---------- */
-	const exportPlan = useCallback(() => {
-		if (!polygon || nodes.length === 0) return;
-		const payload = {
-			generator: 'arlo-industries coverage simulator',
-			detection_radius_m: radiusKm * 1000,
-			redundancy,
-			area_polygon: polygon.map(([lat, lng]) => ({ lat, lng })),
-			nodes: nodes.map(([lat, lng], i) => ({
-				id: `NODE-${String(i + 1).padStart(3, '0')}`,
-				lat,
-				lng,
-			})),
-		};
-		const blob = new Blob([JSON.stringify(payload, null, 2)], {
-			type: 'application/json',
-		});
-		const url = URL.createObjectURL(blob);
-		const a = document.createElement('a');
-		a.href = url;
-		a.download = 'arlo-deployment-plan.json';
-		a.click();
-		URL.revokeObjectURL(url);
-	}, [polygon, nodes, radiusKm, redundancy]);
-
 	/* ---------- UI ---------- */
 	const panelBtn =
 		'w-full border border-red-500/70 px-3 py-2 text-left text-sm font-bold tracking-wider text-red-500 transition-colors hover:bg-red-500 hover:text-black disabled:opacity-40 disabled:hover:bg-transparent disabled:hover:text-red-500';
@@ -445,41 +409,43 @@ export default function CoverageSimulator() {
 			<div ref={mapDivRef} className='absolute inset-0 z-0 bg-black' />
 
 			{/* control panel */}
-			<div className='absolute left-4 top-4 z-[500] flex w-[300px] max-w-[calc(100vw-2rem)] flex-col gap-3 border-2 border-red-500 bg-black/85 p-4 text-red-500 backdrop-blur-sm max-h-[calc(100%-2rem)] overflow-y-auto'>
+			<div className='absolute left-4 top-4 z-[500] flex w-[300px] max-w-[calc(100vw-2rem)] flex-col gap-4 border-2 border-red-500 bg-black/85 p-4 text-red-500 backdrop-blur-sm max-h-[calc(100%-2rem)] overflow-y-auto'>
 				<div>
 					<div className='text-xs tracking-[0.3em] opacity-70'>ARLO INDUSTRIES</div>
 					<div className='text-lg font-black tracking-wider'>COVERAGE PLANNER</div>
 				</div>
 
-				{!drawing ? (
-					<button className={panelBtn} onClick={startDrawing}>
-						▸ DRAW COVERAGE AREA
-					</button>
-				) : (
-					<div className='flex flex-col gap-2 border border-red-500/40 p-2'>
-						<div className='text-xs leading-relaxed opacity-80'>
-							Click the map to drop vertices ({draftCount} placed).
-							Double-click or press FINISH to close the area.
+				<div className='my-3 flex flex-col'>
+					{!drawing ? (
+						<button className={`${panelBtn} text-center`} onClick={startDrawing}>
+							▸ DRAW COVERAGE AREA
+						</button>
+					) : (
+						<div className='flex flex-col gap-2 border border-red-500/40 p-3 bg-black/40'>
+							<div className='text-xs leading-relaxed opacity-85'>
+								Click map to drop vertices ({draftCount} placed).
+								Double-click or press FINISH to close the area.
+							</div>
+							<div className='flex gap-2'>
+								<button
+									className={`${panelBtn} text-center`}
+									onClick={finishDrawingInternal}
+									disabled={draftCount < 3}
+								>
+									FINISH
+								</button>
+								<button className={`${panelBtn} text-center`} onClick={cancelDrawing}>
+									CANCEL
+								</button>
+							</div>
 						</div>
-						<div className='flex gap-2'>
-							<button
-								className={`${panelBtn} text-center`}
-								onClick={finishDrawingInternal}
-								disabled={draftCount < 3}
-							>
-								FINISH
-							</button>
-							<button className={`${panelBtn} text-center`} onClick={cancelDrawing}>
-								CANCEL
-							</button>
-						</div>
-					</div>
-				)}
+					)}
+				</div>
 
-				<div className='flex flex-col gap-1'>
+				<div className='flex flex-col gap-1.5'>
 					<label className='flex items-center justify-between text-xs tracking-wider'>
-						<span>NODE DETECTION RADIUS</span>
-						<span className='font-bold'>{radiusKm.toFixed(2)} KM</span>
+						<span>DETECTION RADIUS</span>
+						<span className='font-bold text-red-400'>{radiusKm.toFixed(2)} KM</span>
 					</label>
 					<input
 						type='range'
@@ -490,15 +456,15 @@ export default function CoverageSimulator() {
 						onChange={(e) => setRadiusKm(parseFloat(e.target.value))}
 						className='arlo-slider'
 					/>
-					<div className='text-[10px] leading-snug opacity-60'>
-						Assured tracking range against small UAS.
+					<div className='text-xs leading-snug opacity-75'>
+						Assured range against small UAS.
 					</div>
 				</div>
 
-				<div className='flex flex-col gap-1'>
+				<div className='flex flex-col gap-1.5'>
 					<label className='flex items-center justify-between text-xs tracking-wider'>
-						<span>TRACKING REDUNDANCY</span>
-						<span className='font-bold'>{redundancy}×</span>
+						<span>REDUNDANCY</span>
+						<span className='font-bold text-red-400'>{redundancy}×</span>
 					</label>
 					<input
 						type='range'
@@ -509,18 +475,18 @@ export default function CoverageSimulator() {
 						onChange={(e) => setRedundancy(parseInt(e.target.value, 10))}
 						className='arlo-slider'
 					/>
-					<div className='text-[10px] leading-snug opacity-60'>
-						Nodes on every target. More nodes, more accuracy.
+					<div className='text-xs leading-snug opacity-75'>
+						Overlapping nodes per target.
 					</div>
 				</div>
 
-				<div className='flex flex-col gap-1'>
+				<div className='flex flex-col gap-1.5'>
 					<div className='text-xs tracking-wider opacity-70'>PRESET SCENARIOS</div>
 					<div className='grid grid-cols-2 gap-1'>
 						{PRESETS.map((p, i) => (
 							<button
 								key={p.label}
-								className={`${panelBtn} !px-2 text-xs`}
+								className={`${panelBtn} !px-2 text-xs !text-center`}
 								onClick={() => loadPreset(i)}
 							>
 								{p.label}
@@ -529,18 +495,9 @@ export default function CoverageSimulator() {
 					</div>
 				</div>
 
-				<div className='flex gap-2'>
-					<button className={`${panelBtn} text-center`} onClick={clearAll}>
-						CLEAR
-					</button>
-					<button
-						className={`${panelBtn} text-center`}
-						onClick={exportPlan}
-						disabled={nodes.length === 0}
-					>
-						EXPORT JSON
-					</button>
-				</div>
+				<button className={`${panelBtn} text-center`} onClick={clearAll}>
+					CLEAR
+				</button>
 			</div>
 
 			{/* stats readout */}

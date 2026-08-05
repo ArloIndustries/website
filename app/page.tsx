@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import dynamic from 'next/dynamic';
 import { useTheme } from 'next-themes';
@@ -36,7 +37,7 @@ const CAPABILITIES = [
 	{
 		index: '03',
 		title: 'RESILIENT & SCALABLE',
-		body: 'No single point of failure: coverage holds even when nodes are lost. Man-portable, quick to deploy, GNSS-denied capable, and up to 10x cheaper than alternatives.',
+		body: 'Not a single point of failure. System maintains coverage even when some nodes are impacted. Man-portable, quick to deploy, GNSS-denied capable, and up to 10x cheaper than alternatives.',
 	},
 ];
 
@@ -45,12 +46,21 @@ export default function Component() {
 	const [isMounted, setIsMounted] = useState(false);
 	const [quoteIndex, setQuoteIndex] = useState(0);
 	const initRef = useRef(false);
+	const [logoVersion, setLogoVersion] = useState<'a' | 'b'>('a');
 
 	const quotes = [
 		'Track drones and missiles without radars',
 		// 'Solving war from first principles',
 		// 'Making Conflict concise and precise',
 	];
+
+	useEffect(() => {
+		const interval = setInterval(() => {
+			setLogoVersion((prev) => (prev === 'a' ? 'b' : 'a'));
+		}, 500);
+
+		return () => clearInterval(interval);
+	}, []);
 
 	useEffect(() => {
 		if (!initRef.current) {
@@ -117,8 +127,8 @@ export default function Component() {
 						<div className='relative w-fit'>
 							<div
 								aria-hidden
-								className={`arlo-hero-veil absolute -inset-8 lg:-inset-12 backdrop-blur-md ${
-									isDark ? 'bg-black/55' : 'bg-red-600/55'
+								className={`arlo-hero-veil absolute -inset-5 lg:-inset-8 backdrop-blur-md ${
+									isDark ? 'bg-black/45' : 'bg-red-600/45'
 								}`}
 							/>
 							<div className='relative cursor-pointer' onClick={handleNextQuote}>
@@ -146,9 +156,6 @@ export default function Component() {
 								>
 									<Link href='/simulator'>▸ PLAN YOUR COVERAGE</Link>
 								</Button>
-								<span className={`text-xs tracking-[0.25em] ${mutedText}`}>
-									LIVE SIMULATION RUNNING ABOVE
-								</span>
 							</div>
 						</div>
 					</div>
@@ -172,23 +179,20 @@ export default function Component() {
 
 			{/* Capabilities */}
 			<section
-				className={`relative z-10 border-t-2 ${sectionBorder} px-6 lg:px-12 py-16 lg:py-24`}
+				className={`relative z-10 border-t-2 ${sectionBorder} px-6 lg:px-12 py-24 lg:py-32`}
 			>
-				<div className={`text-xs tracking-[0.35em] ${mutedText}`}>
-					THE ARLO GRID
-				</div>
 				<h2 className='mt-2 text-3xl lg:text-5xl font-black tracking-tight max-w-3xl'>
 					Air defense as a network, not a silo.
 				</h2>
 				<div
-					className={`mt-10 grid gap-px sm:grid-cols-3 border ${sectionBorder} ${
+					className={`mt-14 lg:mt-20 grid gap-px sm:grid-cols-3 border ${sectionBorder} ${
 						isDark ? 'bg-red-500/30' : 'bg-black/30'
 					}`}
 				>
 					{CAPABILITIES.map((c) => (
 						<div
 							key={c.index}
-							className={`${bgColor} p-6 lg:p-8 transition-colors ${
+							className={`${bgColor} p-8 lg:p-12 transition-colors ${
 								isDark ? 'hover:bg-red-950/40' : 'hover:bg-red-500'
 							}`}
 						>
@@ -208,112 +212,60 @@ export default function Component() {
 
 			{/* Simplified Footer */}
 			<footer
-				className={`relative z-10 border-t-2 ${sectionBorder} flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between w-full pt-8 pb-8 px-6 lg:px-12`}
+				className={`relative z-10 border-t-2 ${sectionBorder} w-full pt-16 pb-16 px-6 lg:pt-24 lg:pb-20 lg:px-12 flex flex-col gap-12`}
 			>
-				<div className='flex flex-col gap-3'>
-					<div className='flex flex-wrap items-center gap-2'>
-						<a
-							href='https://www.ycombinator.com/companies/arlo-industries'
-							target='_blank'
-							rel='noopener noreferrer'
-							className={`group inline-flex items-center gap-2 border px-2 py-[5px] cursor-pointer transition-colors ${
-								isDark
-									? 'border-red-500/80 bg-red-950/30 hover:border-red-500 hover:bg-red-500'
-									: 'border-white/25 bg-black/25 hover:border-red-500 hover:bg-red-500'
-							}`}
+				{/* Footer Main */}
+				<div className='grid grid-cols-1 md:grid-cols-12 gap-8 w-full items-start'>
+					{/* Left: Brand info (4 columns) */}
+					<div className='md:col-span-4 flex flex-col gap-4'>
+						<Link
+							href='/'
+							className='flex shrink-0 items-center gap-3 hover:opacity-80 transition-opacity w-fit'
+							aria-label='Arlo Industries – Home'
 						>
-							<span
-								className={`flex h-[19px] w-[19px] shrink-0 items-center justify-center text-[11px] font-bold leading-none sm:text-[12px] bg-red-500 transition-colors ${
-									isDark
-										? 'text-black group-hover:text-black'
-										: 'text-white group-hover:text-black'
-								}`}
-								aria-hidden
-							>
-								Y
-							</span>
-							<span
-								className={`text-[12px] font-medium tracking-wide sm:text-[14px] transition-colors ${
-									isDark
-										? `${textColor} opacity-95 group-hover:text-black group-hover:opacity-100`
-										: 'text-white/95 group-hover:text-black'
-								}`}
-							>
-								Combinator
-							</span>
-						</a>
-						<div
-							className={`inline-flex items-center gap-2 border px-2 py-[5px] ${
-								isDark
-									? 'border-red-500/80 bg-red-950/30'
-									: 'border-white/25 bg-black/25'
-							}`}
-						>
-							<span
-								className={`shrink-0 bg-red-500 px-[5px] py-0.5 text-[11px] font-bold leading-none tracking-tight sm:text-[12px] sm:px-[7px] ${
-									isDark ? 'text-black' : 'text-white'
-								}`}
-							>
-								NVIDIA
-							</span>
-							<span
-								className={`text-[12px] font-medium tracking-wide sm:text-[14px] ${
-									isDark ? `${textColor} opacity-95` : 'text-white/95'
-								}`}
-							>
-								Inception
-							</span>
+							<Image
+								src={`/logo${logoVersion.toUpperCase()}.png`}
+								alt='Arlo Industries'
+								width={120}
+								height={40}
+								className='h-8 w-auto'
+							/>
+						</Link>
+						<div className={`text-xs font-black tracking-widest leading-relaxed uppercase ${mutedText}`}>
+							Decentralised Aerial Defence
 						</div>
 					</div>
-					<p
-						className={`text-sm lg:text-base font-medium ${
-							isDark ? `opacity-60 ${textColor}` : 'text-white/65'
-						}`}
-					>
-						© 2025 Arlo Industries Inc.
-					</p>
+
+					{/* Middle: Links (3 columns) */}
+					<div className='md:col-span-3 flex flex-col gap-3.5 font-black text-xs tracking-widest uppercase'>
+						<Link href='/' className={`transition-colors ${isDark ? 'hover:text-white' : 'hover:text-red-800'}`}>HOME</Link>
+						<Link href='/simulator' className={`transition-colors ${isDark ? 'hover:text-white' : 'hover:text-red-800'}`}>SIMULATOR</Link>
+						<Link href='/press' className={`transition-colors ${isDark ? 'hover:text-white' : 'hover:text-red-800'}`}>PRESS</Link>
+						<a href='https://www.linkedin.com/in/deoarlo/' target='_blank' rel='noopener noreferrer' className={`transition-colors ${isDark ? 'hover:text-white' : 'hover:text-red-800'}`}>CONTACT</a>
+					</div>
+
+					{/* Right: Key-Value Table (5 columns) */}
+					<div className={`md:col-span-5 border-t md:border-t-0 border-b md:border-b-0 border-red-500/20 py-6 md:py-0 flex flex-col gap-2.5 text-xs font-black tracking-wider uppercase ${mutedText}`}>
+						<div className={`flex items-center justify-between border-b ${sectionBorder} pb-2.5`}>
+							<span>COMPANY</span>
+							<span className={textColor}>ARLO INDUSTRIES</span>
+						</div>
+						<div className={`flex items-center justify-between border-b ${sectionBorder} py-2.5`}>
+							<span>BACKED BY</span>
+							<span className={textColor}>Y COMBINATOR</span>
+						</div>
+						<div className={`flex items-center justify-between pt-2.5`}>
+							<span>OFFICES</span>
+							<span className={textColor}>San Francisco · KYIV</span>
+						</div>
+					</div>
 				</div>
 
-				<div className='flex items-center gap-4'>
-					<a
-						href='https://www.linkedin.com/in/deoarlo/'
-						target='_blank'
-						rel='noopener noreferrer'
-						className={`transition-colors ${
-							isDark
-								? `${textColor} ${hoverColor}`
-								: 'text-white hover:text-red-200'
-						}`}
-						aria-label='LinkedIn'
-					>
-						<svg
-							width='22'
-							height='22'
-							viewBox='0 0 24 24'
-							fill='currentColor'
-							aria-hidden='true'
-						>
-							<path d='M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.062 2.062 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z' />
-						</svg>
-					</a>
-					<Button
-						variant='outline'
-						size='sm'
-						asChild
-						className={
-							isDark
-								? `${buttonBorder} ${buttonText} ${buttonHover} bg-transparent font-medium tracking-wide rounded-none transition-colors text-sm lg:text-base`
-								: 'rounded-none font-medium tracking-wide text-sm !border-2 !border-white/90 !bg-black/30 !text-white transition-colors hover:!bg-black hover:!text-white hover:!border-black lg:text-base'
-						}
-					>
-						<a
-							href='https://www.linkedin.com/in/deoarlo/'
-							target='_blank'
-							rel='noopener noreferrer'
-						>
-							GET IN TOUCH
-						</a>
-					</Button>
+				{/* Footer Bottom Bar */}
+				<div className={`border-t ${sectionBorder} pt-8 text-xs font-black tracking-widest uppercase ${mutedText}`}>
+					<div>
+						© 2026 ARLO INDUSTRIES
+					</div>
 				</div>
 			</footer>
 		</div>

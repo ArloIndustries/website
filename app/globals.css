@@ -100,15 +100,15 @@
 
 .arlo-hero-veil {
 	-webkit-mask-image: radial-gradient(
-		120% 120% at 50% 50%,
-		rgba(0, 0, 0, 1) 40%,
-		rgba(0, 0, 0, 0.55) 68%,
+		100% 100% at 50% 50%,
+		rgba(0, 0, 0, 1) 20%,
+		rgba(0, 0, 0, 0.45) 55%,
 		rgba(0, 0, 0, 0) 100%
 	);
 	mask-image: radial-gradient(
-		120% 120% at 50% 50%,
-		rgba(0, 0, 0, 1) 40%,
-		rgba(0, 0, 0, 0.55) 68%,
+		100% 100% at 50% 50%,
+		rgba(0, 0, 0, 1) 20%,
+		rgba(0, 0, 0, 0.45) 55%,
 		rgba(0, 0, 0, 0) 100%
 	);
 }
