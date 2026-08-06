@@ -52,6 +52,21 @@ export default function YcLaunchBody({ highlightClass }: YcLaunchBodyProps) {
 				scalable and broadly accessible.
 			</p>
 
+			<figure>
+				<div className='relative aspect-[3/2] overflow-hidden border-2 border-current'>
+					<Image
+						src='/about/demoday.jpg'
+						alt='Deo Arlo presenting Arlo Industries at Y Combinator Demo Day'
+						fill
+						sizes='(max-width: 768px) 100vw, 768px'
+						className='object-cover'
+					/>
+				</div>
+				<figcaption className='mt-2 text-center text-sm opacity-70'>
+					Y Combinator Demo Day, 2026
+				</figcaption>
+			</figure>
+
 			<ul className='grid gap-4 pt-4 text-left sm:grid-cols-3'>
 				{LAUNCH_LINKS.map((link) => (
 					<li key={link.href}>

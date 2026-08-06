@@ -94,6 +94,27 @@
 	color: white;
 }
 
+.arlo-typewriter-cursor {
+	animation: arlo-cursor-blink 0.65s step-end infinite;
+}
+
+@keyframes arlo-cursor-blink {
+	0%,
+	45% {
+		opacity: 1;
+	}
+	46%,
+	100% {
+		opacity: 0;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.arlo-typewriter-cursor {
+		animation: none;
+	}
+}
+
 /* ---------------------------------------------------------------- */
 /* Hero text veil: blur + tint feathering out toward the edges       */
 /* ---------------------------------------------------------------- */

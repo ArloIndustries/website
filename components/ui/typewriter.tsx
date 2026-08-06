@@ -6,6 +6,7 @@ interface TypewriterProps {
 	text: string;
 	speed?: number;
 	className?: string;
+	cursorClassName?: string;
 	onFinished?: () => void;
 	startDelay?: number;
 }
@@ -14,6 +15,7 @@ export const Typewriter = ({
 	text,
 	speed = 50,
 	className,
+	cursorClassName = 'text-current',
 	onFinished,
 	startDelay = 0,
 }: TypewriterProps) => {
@@ -49,7 +51,11 @@ export const Typewriter = ({
 	return (
 		<span className={className}>
 			{displayedText}
-			<span className="inline-block animate-[pulse_1s_ease-in-out_infinite] text-white ml-0.5 font-mono">_</span>
+			<span
+				className={`arlo-typewriter-cursor ml-0.5 inline-block font-mono font-black ${cursorClassName}`}
+			>
+				_
+			</span>
 		</span>
 	);
 };

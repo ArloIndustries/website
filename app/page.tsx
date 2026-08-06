@@ -42,11 +42,10 @@ const CAPABILITIES = [
 ];
 
 const CAPABILITIES_HEADING = 'Air defence as a network, not a target.';
-const ABOUT_HEADING = 'BUILT FROM FIRST-HAND EXPERIENCE';
+const ABOUT_HEADING = 'Built from first-hand experience';
 const SECTION_HEADING_CLASS =
 	'text-[clamp(1.45rem,5vw,3rem)] font-black leading-tight tracking-tight lg:text-5xl';
-const BODY_COPY_CLASS =
-	'text-base font-normal leading-relaxed lg:text-lg';
+const BODY_COPY_CLASS = 'text-base font-normal leading-relaxed lg:text-lg';
 
 export default function Component() {
 	const { theme } = useTheme();
@@ -189,6 +188,7 @@ export default function Component() {
 										key={quoteIndex}
 										text={quotes[quoteIndex]}
 										speed={30}
+										cursorClassName={isDark ? 'text-red-500' : 'text-black'}
 									/>
 								</h1>
 							</div>
@@ -231,6 +231,9 @@ export default function Component() {
 
 			{/* Capabilities */}
 			<section className='relative z-10 border-t-2 border-white/30 bg-red-500 px-6 py-24 text-white lg:px-12 lg:py-32'>
+				<p className='mb-4 text-sm font-white tracking-[0.24em] text-black'>
+					PHILOSOPHY
+				</p>
 				<h2
 					ref={capabilitiesHeadingRef}
 					className={`mt-2 max-w-none whitespace-nowrap ${SECTION_HEADING_CLASS}`}
@@ -240,6 +243,7 @@ export default function Component() {
 							key='capabilities-heading'
 							text={CAPABILITIES_HEADING}
 							speed={30}
+							cursorClassName='text-black'
 						/>
 					) : (
 						/* invisible placeholder keeps the height stable until typing starts */
@@ -285,15 +289,13 @@ export default function Component() {
 						<p className='mb-4 text-sm font-black tracking-[0.24em] text-red-500'>
 							ABOUT US
 						</p>
-						<h2
-							ref={aboutHeadingRef}
-							className={SECTION_HEADING_CLASS}
-						>
+						<h2 ref={aboutHeadingRef} className={SECTION_HEADING_CLASS}>
 							{aboutHeadingInView ? (
 								<Typewriter
 									key='about-heading'
 									text={ABOUT_HEADING}
 									speed={30}
+									cursorClassName='text-red-500'
 								/>
 							) : (
 								<span className='opacity-0' aria-hidden>
