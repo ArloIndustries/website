@@ -33,13 +33,13 @@ export default function MentatPage() {
 						/>
 						<h1>MENTAT</h1>
 					</div>
-					<p className={`${bodyClass} max-w-2xl mx-auto`}>
+					<p className={bodyClass}>
 						A passive aerial sensing node designed for distributed aerial
 						tracking without radar emissions.
 					</p>
 				</header>
 
-				<div className='mx-auto mb-8 lg:mb-12 max-w-2xl'>
+				<div className='mx-auto mb-8 lg:mb-12 w-full'>
 					<img
 						src={MENTAT_VID_URL}
 						alt='Mentat mesh visualization'
@@ -87,7 +87,7 @@ export default function MentatPage() {
 						</p>
 					</section>
 
-					<div className='mx-auto max-w-2xl'>
+					<div className='mx-auto w-full'>
 						<img
 							src={MENTAT_3D_GIF_URL}
 							alt='Mentat node 3D model'

@@ -41,12 +41,16 @@ const CAPABILITIES = [
 	},
 ];
 
+const CAPABILITIES_HEADING = 'Air defense as a network, not a target.';
+
 export default function Component() {
 	const { theme } = useTheme();
 	const [isMounted, setIsMounted] = useState(false);
 	const [quoteIndex, setQuoteIndex] = useState(0);
 	const initRef = useRef(false);
 	const [logoVersion, setLogoVersion] = useState<'a' | 'b'>('a');
+	const capabilitiesHeadingRef = useRef<HTMLHeadingElement | null>(null);
+	const [headingInView, setHeadingInView] = useState(false);
 
 	const quotes = [
 		'Track drones and missiles without radars',
@@ -82,6 +86,25 @@ export default function Component() {
 		}
 		setIsMounted(true);
 	}, [quotes.length]);
+
+	useEffect(() => {
+		const heading = capabilitiesHeadingRef.current;
+		if (!heading || headingInView) return;
+
+		const observer = new IntersectionObserver(
+			([entry]) => {
+				if (entry.isIntersecting) {
+					setHeadingInView(true);
+					observer.disconnect();
+				}
+			},
+			{ threshold: 0.1 },
+		);
+
+		observer.observe(heading);
+
+		return () => observer.disconnect();
+	}, [isMounted, headingInView]);
 
 	const handleNextQuote = () => {
 		setQuoteIndex((prev) => {
@@ -131,7 +154,10 @@ export default function Component() {
 									isDark ? 'bg-black/45' : 'bg-red-600/45'
 								}`}
 							/>
-							<div className='relative cursor-pointer' onClick={handleNextQuote}>
+							<div
+								className='relative cursor-pointer'
+								onClick={handleNextQuote}
+							>
 								<h1 className='text-4xl lg:text-6xl xl:text-7xl font-black leading-tight tracking-tight'>
 									<Typewriter
 										key={quoteIndex}
@@ -178,31 +204,37 @@ export default function Component() {
 			</section>
 
 			{/* Capabilities */}
-			<section
-				className={`relative z-10 border-t-2 ${sectionBorder} px-6 lg:px-12 py-24 lg:py-32`}
-			>
-				<h2 className='mt-2 text-3xl lg:text-5xl font-black tracking-tight max-w-3xl'>
-					Air defense as a network, not a silo.
-				</h2>
-				<div
-					className={`mt-14 lg:mt-20 grid gap-px sm:grid-cols-3 border ${sectionBorder} ${
-						isDark ? 'bg-red-500/30' : 'bg-black/30'
-					}`}
+			<section className='relative z-10 border-t-2 border-white/30 bg-red-500 px-6 py-24 text-white lg:px-12 lg:py-32'>
+				<h2
+					ref={capabilitiesHeadingRef}
+					className='mt-2 max-w-none whitespace-nowrap text-[clamp(1.45rem,5vw,3rem)] font-black tracking-tight lg:text-5xl'
 				>
+					{headingInView ? (
+						<Typewriter
+							key='capabilities-heading'
+							text={CAPABILITIES_HEADING}
+							speed={30}
+						/>
+					) : (
+						/* invisible placeholder keeps the height stable until typing starts */
+						<span className='opacity-0' aria-hidden>
+							{CAPABILITIES_HEADING}
+						</span>
+					)}
+				</h2>
+				<div className='mt-14 lg:mt-20 grid gap-px sm:grid-cols-3 border border-white/30 bg-white/30'>
 					{CAPABILITIES.map((c) => (
 						<div
 							key={c.index}
-							className={`${bgColor} p-8 lg:p-12 transition-colors ${
-								isDark ? 'hover:bg-red-950/40' : 'hover:bg-red-500'
-							}`}
+							className='group bg-red-500 p-8 text-white transition-colors hover:bg-black lg:p-12'
 						>
-							<div className={`text-sm font-bold ${mutedText}`}>/{c.index}</div>
-							<h3 className='mt-3 text-xl lg:text-2xl font-black tracking-wide'>
+							<div className='text-sm font-bold text-white/75 transition-colors group-hover:text-red-500'>
+								/{c.index}
+							</div>
+							<h3 className='mt-3 text-xl lg:text-2xl font-black tracking-wide transition-colors group-hover:text-red-500'>
 								{c.title}
 							</h3>
-							<p
-								className={`mt-3 text-sm lg:text-base leading-relaxed ${mutedText}`}
-							>
+							<p className='mt-3 text-sm leading-relaxed text-white/75 transition-colors group-hover:text-red-500/80 lg:text-base'>
 								{c.body}
 							</p>
 						</div>
@@ -231,26 +263,64 @@ export default function Component() {
 								className='h-8 w-auto'
 							/>
 						</Link>
-						<div className={`text-xs font-black tracking-widest leading-relaxed uppercase ${mutedText}`}>
+						<div
+							className={`text-sm lg:text-base font-black tracking-widest leading-relaxed uppercase ${mutedText}`}
+						>
 							Decentralised Aerial Defence
 						</div>
 					</div>
 
 					{/* Middle: Links (3 columns) */}
-					<div className='md:col-span-3 flex flex-col gap-3.5 font-black text-xs tracking-widest uppercase'>
-						<Link href='/' className={`transition-colors ${isDark ? 'hover:text-white' : 'hover:text-red-800'}`}>HOME</Link>
-						<Link href='/simulator' className={`transition-colors ${isDark ? 'hover:text-white' : 'hover:text-red-800'}`}>SIMULATOR</Link>
-						<Link href='/press' className={`transition-colors ${isDark ? 'hover:text-white' : 'hover:text-red-800'}`}>PRESS</Link>
-						<a href='https://www.linkedin.com/in/deoarlo/' target='_blank' rel='noopener noreferrer' className={`transition-colors ${isDark ? 'hover:text-white' : 'hover:text-red-800'}`}>CONTACT</a>
+					<div className='md:col-span-3 flex flex-col gap-3.5 text-sm lg:text-base font-black tracking-widest uppercase'>
+						<Link
+							href='/'
+							className={`transition-colors ${
+								isDark ? 'hover:text-white' : 'hover:text-red-800'
+							}`}
+						>
+							HOME
+						</Link>
+						<Link
+							href='/simulator'
+							className={`transition-colors ${
+								isDark ? 'hover:text-white' : 'hover:text-red-800'
+							}`}
+						>
+							SIMULATOR
+						</Link>
+						<Link
+							href='/press'
+							className={`transition-colors ${
+								isDark ? 'hover:text-white' : 'hover:text-red-800'
+							}`}
+						>
+							PRESS
+						</Link>
+						<a
+							href='https://www.linkedin.com/in/deoarlo/'
+							target='_blank'
+							rel='noopener noreferrer'
+							className={`transition-colors ${
+								isDark ? 'hover:text-white' : 'hover:text-red-800'
+							}`}
+						>
+							CONTACT
+						</a>
 					</div>
 
 					{/* Right: Key-Value Table (5 columns) */}
-					<div className={`md:col-span-5 border-t md:border-t-0 border-b md:border-b-0 border-red-500/20 py-6 md:py-0 flex flex-col gap-2.5 text-xs font-black tracking-wider uppercase ${mutedText}`}>
-						<div className={`flex items-center justify-between border-b ${sectionBorder} pb-2.5`}>
+					<div
+						className={`md:col-span-5 border-t md:border-t-0 border-b md:border-b-0 border-red-500/20 py-6 md:py-0 flex flex-col gap-2.5 text-sm lg:text-base font-black tracking-wider uppercase ${mutedText}`}
+					>
+						<div
+							className={`flex items-center justify-between border-b ${sectionBorder} pb-2.5`}
+						>
 							<span>COMPANY</span>
 							<span className={textColor}>ARLO INDUSTRIES</span>
 						</div>
-						<div className={`flex items-center justify-between border-b ${sectionBorder} py-2.5`}>
+						<div
+							className={`flex items-center justify-between border-b ${sectionBorder} py-2.5`}
+						>
 							<span>BACKED BY</span>
 							<span className={textColor}>Y COMBINATOR</span>
 						</div>
@@ -262,12 +332,34 @@ export default function Component() {
 				</div>
 
 				{/* Footer Bottom Bar */}
-				<div className={`border-t ${sectionBorder} pt-8 text-xs font-black tracking-widest uppercase ${mutedText}`}>
-					<div>
-						© 2026 ARLO INDUSTRIES
-					</div>
+				<div
+					className={`border-t ${sectionBorder} pt-8 text-sm lg:text-base font-black tracking-widest uppercase ${mutedText}`}
+				>
+					<div>© 2026 ARLO INDUSTRIES</div>
 				</div>
 			</footer>
+
+			{/* Bottom brand mark */}
+			<section className='relative z-10 w-full' aria-label='Arlo Industries'>
+				<div className='flex flex-col gap-3 bg-black py-3' aria-hidden>
+					<div className='h-px bg-red-500' />
+					<div className='h-0.5 bg-red-500' />
+					<div className='h-1 bg-red-500' />
+					<div className='h-2 bg-red-500' />
+					<div className='h-4 bg-red-500' />
+					<div className='h-8 bg-red-500' />
+					<div className='h-16 bg-red-500' />
+				</div>
+				<div className='flex items-center justify-center bg-red-500 px-6 py-8 lg:px-12 lg:py-12'>
+					<Image
+						src='/arlo1ndustriesBlack2.png'
+						alt='Arlo Industries'
+						width={7300}
+						height={500}
+						className='h-auto w-full max-w-[1600px]'
+					/>
+				</div>
+			</section>
 		</div>
 	);
 }

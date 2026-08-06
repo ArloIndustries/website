@@ -22,13 +22,19 @@ function renderNavLink(
 	const common = { className, onClick: onNavigate };
 	if (link.external) {
 		return (
-			<a href={link.href} target='_blank' rel='noopener noreferrer' {...common}>
+			<a
+				key={link.href}
+				href={link.href}
+				target='_blank'
+				rel='noopener noreferrer'
+				{...common}
+			>
 				{link.label}
 			</a>
 		);
 	}
 	return (
-		<Link href={link.href} {...common}>
+		<Link key={link.href} href={link.href} {...common}>
 			{link.label}
 		</Link>
 	);
@@ -79,10 +85,15 @@ export default function SiteHeader({ trailing }: SiteHeaderProps) {
 	const isDark = theme === 'dark';
 	const textColor = isDark ? 'text-red-500' : 'text-black';
 	const hoverColor = isDark ? 'hover:text-red-700' : 'hover:text-red-900';
-	const navLinkClass = `font-bold tracking-wide text-base lg:text-lg ${hoverColor} transition-colors`;
+	const navBackdropClass = `isolate before:absolute before:-inset-x-2 before:-inset-y-1 before:-z-10 before:backdrop-blur-md before:content-[''] ${
+		isDark ? 'before:bg-black/35' : 'before:bg-white/25'
+	}`;
+	const navUnderlineClass =
+		"relative after:absolute after:-bottom-1 after:left-0 after:h-0.5 after:w-full after:origin-left after:scale-x-0 after:bg-current after:transition-transform after:duration-300 after:content-[''] hover:after:scale-x-100";
+	const navLinkClass = `font-bold tracking-wide text-base lg:text-lg px-2 py-1 ${hoverColor} transition-colors ${navBackdropClass} ${navUnderlineClass}`;
 	const mentatNavLinkClass = outlineCtaClass(
 		isDark,
-		'font-bold tracking-wide text-base lg:text-lg px-2.5 py-1',
+		`font-bold tracking-wide text-base lg:text-lg px-2.5 py-1 ${navUnderlineClass}`,
 	);
 	const mobileNavItemClass = isDark
 		? 'text-red-500 hover:bg-red-500 hover:text-black'
