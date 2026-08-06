@@ -292,10 +292,11 @@ export default function Component() {
 							threshold={0.2}
 						/>
 						<p className={`mt-6 max-w-xl text-white/75 ${BODY_COPY_CLASS}`}>
-							Founder Deo Arlo spent six years in Israel&apos;s research and
-							high-tech ecosystem, studying at the Technion while living through
-							repeated conflict. That first-hand experience shaped our mission:
-							passive, decentralised sensing built to protect people everywhere.
+							Founder Deo Arlo spent six over years in Israel&apos;s research
+							and high-tech ecosystem, studied at the Technion while living
+							through repeated conflict. That first-hand experience shaped our
+							mission: passive, decentralised sensing built to protect people,
+							borders, and critical infrastructure.
 						</p>
 						<Link
 							href='/blog/our-story'
