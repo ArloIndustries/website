@@ -5,11 +5,10 @@ import Link from 'next/link';
 import { ExternalLink } from 'lucide-react';
 import BlogPageShell from '@/components/blog-page-shell';
 import { careersImageUrl, pickCareersImages, YC_JOBS_URL } from '@/lib/careers';
-import { useTheme } from 'next-themes';
+import { THEME_CARD_BORDER_CLASS } from '@/lib/theme';
 import { useEffect, useState } from 'react';
 
 export default function CareersPage() {
-	const { theme } = useTheme();
 	const [images, setImages] = useState<string[]>([]);
 
 	useEffect(() => {
@@ -32,17 +31,13 @@ export default function CareersPage() {
 		};
 	}, []);
 
-	const isDark = theme === 'dark';
 	const highlightClass = 'font-bold';
-	const borderColor = isDark ? 'border-red-900' : 'border-red-800';
+	const borderColor = THEME_CARD_BORDER_CLASS;
 	const { hero: heroImage, gallery: galleryImages } = pickCareersImages(images);
 	const photoClass = 'object-cover grayscale';
 
-	const ctaClass = `inline-flex items-center justify-center gap-2 px-8 py-4 text-sm lg:text-base font-bold tracking-wide uppercase border-2 transition-colors ${
-		isDark
-			? 'bg-red-500 text-black border-red-500 hover:bg-white hover:text-red-500 hover:border-white'
-			: 'bg-black text-white border-black hover:bg-zinc-900 hover:border-zinc-900'
-	}`;
+	const ctaClass =
+		'inline-flex items-center justify-center gap-2 px-8 py-4 text-sm lg:text-base font-bold tracking-wide uppercase border-2 transition-colors bg-black text-white border-black hover:bg-zinc-900 hover:border-zinc-900 dark:bg-red-500 dark:text-black dark:border-red-500 dark:hover:bg-white dark:hover:text-red-500 dark:hover:border-white';
 
 	return (
 		<BlogPageShell>

@@ -1,0 +1,24 @@
+# Arlo Industries
+
+> Arlo Industries builds a passive, decentralised aerial sensing mesh that tracks drones and missiles in real-time 3D without radar. Zero RF emissions means nothing to jam, nothing to detect, and nothing for anti-radiation weapons to home on. Backed by Y Combinator (P26), with offices in San Francisco and Kyiv.
+
+Key facts:
+- Product: Mentat, a passive optical sensing node deployed across rooftops and elevated infrastructure as a distributed mesh.
+- Capability: live 3D position, velocity, and heading for every aerial target, from a single low-RCS drone to a full swarm, feeding directly into interceptors and effectors.
+- Resilience: no single point of failure; coverage is maintained even when nodes are impacted. Man-portable, GNSS-denied capable, up to 10x cheaper than radar alternatives.
+- Founder: Deo Arlo, who spent six years in Israel's research and high-tech ecosystem studying at the Technion; the system has been tested alongside Ukrainian forces on the frontlines and with operators across Europe and the USA.
+
+## Pages
+
+- [Home](https://arlo1.com/): overview of the passive sensing network and capabilities
+- [Mentat](https://arlo1.com/mentat): the passive aerial sensing node, problem, and architecture
+- [Coverage Simulator](https://arlo1.com/simulator): interactive planner for node placement over a defended area
+- [Blog](https://arlo1.com/blog): company writing, including the YC launch and origin story
+- [Our Story](https://arlo1.com/blog/our-story): founding story and mission
+- [Press](https://arlo1.com/press): media coverage and brand assets
+- [Careers](https://arlo1.com/careers): open roles via Y Combinator jobs
+
+## Contact
+
+- Y Combinator profile: https://www.ycombinator.com/companies/arlo-industries
+- Founder LinkedIn: https://www.linkedin.com/in/deoarlo/

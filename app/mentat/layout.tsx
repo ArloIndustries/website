@@ -1,9 +1,9 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-	title: 'Mentat | Arlo Industries',
+	title: 'Mentat — Passive Aerial Sensing Node',
 	description:
-		'A passive aerial sensing node designed for distributed aerial tracking without radar emissions.',
+		'Mentat is a passive aerial sensing node for distributed drone and missile tracking without radar emissions. Nodes form an optical mesh that scales across regions as interconnected coverage.',
 };
 
 export default function MentatLayout({

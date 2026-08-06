@@ -1,5 +1,3 @@
-'use client';
-
 import NewsletterSignup from '@/components/newsletter-signup';
 import YcLaunchUpvote from '@/components/yc-launch-upvote';
 import { HOME_CTA_WIDTH_CLASS } from '@/lib/yc';

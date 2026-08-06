@@ -1,15 +1,11 @@
-'use client';
-
 import Link from 'next/link';
 import BlogPageShell from '@/components/blog-page-shell';
 import { formatBlogDate, getBlogPostsSorted } from '@/lib/blog';
-import { useTheme } from 'next-themes';
+import { THEME_CARD_BORDER_CLASS } from '@/lib/theme';
 
 export default function BlogPage() {
-	const { theme } = useTheme();
 	const posts = getBlogPostsSorted();
-	const isDark = theme === 'dark';
-	const borderColor = isDark ? 'border-red-900' : 'border-red-800';
+	const borderColor = THEME_CARD_BORDER_CLASS;
 
 	return (
 		<BlogPageShell>

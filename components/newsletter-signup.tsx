@@ -1,29 +1,23 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { useTheme } from 'next-themes';
-import { outlineCtaClass } from '@/lib/outline-cta';
+import { useState } from 'react';
+import { OUTLINE_CTA_CLASS } from '@/lib/theme';
 
 interface NewsletterSignupProps {
 	className?: string;
 }
 
+const BACK_BUTTON_CLASS =
+	'text-sm font-medium underline hover:no-underline transition-all cursor-pointer bg-transparent border-none text-white/70 hover:text-white dark:text-gray-400 dark:hover:text-white';
+
 export default function NewsletterSignup({
 	className = '',
 }: NewsletterSignupProps) {
-	const { theme } = useTheme();
 	const [email, setEmail] = useState('');
 	const [status, setStatus] = useState<
 		'idle' | 'loading' | 'success' | 'error'
 	>('idle');
 	const [errorMessage, setErrorMessage] = useState('');
-	const [isMounted, setIsMounted] = useState(false);
-
-	useEffect(() => {
-		setIsMounted(true);
-	}, []);
-
-	const isDark = theme === 'dark';
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
@@ -85,15 +79,7 @@ export default function NewsletterSignup({
 		setErrorMessage('');
 	};
 
-	if (!isMounted) {
-		return null;
-	}
-
-	const inputBorder = isDark ? 'border-red-500' : 'border-white/90';
-	const submitClass = outlineCtaClass(
-		isDark,
-		'shrink-0 px-4 py-2.5 text-xs sm:text-sm font-bold tracking-wide uppercase whitespace-nowrap border-l-0',
-	);
+	const submitClass = `${OUTLINE_CTA_CLASS} shrink-0 px-4 py-2.5 text-xs sm:text-sm font-bold tracking-wide uppercase whitespace-nowrap border-l-0`;
 
 	return (
 		<div className={`w-full ${className}`}>
@@ -108,17 +94,14 @@ export default function NewsletterSignup({
 						onChange={(e) => setEmail(e.target.value)}
 						placeholder='your@email.com'
 						required
-						className={`
+						className='
 							min-w-0 flex-1 px-3 py-2.5 text-sm font-medium
-							${
-								isDark
-									? 'bg-black text-white placeholder-gray-400'
-									: 'bg-black/30 text-white placeholder-red-200/45'
-							}
-							border-2 border-r-0 ${inputBorder}
+							bg-black/30 text-white placeholder-red-200/45
+							dark:bg-black dark:placeholder-gray-400
+							border-2 border-r-0 border-white/90 dark:border-red-500
 							focus:outline-none focus:ring-2 focus:ring-red-500 focus:z-10
 							transition-colors
-						`}
+						'
 						style={{ fontFamily: 'Inter, sans-serif' }}
 					/>
 					<button
@@ -135,10 +118,7 @@ export default function NewsletterSignup({
 				<div className='flex justify-center'>
 					<button
 						disabled
-						className={outlineCtaClass(
-							isDark,
-							'w-full px-4 py-2.5 text-sm font-bold tracking-wide uppercase opacity-75 cursor-not-allowed',
-						)}
+						className={`${OUTLINE_CTA_CLASS} w-full px-4 py-2.5 text-sm font-bold tracking-wide uppercase opacity-75 cursor-not-allowed`}
 						style={{ fontFamily: 'Inter, sans-serif' }}
 					>
 						Please wait...
@@ -159,11 +139,7 @@ export default function NewsletterSignup({
 					</p>
 					<button
 						onClick={handleReset}
-						className={`
-							text-sm font-medium underline hover:no-underline
-							transition-all cursor-pointer bg-transparent border-none
-							${isDark ? 'text-gray-400 hover:text-white' : 'text-white/70 hover:text-white'}
-						`}
+						className={BACK_BUTTON_CLASS}
 						style={{ fontFamily: 'Inter, sans-serif' }}
 					>
 						← Back
@@ -174,21 +150,14 @@ export default function NewsletterSignup({
 			{status === 'error' && (
 				<div className='text-center'>
 					<p
-						className={`
-						text-xs font-medium mb-2
-						${isDark ? 'text-red-400' : 'text-red-100'}
-					`}
+						className='text-xs font-medium mb-2 text-red-100 dark:text-red-400'
 						style={{ fontFamily: 'Inter, sans-serif' }}
 					>
 						{errorMessage || 'Oops! Something went wrong, please try again'}
 					</p>
 					<button
 						onClick={handleReset}
-						className={`
-							text-sm font-medium underline hover:no-underline
-							transition-all cursor-pointer bg-transparent border-none
-							${isDark ? 'text-gray-400 hover:text-white' : 'text-white/70 hover:text-white'}
-						`}
+						className={BACK_BUTTON_CLASS}
 						style={{ fontFamily: 'Inter, sans-serif' }}
 					>
 						← Back

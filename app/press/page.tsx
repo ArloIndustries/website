@@ -4,27 +4,25 @@ import Image from 'next/image';
 import { Download, Loader2 } from 'lucide-react';
 import SiteHeader from '@/components/site-header';
 import { Button } from '@/components/ui/button';
-import { useTheme } from 'next-themes';
 import { useCallback, useEffect, useState } from 'react';
 import { formatBlogDate } from '@/lib/blog';
 import { getPressCoverageSorted } from '@/lib/press-coverage';
 import { formatPressLabel, pressAssetUrl } from '@/lib/press';
+import { THEME_CARD_BORDER_CLASS, THEME_SURFACE_CLASS } from '@/lib/theme';
 
 const VISIBLE_ASSET_COUNT = 6;
 
+/** Outlined button that inverts on hover; matches page accent per theme */
+const OUTLINE_BUTTON_COLOR_CLASS =
+	'border-black text-black hover:bg-black hover:text-white dark:border-red-500 dark:text-red-500 dark:hover:bg-red-500 dark:hover:text-black';
+
 export default function PressPage() {
-	const { theme } = useTheme();
-	const [isMounted, setIsMounted] = useState(false);
 	const [files, setFiles] = useState<string[]>([]);
 	const [loadingFiles, setLoadingFiles] = useState(true);
 	const [downloadingAll, setDownloadingAll] = useState(false);
 	const [showAllAssets, setShowAllAssets] = useState(false);
 
 	const coverage = getPressCoverageSorted();
-
-	useEffect(() => {
-		setIsMounted(true);
-	}, []);
 
 	useEffect(() => {
 		let cancelled = false;
@@ -46,12 +44,8 @@ export default function PressPage() {
 		};
 	}, []);
 
-	const isDark = theme === 'dark';
-	const bgColor = isDark ? 'bg-black' : 'bg-red-600';
-	const textColor = isDark ? 'text-red-500' : 'text-black';
-	const borderColor = isDark ? 'border-red-900' : 'border-red-800';
-	const cardBg = isDark ? 'bg-red-950/40' : 'bg-red-950/25';
-	const previewBg = 'bg-white';
+	const borderColor = THEME_CARD_BORDER_CLASS;
+	const cardBg = 'bg-red-950/25 dark:bg-red-950/40';
 
 	const downloadAll = useCallback(async () => {
 		if (files.length === 0 || downloadingAll) return;
@@ -85,17 +79,10 @@ export default function PressPage() {
 		}
 	}, [files, downloadingAll]);
 
-	const downloadAllButtonClass = `rounded-none border-2 font-bold tracking-wide uppercase text-sm shrink-0 ${
-		isDark
-			? 'bg-red-500 text-black border-red-500 hover:bg-white hover:text-red-500 hover:border-white disabled:opacity-50'
-			: 'bg-black text-white border-black hover:bg-zinc-900 disabled:opacity-50'
-	}`;
+	const downloadAllButtonClass =
+		'rounded-none border-2 font-bold tracking-wide uppercase text-sm shrink-0 disabled:opacity-50 bg-black text-white border-black hover:bg-zinc-900 dark:bg-red-500 dark:text-black dark:border-red-500 dark:hover:bg-white dark:hover:text-red-500 dark:hover:border-white';
 
-	const showAllButtonClass = `inline-flex items-center justify-center px-6 py-2.5 text-sm font-bold tracking-wide uppercase border-2 transition-colors ${
-		isDark
-			? 'border-red-500 text-red-500 hover:bg-red-500 hover:text-black'
-			: 'border-black text-black hover:bg-black hover:text-white'
-	}`;
+	const showAllButtonClass = `inline-flex items-center justify-center px-6 py-2.5 text-sm font-bold tracking-wide uppercase border-2 transition-colors ${OUTLINE_BUTTON_COLOR_CLASS}`;
 
 	const downloadAllButton = (
 		<Button
@@ -118,17 +105,13 @@ export default function PressPage() {
 		</Button>
 	);
 
-	if (!isMounted) {
-		return null;
-	}
-
 	const visibleFiles = showAllAssets
 		? files
 		: files.slice(0, VISIBLE_ASSET_COUNT);
 
 	return (
 		<div
-			className={`min-h-screen flex flex-col ${bgColor} ${textColor} relative overflow-hidden transition-colors duration-300`}
+			className={`min-h-screen flex flex-col ${THEME_SURFACE_CLASS} relative overflow-hidden transition-colors duration-300`}
 		>
 			<SiteHeader />
 
@@ -237,9 +220,7 @@ export default function PressPage() {
 											key={filename}
 											className={`flex flex-col border-2 ${borderColor} ${cardBg}`}
 										>
-											<div
-												className={`relative aspect-[4/3] flex items-center justify-center p-6 ${previewBg}`}
-											>
+											<div className='relative aspect-[4/3] flex items-center justify-center bg-white p-6'>
 												<Image
 													src={pressAssetUrl(filename)}
 													alt={formatPressLabel(filename)}
@@ -261,11 +242,7 @@ export default function PressPage() {
 												<a
 													href={pressAssetUrl(filename)}
 													download={filename}
-													className={`mt-auto inline-flex items-center justify-center gap-2 px-4 py-2 text-sm font-bold tracking-wide uppercase border-2 transition-colors ${
-														isDark
-															? 'border-red-500 text-red-500 hover:bg-red-500 hover:text-black'
-															: 'border-black text-black hover:bg-black hover:text-white'
-													}`}
+													className={`mt-auto inline-flex items-center justify-center gap-2 px-4 py-2 text-sm font-bold tracking-wide uppercase border-2 transition-colors ${OUTLINE_BUTTON_COLOR_CLASS}`}
 												>
 													<Download className='w-4 h-4' />
 													Download

@@ -1,7 +1,7 @@
 'use client';
 
 import { notFound } from 'next/navigation';
-import { use } from 'react';
+import { use, type ComponentType } from 'react';
 import BlogPageShell from '@/components/blog-page-shell';
 import ManifestoBody from '@/components/blog/manifesto-body';
 import OurStoryBody from '@/components/blog/our-story-body';
@@ -12,6 +12,12 @@ type BlogPostPageProps = {
 	params: Promise<{ slug: string }>;
 };
 
+const POST_BODIES: Record<string, ComponentType<{ highlightClass: string }>> = {
+	manifesto: ManifestoBody,
+	'yc-launch': YcLaunchBody,
+	'our-story': OurStoryBody,
+};
+
 function BlogPostContent({ slug }: { slug: string }) {
 	const post = getBlogPost(slug);
 
@@ -19,7 +25,7 @@ function BlogPostContent({ slug }: { slug: string }) {
 		notFound();
 	}
 
-	const highlightClass = 'font-bold';
+	const PostBody = POST_BODIES[slug];
 
 	return (
 		<div className='max-w-3xl mx-auto text-center'>
@@ -33,15 +39,7 @@ function BlogPostContent({ slug }: { slug: string }) {
 				{post.title.toUpperCase()}
 			</h1>
 
-			{slug === 'manifesto' && (
-				<ManifestoBody highlightClass={highlightClass} />
-			)}
-			{slug === 'yc-launch' && (
-				<YcLaunchBody highlightClass={highlightClass} />
-			)}
-			{slug === 'our-story' && (
-				<OurStoryBody highlightClass={highlightClass} />
-			)}
+			{PostBody && <PostBody highlightClass='font-bold' />}
 		</div>
 	);
 }

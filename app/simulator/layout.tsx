@@ -1,10 +1,9 @@
 import type { Metadata } from 'next';
-import type React from 'react';
 
 export const metadata: Metadata = {
-	title: 'Coverage Simulator | Arlo Industries',
+	title: 'Coverage Simulator',
 	description:
-		'Draw an area on the map and see how many Arlo nodes it takes to blanket it with passive drone and missile tracking.',
+		'Plan your air-defence coverage. Draw the area you need to defend and see how Arlo passive sensing nodes deliver persistent, real-time 3D tracking of drones and missiles, no radar required.',
 };
 
 export default function SimulatorLayout({

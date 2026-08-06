@@ -1,9 +1,9 @@
 'use client';
 
 import dynamic from 'next/dynamic';
-import { useEffect, useState } from 'react';
-import { useTheme } from 'next-themes';
+import { useState } from 'react';
 import SiteHeader from '@/components/site-header';
+import { THEME_SURFACE_CLASS } from '@/lib/theme';
 
 // Leaflet touches `window`, client-only
 const CoverageSimulator = dynamic(
@@ -21,19 +21,11 @@ const CoverageSimulator = dynamic(
 );
 
 export default function SimulatorPage() {
-	const { theme } = useTheme();
-	const [isMounted, setIsMounted] = useState(false);
 	const [isMethodNoteOpen, setIsMethodNoteOpen] = useState(false);
-	useEffect(() => setIsMounted(true), []);
-	if (!isMounted) return null;
-
-	const isDark = theme === 'dark';
 
 	return (
 		<div
-			className={`flex h-[100dvh] flex-col overflow-hidden ${
-				isDark ? 'bg-black text-red-500' : 'bg-red-600 text-black'
-			}`}
+			className={`flex h-[100dvh] flex-col overflow-hidden ${THEME_SURFACE_CLASS}`}
 		>
 			<SiteHeader />
 			<div className='px-6 pb-3 lg:px-12'>
