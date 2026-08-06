@@ -13,7 +13,7 @@ const blockDownload = {
 
 export default function OurStoryBody({ highlightClass }: OurStoryBodyProps) {
 	return (
-		<div className='mx-auto max-w-3xl space-y-6 pb-8 text-justify text-lg leading-relaxed opacity-90 lg:pb-12'>
+		<div className='mx-auto max-w-3xl space-y-6 pb-8 text-left lg:text-justify text-lg leading-relaxed opacity-90 lg:pb-12'>
 			<p>
 				Arlo Industries began with a question shaped by lived experience:{' '}
 				<span className={highlightClass}>

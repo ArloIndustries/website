@@ -4,7 +4,7 @@ type ManifestoBodyProps = {
 
 export default function ManifestoBody({ highlightClass }: ManifestoBodyProps) {
 	return (
-		<div className='text-lg text-justify max-w-3xl mx-auto opacity-90 leading-relaxed space-y-6 pb-8 lg:pb-12'>
+		<div className='text-lg text-left lg:text-justify max-w-3xl mx-auto opacity-90 leading-relaxed space-y-6 pb-8 lg:pb-12'>
 			<p>
 				<span className={highlightClass}>Conflict is inevitable</span>. As long
 				as there are humans, there will be disagreements. Conflict delayed is

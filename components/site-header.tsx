@@ -1,8 +1,8 @@
 'use client';
 
 import Link from 'next/link';
-import Image from 'next/image';
 import { Menu, X } from 'lucide-react';
+import AnimatedLogo from '@/components/animated-logo';
 import { Button } from '@/components/ui/button';
 import { useEffect, useState, type ReactNode } from 'react';
 import { SITE_NAV_LINKS, type SiteNavLink } from '@/lib/site-nav';
@@ -40,15 +40,6 @@ function renderNavLink(
 
 export default function SiteHeader({ trailing }: SiteHeaderProps) {
 	const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-	const [logoVersion, setLogoVersion] = useState<'a' | 'b'>('a');
-
-	useEffect(() => {
-		const interval = setInterval(() => {
-			setLogoVersion((prev) => (prev === 'a' ? 'b' : 'a'));
-		}, 500);
-
-		return () => clearInterval(interval);
-	}, []);
 
 	useEffect(() => {
 		if (!mobileMenuOpen) return;
@@ -74,8 +65,6 @@ export default function SiteHeader({ trailing }: SiteHeaderProps) {
 	const mobileNavItemClass =
 		'text-white dark:text-red-500 hover:bg-red-500 hover:text-black dark:hover:bg-red-500 dark:hover:text-black';
 
-	const logoSrc = `/logo${logoVersion.toUpperCase()}.png`;
-
 	return (
 		<>
 			<header
@@ -88,11 +77,14 @@ export default function SiteHeader({ trailing }: SiteHeaderProps) {
 					className='flex shrink-0 items-center gap-3 hover:opacity-80 transition-opacity'
 					aria-label='Arlo Industries – Home'
 				>
-					<Image
-						src={logoSrc}
+					<AnimatedLogo
+						srcA='/logoA.png'
+						srcB='/logoB.png'
 						alt=''
 						width={120}
 						height={40}
+						priority
+						unoptimized
 						className='h-8 w-auto'
 					/>
 				</Link>

@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import dynamic from 'next/dynamic';
 import { useState, useEffect, useRef } from 'react';
 import { Typewriter } from '@/components/ui/typewriter';
+import AnimatedLogo from '@/components/animated-logo';
 import HomeCtaColumn from '@/components/home-cta-column';
 import SiteHeader from '@/components/site-header';
 import { THEME_SURFACE_CLASS } from '@/lib/theme';
@@ -126,15 +127,6 @@ export default function Component() {
 	const { isMounted, isDark } = useMountedTheme();
 	const [quoteIndex, setQuoteIndex] = useState(0);
 	const initRef = useRef(false);
-	const [logoVersion, setLogoVersion] = useState<'a' | 'b'>('a');
-
-	useEffect(() => {
-		const interval = setInterval(() => {
-			setLogoVersion((prev) => (prev === 'a' ? 'b' : 'a'));
-		}, 500);
-
-		return () => clearInterval(interval);
-	}, []);
 
 	useEffect(() => {
 		if (initRef.current) return;
@@ -251,7 +243,7 @@ export default function Component() {
 				<p className='mb-4 text-sm tracking-[0.24em] text-black'>PHILOSOPHY</p>
 				<TypewriterHeadingOnView
 					text='Air defence as a network, not a target.'
-					className={`mt-2 max-w-none whitespace-nowrap ${SECTION_HEADING_CLASS}`}
+					className={`mt-2 max-w-none lg:whitespace-nowrap ${SECTION_HEADING_CLASS}`}
 					cursorClassName='text-black'
 					threshold={0.1}
 				/>
@@ -327,11 +319,13 @@ export default function Component() {
 							className='flex shrink-0 items-center gap-3 hover:opacity-80 transition-opacity w-fit'
 							aria-label='Arlo Industries – Home'
 						>
-							<Image
-								src={`/logo${logoVersion.toUpperCase()}.png`}
+							<AnimatedLogo
+								srcA='/logoA.png'
+								srcB='/logoB.png'
 								alt='Arlo Industries'
 								width={120}
 								height={40}
+								unoptimized
 								className='h-8 w-auto'
 							/>
 						</Link>
@@ -356,7 +350,11 @@ export default function Component() {
 									{link.label}
 								</a>
 							) : (
-								<Link key={link.href} href={link.href} className={footerLinkClass}>
+								<Link
+									key={link.href}
+									href={link.href}
+									className={footerLinkClass}
+								>
 									{link.label}
 								</Link>
 							),
@@ -390,7 +388,7 @@ export default function Component() {
 				<div
 					className={`border-t ${sectionBorder} pt-8 text-sm lg:text-base font-black tracking-widest uppercase ${mutedText}`}
 				>
-					<div>© 2026 ARLO INDUSTRIES</div>
+					<div>© 2025 ARLO INDUSTRIES</div>
 				</div>
 			</footer>
 
@@ -402,13 +400,15 @@ export default function Component() {
 					))}
 				</div>
 				<div className='flex items-center justify-center bg-red-500 px-6 py-8 lg:px-12 lg:py-12'>
-					<Image
-						src='/arlo1ndustriesBlack2.png'
+					<AnimatedLogo
+						srcA='/arlo1ndustriesBlack2a.png'
+						srcB='/arlo1ndustriesBlack2b.png'
 						alt='Arlo Industries'
 						width={7300}
 						height={500}
 						sizes='(max-width: 1600px) 100vw, 1600px'
-						className='h-auto w-full max-w-[1600px]'
+						wrapperClassName='w-full max-w-[1600px]'
+						className='h-auto w-full'
 					/>
 				</div>
 			</section>

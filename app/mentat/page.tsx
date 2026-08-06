@@ -15,14 +15,15 @@ const titleRowClass =
 	'flex items-center justify-center gap-3 lg:gap-4 text-4xl lg:text-6xl font-bold tracking-tight leading-none';
 const sectionHeadingClass =
 	'text-xl lg:text-2xl font-bold tracking-tight leading-tight';
-const bodyClass = 'text-sm lg:text-base opacity-90 leading-relaxed text-justify';
+const bodyClass =
+	'text-sm lg:text-base opacity-90 leading-relaxed text-left lg:text-justify';
 
 export default function MentatPage() {
 	return (
 		<BlogPageShell>
 			<div className='max-w-3xl mx-auto'>
 				<header className='text-center mb-6 lg:mb-8'>
-					<div className={`${titleRowClass} mb-16 lg:mb-24`}>
+					<div className={`${titleRowClass} mb-10 lg:mb-24`}>
 						<Image
 							src={MENTAT_LOGO_URL}
 							alt=''

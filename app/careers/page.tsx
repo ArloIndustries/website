@@ -43,7 +43,7 @@ export default function CareersPage() {
 		<BlogPageShell>
 			<div className='max-w-4xl mx-auto'>
 				<header className='text-center mb-10 lg:mb-14'>
-					<h1 className='text-4xl lg:text-6xl font-bold leading-tight mb-20'>
+					<h1 className='text-4xl lg:text-6xl font-bold leading-tight mb-10 lg:mb-20'>
 						Join us to build the future of Air Defence.
 					</h1>
 
@@ -57,7 +57,7 @@ export default function CareersPage() {
 						<ExternalLink className='w-4 h-4' aria-hidden />
 					</a>
 
-					<p className='mt-20 text-xl lg:text-2xl font-medium opacity-95 leading-relaxed max-w-2xl mx-auto'>
+					<p className='mt-10 lg:mt-20 text-xl lg:text-2xl font-medium opacity-95 leading-relaxed max-w-2xl mx-auto'>
 						Come work on world-changing problems that actually matter.
 					</p>
 				</header>
