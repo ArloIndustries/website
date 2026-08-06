@@ -27,7 +27,7 @@ const CAPABILITIES = [
 	{
 		index: '01',
 		title: 'PASSIVE & UNDETECTABLE',
-		body: 'Zero RF emissions. Nothing to jam, nothing to detect, nothing for anti-radiation weapons to home on. Your defenses see the sky without ever revealing themselves.',
+		body: 'Zero RF emissions. Nothing to jam, nothing to detect, nothing for anti-radiation weapons to home on. Your defences see the sky without ever revealing themselves.',
 	},
 	{
 		index: '02',
@@ -41,7 +41,12 @@ const CAPABILITIES = [
 	},
 ];
 
-const CAPABILITIES_HEADING = 'Air defense as a network, not a target.';
+const CAPABILITIES_HEADING = 'Air defence as a network, not a target.';
+const ABOUT_HEADING = 'BUILT FROM FIRST-HAND EXPERIENCE';
+const SECTION_HEADING_CLASS =
+	'text-[clamp(1.45rem,5vw,3rem)] font-black leading-tight tracking-tight lg:text-5xl';
+const BODY_COPY_CLASS =
+	'text-base font-normal leading-relaxed lg:text-lg';
 
 export default function Component() {
 	const { theme } = useTheme();
@@ -51,6 +56,8 @@ export default function Component() {
 	const [logoVersion, setLogoVersion] = useState<'a' | 'b'>('a');
 	const capabilitiesHeadingRef = useRef<HTMLHeadingElement | null>(null);
 	const [headingInView, setHeadingInView] = useState(false);
+	const aboutHeadingRef = useRef<HTMLHeadingElement | null>(null);
+	const [aboutHeadingInView, setAboutHeadingInView] = useState(false);
 
 	const quotes = [
 		'Track drones and missiles without radars',
@@ -105,6 +112,25 @@ export default function Component() {
 
 		return () => observer.disconnect();
 	}, [isMounted, headingInView]);
+
+	useEffect(() => {
+		const heading = aboutHeadingRef.current;
+		if (!heading || aboutHeadingInView) return;
+
+		const observer = new IntersectionObserver(
+			([entry]) => {
+				if (entry.isIntersecting) {
+					setAboutHeadingInView(true);
+					observer.disconnect();
+				}
+			},
+			{ threshold: 0.2 },
+		);
+
+		observer.observe(heading);
+
+		return () => observer.disconnect();
+	}, [isMounted, aboutHeadingInView]);
 
 	const handleNextQuote = () => {
 		setQuoteIndex((prev) => {
@@ -167,7 +193,7 @@ export default function Component() {
 								</h1>
 							</div>
 							<p
-								className={`relative mt-6 max-w-xl text-base lg:text-lg leading-relaxed ${mutedText}`}
+								className={`relative mt-6 max-w-xl ${BODY_COPY_CLASS} ${mutedText}`}
 							>
 								A decentralised grid of passive nodes delivering real-time 3D
 								tracking of drones and missiles. Nothing to jam. Nothing to
@@ -207,7 +233,7 @@ export default function Component() {
 			<section className='relative z-10 border-t-2 border-white/30 bg-red-500 px-6 py-24 text-white lg:px-12 lg:py-32'>
 				<h2
 					ref={capabilitiesHeadingRef}
-					className='mt-2 max-w-none whitespace-nowrap text-[clamp(1.45rem,5vw,3rem)] font-black tracking-tight lg:text-5xl'
+					className={`mt-2 max-w-none whitespace-nowrap ${SECTION_HEADING_CLASS}`}
 				>
 					{headingInView ? (
 						<Typewriter
@@ -239,6 +265,55 @@ export default function Component() {
 							</p>
 						</div>
 					))}
+				</div>
+			</section>
+
+			{/* About */}
+			<section className='relative z-10 border-t-2 border-red-500/40 bg-black px-6 py-24 text-white lg:px-12 lg:py-32'>
+				<div className='mx-auto grid max-w-6xl items-center gap-10 md:grid-cols-2 lg:gap-16'>
+					<div className='relative aspect-[4/3] w-full max-w-md justify-self-center overflow-hidden border-2 border-red-500/60 md:aspect-auto md:h-full md:self-stretch md:justify-self-start'>
+						<Image
+							src='/about/YC.jpeg'
+							alt='Deo Arlo at Y Combinator'
+							fill
+							sizes='(max-width: 768px) 100vw, 448px'
+							className='object-cover object-[center_42%]'
+						/>
+					</div>
+
+					<div>
+						<p className='mb-4 text-sm font-black tracking-[0.24em] text-red-500'>
+							ABOUT US
+						</p>
+						<h2
+							ref={aboutHeadingRef}
+							className={SECTION_HEADING_CLASS}
+						>
+							{aboutHeadingInView ? (
+								<Typewriter
+									key='about-heading'
+									text={ABOUT_HEADING}
+									speed={30}
+								/>
+							) : (
+								<span className='opacity-0' aria-hidden>
+									{ABOUT_HEADING}
+								</span>
+							)}
+						</h2>
+						<p className={`mt-6 max-w-xl text-white/75 ${BODY_COPY_CLASS}`}>
+							Founder Deo Arlo spent six years in Israel&apos;s research and
+							high-tech ecosystem, studying at the Technion while living through
+							repeated conflict. That first-hand experience shaped our mission:
+							passive, decentralised sensing built to protect people everywhere.
+						</p>
+						<Link
+							href='/blog/our-story'
+							className='mt-8 inline-flex border-2 border-red-500 px-6 py-3 text-sm font-black tracking-widest text-red-500 transition-colors hover:bg-red-500 hover:text-black'
+						>
+							READ OUR STORY
+						</Link>
+					</div>
 				</div>
 			</section>
 

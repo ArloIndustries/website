@@ -20,10 +20,10 @@ export const pressCoverage: PressCoverage[] = [
 		id: 'ignite-startups-ep285',
 		outlet: 'Ignite Podcast, Ep. 285',
 		title:
-			'Passive Sensors, Drone Swarms, and the Future of Air Defense with Deo Arlo',
+			'Passive Sensors, Drone Swarms, and the Future of Air Defence with Deo Arlo',
 		publishedAt: '2026-07-27',
 		excerpt:
-			'Deo Arlo joins Ignite to discuss replacing 100-year-old radar assumptions with a passive sensor mesh, why sensing, not interceptors, is the real bottleneck in counter-drone defense, and what Ukraine teaches about battlefield innovation.',
+			'Deo Arlo joins Ignite to discuss replacing 100-year-old radar assumptions with a passive sensor mesh, why sensing, not interceptors, is the real bottleneck in counter-drone defence, and what Ukraine teaches about battlefield innovation.',
 		previewImage: '/about/ignite-preview.png',
 		links: [
 			{

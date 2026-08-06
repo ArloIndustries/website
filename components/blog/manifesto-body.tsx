@@ -25,7 +25,7 @@ export default function ManifestoBody({ highlightClass }: ManifestoBodyProps) {
 			</p>
 
 			<p>
-				We create decentralized networks of nodes that operate at the{' '}
+				We create decentralised networks of nodes that operate at the{' '}
 				<span className={highlightClass}>tactical edge</span>. Like cells, these
 				nodes sense, observe, and react, shifting between modes to shape what is
 				seen and what is hidden.

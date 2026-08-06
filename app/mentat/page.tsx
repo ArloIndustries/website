@@ -42,7 +42,7 @@ export default function MentatPage() {
 				<div className='mx-auto mb-8 lg:mb-12 w-full'>
 					<img
 						src={MENTAT_VID_URL}
-						alt='Mentat mesh visualization'
+						alt='Mentat mesh visualisation'
 						className='w-full h-auto'
 					/>
 				</div>
@@ -51,7 +51,7 @@ export default function MentatPage() {
 					<section className='space-y-3'>
 						<h2 className={sectionHeadingClass}>THE PROBLEM</h2>
 						<p className={bodyClass}>
-							Traditional air defence is built around centralized radars
+							Traditional air defence is built around centralised radars
 							protecting limited areas. These systems are expensive, emitting,
 							and difficult to scale against dense low altitude threats.
 						</p>
@@ -82,7 +82,7 @@ export default function MentatPage() {
 						<p className={bodyClass}>
 							The need is most urgent today. Shahed and other stealthy drones
 							are defining modern drone warfare, flooding contested airspace at
-							low altitude in numbers and profiles that centralized radars were
+							low altitude in numbers and profiles that centralised radars were
 							never built to handle.
 						</p>
 					</section>
