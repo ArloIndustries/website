@@ -139,6 +139,7 @@ export default function PressPage() {
 													src={item.previewImage}
 													alt=''
 													fill
+													draggable={false}
 													sizes='(max-width: 768px) 100vw, 256px'
 													className='object-cover transition-transform duration-300 group-hover:scale-[1.02]'
 												/>
@@ -226,6 +227,7 @@ export default function PressPage() {
 													alt={formatPressLabel(filename)}
 													width={400}
 													height={300}
+													draggable={false}
 													className='max-h-full w-auto h-auto object-contain'
 													unoptimized
 												/>

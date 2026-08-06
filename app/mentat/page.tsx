@@ -29,6 +29,7 @@ export default function MentatPage() {
 							alt=''
 							width={1466}
 							height={700}
+							draggable={false}
 							className='h-[0.9em] w-auto shrink-0'
 							unoptimized
 						/>
@@ -44,6 +45,7 @@ export default function MentatPage() {
 					<img
 						src={MENTAT_VID_URL}
 						alt='Mentat mesh visualisation'
+						draggable={false}
 						className='w-full h-auto'
 					/>
 				</div>
@@ -92,6 +94,7 @@ export default function MentatPage() {
 						<img
 							src={MENTAT_3D_GIF_URL}
 							alt='Mentat node 3D model'
+							draggable={false}
 							className='w-full h-auto'
 						/>
 					</div>

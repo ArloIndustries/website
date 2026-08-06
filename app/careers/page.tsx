@@ -71,6 +71,7 @@ export default function CareersPage() {
 								src={careersImageUrl(heroImage)}
 								alt='Arlo Industries team'
 								fill
+								draggable={false}
 								className={photoClass}
 								priority
 								unoptimized
@@ -114,6 +115,7 @@ export default function CareersPage() {
 									src={careersImageUrl(filename)}
 									alt=''
 									fill
+									draggable={false}
 									className={photoClass}
 									unoptimized
 								/>

@@ -40,6 +40,7 @@ export default function AnimatedLogo({
 		sizes,
 		priority,
 		unoptimized,
+		draggable: false,
 	};
 
 	useEffect(() => {

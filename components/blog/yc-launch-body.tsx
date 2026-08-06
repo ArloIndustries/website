@@ -58,6 +58,7 @@ export default function YcLaunchBody({ highlightClass }: YcLaunchBodyProps) {
 						src='/about/demoday.jpg'
 						alt='Deo Arlo presenting Arlo Industries at Y Combinator Demo Day'
 						fill
+						draggable={false}
 						sizes='(max-width: 768px) 100vw, 768px'
 						className='object-cover'
 					/>
@@ -82,6 +83,7 @@ export default function YcLaunchBody({ highlightClass }: YcLaunchBodyProps) {
 										src={link.thumbnail}
 										alt=''
 										fill
+										draggable={false}
 										sizes='(max-width: 640px) 100vw, 33vw'
 										className='object-cover transition-transform duration-300 group-hover:scale-105'
 									/>

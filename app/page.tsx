@@ -275,6 +275,7 @@ export default function Component() {
 							src='/about/YC.jpeg'
 							alt='Deo Arlo at Y Combinator'
 							fill
+							draggable={false}
 							sizes='(max-width: 768px) 100vw, 448px'
 							className='object-cover object-[center_42%]'
 						/>
