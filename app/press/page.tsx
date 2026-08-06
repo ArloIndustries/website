@@ -6,7 +6,11 @@ import SiteHeader from '@/components/site-header';
 import { Button } from '@/components/ui/button';
 import { useTheme } from 'next-themes';
 import { useCallback, useEffect, useState } from 'react';
+import { formatBlogDate } from '@/lib/blog';
+import { getPressCoverageSorted } from '@/lib/press-coverage';
 import { formatPressLabel, pressAssetUrl } from '@/lib/press';
+
+const VISIBLE_ASSET_COUNT = 6;
 
 export default function PressPage() {
 	const { theme } = useTheme();
@@ -14,6 +18,9 @@ export default function PressPage() {
 	const [files, setFiles] = useState<string[]>([]);
 	const [loadingFiles, setLoadingFiles] = useState(true);
 	const [downloadingAll, setDownloadingAll] = useState(false);
+	const [showAllAssets, setShowAllAssets] = useState(false);
+
+	const coverage = getPressCoverageSorted();
 
 	useEffect(() => {
 		setIsMounted(true);
@@ -84,6 +91,12 @@ export default function PressPage() {
 			: 'bg-black text-white border-black hover:bg-zinc-900 disabled:opacity-50'
 	}`;
 
+	const showAllButtonClass = `inline-flex items-center justify-center px-6 py-2.5 text-sm font-bold tracking-wide uppercase border-2 transition-colors ${
+		isDark
+			? 'border-red-500 text-red-500 hover:bg-red-500 hover:text-black'
+			: 'border-black text-black hover:bg-black hover:text-white'
+	}`;
+
 	const downloadAllButton = (
 		<Button
 			type='button'
@@ -109,6 +122,10 @@ export default function PressPage() {
 		return null;
 	}
 
+	const visibleFiles = showAllAssets
+		? files
+		: files.slice(0, VISIBLE_ASSET_COUNT);
+
 	return (
 		<div
 			className={`min-h-screen flex flex-col ${bgColor} ${textColor} relative overflow-hidden transition-colors duration-300`}
@@ -120,73 +137,147 @@ export default function PressPage() {
 					<header className='text-center mb-10 lg:mb-14'>
 						<h1 className='text-4xl lg:text-6xl font-bold mb-4'>PRESS</h1>
 						<p className='text-base lg:text-lg max-w-2xl mx-auto opacity-90 leading-relaxed'>
-							Official Arlo Industries logos and brand assets. Download
-							individual files or grab the full press kit as a ZIP.
+							Media coverage of Arlo Industries, plus official logos and brand
+							assets for publication.
 						</p>
-						<div className='mt-6 flex justify-center'>
-							{downloadAllButton}
-						</div>
 					</header>
 
-					{loadingFiles && (
-						<p className='text-center opacity-80 flex items-center justify-center gap-2'>
-							<Loader2 className='w-5 h-5 animate-spin' />
-							Loading assets…
-						</p>
-					)}
-
-					{!loadingFiles && files.length === 0 && (
-						<p className='text-center opacity-80'>
-							No press assets found. Add images to{' '}
-							<code className='opacity-100'>public/press</code>.
-						</p>
-					)}
-
-					{!loadingFiles && files.length > 0 && (
-						<ul className='grid grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6'>
-							{files.map((filename) => (
-								<li
-									key={filename}
-									className={`flex flex-col border-2 ${borderColor} ${cardBg}`}
-								>
-									<div
-										className={`relative aspect-[4/3] flex items-center justify-center p-6 ${previewBg}`}
+					{/* Media coverage */}
+					<section aria-label='Media coverage' className='max-w-3xl mx-auto'>
+						<ul className='space-y-8'>
+							{coverage.map((item) => (
+								<li key={item.id}>
+									<article
+										className={`border-2 p-6 lg:p-8 transition-colors duration-300 hover:border-red-500 hover:bg-red-500 hover:text-white ${borderColor}`}
 									>
-										<Image
-											src={pressAssetUrl(filename)}
-											alt={formatPressLabel(filename)}
-											width={400}
-											height={300}
-											className='max-h-full w-auto h-auto object-contain'
-											unoptimized
-										/>
-									</div>
-									<div className='p-4 flex flex-col gap-3 flex-grow'>
-										<div>
-											<p className='font-bold text-sm lg:text-base leading-tight'>
-												{formatPressLabel(filename)}
-											</p>
-											<p className='text-xs opacity-70 mt-1 break-all'>
-												{filename}
-											</p>
+										<div className='mb-2 flex flex-wrap items-baseline justify-between gap-2'>
+											<span className='text-sm font-bold tracking-widest uppercase opacity-75'>
+												{item.outlet}
+											</span>
+											<time
+												dateTime={item.publishedAt}
+												className='text-sm tracking-wide opacity-75'
+											>
+												{formatBlogDate(item.publishedAt)}
+											</time>
 										</div>
-										<a
-											href={pressAssetUrl(filename)}
-											download={filename}
-											className={`mt-auto inline-flex items-center justify-center gap-2 px-4 py-2 text-sm font-bold tracking-wide uppercase border-2 transition-colors ${
-												isDark
-													? 'border-red-500 text-red-500 hover:bg-red-500 hover:text-black'
-													: 'border-black text-black hover:bg-black hover:text-white'
-											}`}
-										>
-											<Download className='w-4 h-4' />
-											Download
-										</a>
-									</div>
+										<h2 className='text-2xl lg:text-3xl font-bold mb-3'>
+											{item.title.toUpperCase()}
+										</h2>
+										<p className='opacity-90 leading-relaxed mb-5'>
+											{item.excerpt}
+										</p>
+										<div className='flex flex-wrap gap-x-6 gap-y-2'>
+											{item.links.map((link) => (
+												<a
+													key={link.href}
+													href={link.href}
+													target='_blank'
+													rel='noopener noreferrer'
+													className='text-sm font-bold tracking-wide uppercase underline underline-offset-4 hover:opacity-80 transition-opacity'
+												>
+													{link.label} ↗
+												</a>
+											))}
+										</div>
+									</article>
 								</li>
 							))}
 						</ul>
-					)}
+					</section>
+
+					{/* Brand assets */}
+					<section
+						aria-label='Brand assets'
+						className='mt-20 lg:mt-28'
+					>
+						<header className='text-center mb-10 lg:mb-14'>
+							<h2 className='text-3xl lg:text-5xl font-bold mb-4'>
+								BRAND ASSETS
+							</h2>
+							<p className='text-base lg:text-lg max-w-2xl mx-auto opacity-90 leading-relaxed'>
+								Official Arlo Industries logos. Download individual files or
+								grab the full press kit as a ZIP.
+							</p>
+							<div className='mt-6 flex justify-center'>{downloadAllButton}</div>
+						</header>
+
+						{loadingFiles && (
+							<p className='text-center opacity-80 flex items-center justify-center gap-2'>
+								<Loader2 className='w-5 h-5 animate-spin' />
+								Loading assets…
+							</p>
+						)}
+
+						{!loadingFiles && files.length === 0 && (
+							<p className='text-center opacity-80'>
+								No press assets found. Add images to{' '}
+								<code className='opacity-100'>public/press</code>.
+							</p>
+						)}
+
+						{!loadingFiles && files.length > 0 && (
+							<>
+								<ul className='grid grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6'>
+									{visibleFiles.map((filename) => (
+										<li
+											key={filename}
+											className={`flex flex-col border-2 ${borderColor} ${cardBg}`}
+										>
+											<div
+												className={`relative aspect-[4/3] flex items-center justify-center p-6 ${previewBg}`}
+											>
+												<Image
+													src={pressAssetUrl(filename)}
+													alt={formatPressLabel(filename)}
+													width={400}
+													height={300}
+													className='max-h-full w-auto h-auto object-contain'
+													unoptimized
+												/>
+											</div>
+											<div className='p-4 flex flex-col gap-3 flex-grow'>
+												<div>
+													<p className='font-bold text-sm lg:text-base leading-tight'>
+														{formatPressLabel(filename)}
+													</p>
+													<p className='text-xs opacity-70 mt-1 break-all'>
+														{filename}
+													</p>
+												</div>
+												<a
+													href={pressAssetUrl(filename)}
+													download={filename}
+													className={`mt-auto inline-flex items-center justify-center gap-2 px-4 py-2 text-sm font-bold tracking-wide uppercase border-2 transition-colors ${
+														isDark
+															? 'border-red-500 text-red-500 hover:bg-red-500 hover:text-black'
+															: 'border-black text-black hover:bg-black hover:text-white'
+													}`}
+												>
+													<Download className='w-4 h-4' />
+													Download
+												</a>
+											</div>
+										</li>
+									))}
+								</ul>
+
+								{files.length > VISIBLE_ASSET_COUNT && (
+									<div className='mt-8 flex justify-center'>
+										<button
+											type='button'
+											onClick={() => setShowAllAssets((prev) => !prev)}
+											className={showAllButtonClass}
+										>
+											{showAllAssets
+												? 'Show less'
+												: `Show all (${files.length})`}
+										</button>
+									</div>
+								)}
+							</>
+						)}
+					</section>
 				</div>
 			</div>
 		</div>

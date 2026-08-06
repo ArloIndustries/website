@@ -9,7 +9,7 @@ export default function BlogPage() {
 	const { theme } = useTheme();
 	const posts = getBlogPostsSorted();
 	const isDark = theme === 'dark';
-	const borderColor = isDark ? 'border-red-900 hover:border-red-700' : 'border-red-800 hover:border-black';
+	const borderColor = isDark ? 'border-red-900' : 'border-red-800';
 
 	return (
 		<BlogPageShell>
@@ -24,33 +24,26 @@ export default function BlogPage() {
 				<ul className='space-y-8'>
 					{posts.map((post) => (
 						<li key={post.slug}>
-							<article
-								className={`border-2 p-6 lg:p-8 transition-colors ${borderColor}`}
+							<Link
+								href={`/blog/${post.slug}`}
+								className={`group block border-2 p-6 transition-colors duration-300 hover:border-red-500 hover:bg-red-500 hover:text-white lg:p-8 ${borderColor}`}
 							>
 								<time
 									dateTime={post.publishedAt}
-									className='block text-sm opacity-75 mb-2 tracking-wide'
+									className='mb-2 block text-sm tracking-wide opacity-75 transition-opacity group-hover:opacity-100'
 								>
 									{formatBlogDate(post.publishedAt)}
 								</time>
 								<h2 className='text-2xl lg:text-3xl font-bold mb-3'>
-									<Link
-										href={`/blog/${post.slug}`}
-										className='hover:opacity-80 transition-opacity'
-									>
-										{post.title.toUpperCase()}
-									</Link>
+									{post.title.toUpperCase()}
 								</h2>
 								<p className='opacity-90 leading-relaxed mb-4'>
 									{post.excerpt}
 								</p>
-								<Link
-									href={`/blog/${post.slug}`}
-									className='text-sm font-bold tracking-wide uppercase underline underline-offset-4 hover:opacity-80 transition-opacity'
-								>
+								<span className='text-sm font-bold tracking-wide uppercase underline underline-offset-4'>
 									Read more
-								</Link>
-							</article>
+								</span>
+							</Link>
 						</li>
 					))}
 				</ul>

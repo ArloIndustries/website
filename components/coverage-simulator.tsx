@@ -62,7 +62,7 @@ const PRESETS: { label: string; center: LatLng; zoom: number; area: LatLng[] }[]
 		center: [37.83, 126.8],
 		zoom: 11,
 		// Entire polygon must stay on South Korean territory (Paju corridor,
-		// south of the DMZ and the Imjin River) — no nodes north of the border.
+		// south of the DMZ and the Imjin River), no nodes north of the border.
 		area: [
 			[37.885, 126.735],
 			[37.87, 126.85],
@@ -137,7 +137,7 @@ function distToPolygon(x: number, y: number, poly: [number, number][]): number {
  * Hexagonal covering lattice: circles of radius R centered on a hex grid
  * with pitch √3·R cover the plane with 1× redundancy. For K× redundancy the
  * pitch shrinks by ~√K. Lattice points further than R from the area are
- * dropped — every point of the area stays within R of a kept node.
+ * dropped, every point of the area stays within R of a kept node.
  */
 function planNodes(
 	polygon: LatLng[],
@@ -349,7 +349,7 @@ export default function CoverageSimulator() {
 			fillOpacity: 0.08,
 		}).addTo(layer);
 
-		// coverage circles (skip when dense — markers still show placement)
+		// coverage circles (skip when dense, markers still show placement)
 		if (plan.nodes.length <= 400) {
 			for (const n of plan.nodes) {
 				L.circle(n, {

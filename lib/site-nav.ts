@@ -1,7 +1,7 @@
 export type SiteNavLink = {
 	href: string;
 	label: string;
-	/** MENTAT — outline CTA style */
+	/** MENTAT, outline CTA style */
 	emphasize?: boolean;
 	external?: boolean;
 };

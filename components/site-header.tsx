@@ -6,7 +6,6 @@ import { Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useTheme } from 'next-themes';
 import { useEffect, useState, type ReactNode } from 'react';
-import { outlineCtaClass } from '@/lib/outline-cta';
 import { SITE_NAV_LINKS, type SiteNavLink } from '@/lib/site-nav';
 
 type SiteHeaderProps = {
@@ -91,16 +90,9 @@ export default function SiteHeader({ trailing }: SiteHeaderProps) {
 	const navUnderlineClass =
 		"relative after:absolute after:-bottom-1 after:left-0 after:h-0.5 after:w-full after:origin-left after:scale-x-0 after:bg-current after:transition-transform after:duration-300 after:content-[''] hover:after:scale-x-100";
 	const navLinkClass = `font-bold tracking-wide text-base lg:text-lg px-2 py-1 ${hoverColor} transition-colors ${navBackdropClass} ${navUnderlineClass}`;
-	const mentatNavLinkClass = outlineCtaClass(
-		isDark,
-		`font-bold tracking-wide text-base lg:text-lg px-2.5 py-1 ${navUnderlineClass}`,
-	);
 	const mobileNavItemClass = isDark
 		? 'text-red-500 hover:bg-red-500 hover:text-black'
 		: 'text-white hover:bg-red-500 hover:text-black';
-
-	const mentatLink = SITE_NAV_LINKS.find((link) => link.emphasize);
-	const secondaryLinks = SITE_NAV_LINKS.filter((link) => !link.emphasize);
 
 	const logoSrc = `/logo${logoVersion.toUpperCase()}.png`;
 
@@ -126,19 +118,6 @@ export default function SiteHeader({ trailing }: SiteHeaderProps) {
 				</Link>
 
 				<div className='flex min-w-0 flex-1 items-center justify-end gap-3 md:gap-8'>
-					{/* Mobile-only prominent Mentat link */}
-					{mentatLink && (
-						<span className='md:hidden'>
-							{renderNavLink(
-								mentatLink,
-								outlineCtaClass(
-									isDark,
-									'px-3 py-1.5 text-sm font-bold tracking-wide',
-								),
-							)}
-						</span>
-					)}
-
 					{trailing}
 
 					<nav
@@ -146,10 +125,7 @@ export default function SiteHeader({ trailing }: SiteHeaderProps) {
 						aria-label='Main navigation'
 					>
 						{SITE_NAV_LINKS.map((link) =>
-							renderNavLink(
-								link,
-								link.emphasize ? mentatNavLinkClass : navLinkClass,
-							),
+							renderNavLink(link, navLinkClass),
 						)}
 					</nav>
 
@@ -190,16 +166,11 @@ export default function SiteHeader({ trailing }: SiteHeaderProps) {
 							}`}
 						>
 							<ul className='flex flex-col gap-1 p-2'>
-								{secondaryLinks.map((link) => (
+								{SITE_NAV_LINKS.map((link) => (
 									<li key={link.href}>
 										{renderNavLink(
 											link,
-											link.emphasize
-												? outlineCtaClass(
-														isDark,
-														'block w-full py-3.5 px-4 text-center font-bold tracking-wide text-base',
-													)
-												: `block w-full py-3.5 px-4 text-left font-bold tracking-wide text-base transition-colors ${mobileNavItemClass}`,
+											`block w-full py-3.5 px-4 text-left font-bold tracking-wide text-base transition-colors ${mobileNavItemClass}`,
 											() => setMobileMenuOpen(false),
 										)}
 									</li>

@@ -1,7 +1,7 @@
 'use client';
 
 /**
- * DefenseGridBackground — animated hero scene.
+ * DefenseGridBackground, animated hero scene.
  *
  * A distributed grid of Arlo sensor nodes tracks drones and missiles in the
  * sky: scan sweeps, tracking beams, lock reticles, telemetry tags and
@@ -836,7 +836,7 @@ function Scene({ palette, additive }: { palette: DefenseGridPalette; additive: b
 				sim.setNodeGeometry(geo);
 			})
 			.catch(() => {
-				/* no STL yet — placeholder stays */
+				/* no STL yet, placeholder stays */
 			});
 		return () => {
 			cancelled = true;

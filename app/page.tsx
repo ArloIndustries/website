@@ -138,7 +138,7 @@ export default function Component() {
 		<div
 			className={`min-h-screen flex flex-col ${bgColor} ${textColor} relative transition-colors duration-300`}
 		>
-			{/* Hero — full viewport with the live defense-grid simulation */}
+			{/* Hero, full viewport with the live defense-grid simulation */}
 			<section className='relative flex min-h-[100svh] flex-col overflow-hidden'>
 				<DefenseGridBackground isDark={isDark} />
 
@@ -186,7 +186,7 @@ export default function Component() {
 						</div>
 					</div>
 
-					{/* Right Content — YC upvote + newsletter */}
+					{/* Right Content, YC upvote + newsletter */}
 					<div className='flex-1 max-w-md z-10 flex flex-col items-center justify-center w-full'>
 						<HomeCtaColumn />
 					</div>

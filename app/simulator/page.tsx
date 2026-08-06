@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { useTheme } from 'next-themes';
 import SiteHeader from '@/components/site-header';
 
-// Leaflet touches `window` — client-only
+// Leaflet touches `window`, client-only
 const CoverageSimulator = dynamic(
 	() => import('@/components/coverage-simulator'),
 	{

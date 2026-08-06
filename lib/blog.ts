@@ -8,6 +8,20 @@ export type BlogPostMeta = {
 
 export const blogPosts: BlogPostMeta[] = [
 	{
+		slug: 'yc-launch',
+		title: 'Arlo Industries joins Y-Combinator',
+		publishedAt: '2026-05-25',
+		excerpt:
+			'We officially launched as part of Y Combinator (P26). Distributed passive sensor networks that track drones and missiles in 3D, no radar, no emissions, no single point of failure.',
+	},
+	{
+		slug: 'our-story',
+		title: 'Our Story',
+		publishedAt: '2026-05-24',
+		excerpt:
+			'How lived experience, frontline testing, and years inside the Israeli defence ecosystem shaped Arlo Industries.',
+	},
+	{
 		slug: 'manifesto',
 		title: 'Manifesto',
 		publishedAt: '2025-10-07',

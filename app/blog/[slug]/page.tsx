@@ -4,6 +4,8 @@ import { notFound } from 'next/navigation';
 import { use } from 'react';
 import BlogPageShell from '@/components/blog-page-shell';
 import ManifestoBody from '@/components/blog/manifesto-body';
+import OurStoryBody from '@/components/blog/our-story-body';
+import YcLaunchBody from '@/components/blog/yc-launch-body';
 import { formatBlogDate, getBlogPost } from '@/lib/blog';
 
 type BlogPostPageProps = {
@@ -20,7 +22,7 @@ function BlogPostContent({ slug }: { slug: string }) {
 	const highlightClass = 'font-bold';
 
 	return (
-		<div className='max-w-4xl mx-auto text-center'>
+		<div className='max-w-3xl mx-auto text-center'>
 			<time
 				dateTime={post.publishedAt}
 				className='block text-sm lg:text-base opacity-75 mb-4 tracking-wide'
@@ -33,6 +35,12 @@ function BlogPostContent({ slug }: { slug: string }) {
 
 			{slug === 'manifesto' && (
 				<ManifestoBody highlightClass={highlightClass} />
+			)}
+			{slug === 'yc-launch' && (
+				<YcLaunchBody highlightClass={highlightClass} />
+			)}
+			{slug === 'our-story' && (
+				<OurStoryBody highlightClass={highlightClass} />
 			)}
 		</div>
 	);

@@ -89,7 +89,7 @@ export default function CareersPage() {
 
 				<section className='max-w-2xl mx-auto space-y-4 text-base lg:text-lg text-center opacity-90 leading-relaxed mb-14 lg:mb-20'>
 					<p>
-						We&apos;re building <span className={highlightClass}>Mentat</span> —
+						We&apos;re building <span className={highlightClass}>Mentat</span>,
 						an optical mesh to track drones and missiles without traditional
 						radar. Sensing at the{' '}
 						<span className={highlightClass}>tactical edge.</span>
