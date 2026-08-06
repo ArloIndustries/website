@@ -42,10 +42,10 @@ export default function OurStoryBody({ highlightClass }: OurStoryBodyProps) {
 
 			<p>
 				The October 7 attack exposed how low and slow-flying threats exploit
-				assumptions built around faster, more visible threats. The danger did
-				not end that day: Shaheds used the same strategy in Ukraine and showed
-				how inexpensive low-and-slow attack drones could be deployed at scale
-				and overwhelm centralised systems.
+				assumptions built around larger, more visible threats. The danger did
+				not end that day, during our time in Ukraine, Shaheds built upon this
+				strategy and showed how inexpensive low-and-slow attack drones could be
+				deployed at scale and overwhelm centralised systems.
 			</p>
 
 			<video
