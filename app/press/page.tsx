@@ -143,42 +143,55 @@ export default function PressPage() {
 					</header>
 
 					{/* Media coverage */}
-					<section aria-label='Media coverage' className='max-w-3xl mx-auto'>
-						<ul className='space-y-8'>
+					<section aria-label='Media coverage' className='w-full'>
+						<ul className='space-y-5'>
 							{coverage.map((item) => (
 								<li key={item.id}>
 									<article
-										className={`border-2 p-6 lg:p-8 transition-colors duration-300 hover:border-red-500 hover:bg-red-500 hover:text-white ${borderColor}`}
+										className={`group overflow-hidden border-2 transition-colors duration-300 hover:border-red-500 hover:bg-red-500 hover:text-white md:grid md:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] ${borderColor}`}
 									>
-										<div className='mb-2 flex flex-wrap items-baseline justify-between gap-2'>
-											<span className='text-sm font-bold tracking-widest uppercase opacity-75'>
-												{item.outlet}
-											</span>
-											<time
-												dateTime={item.publishedAt}
-												className='text-sm tracking-wide opacity-75'
-											>
-												{formatBlogDate(item.publishedAt)}
-											</time>
-										</div>
-										<h2 className='text-2xl lg:text-3xl font-bold mb-3'>
-											{item.title.toUpperCase()}
-										</h2>
-										<p className='opacity-90 leading-relaxed mb-5'>
-											{item.excerpt}
-										</p>
-										<div className='flex flex-wrap gap-x-6 gap-y-2'>
-											{item.links.map((link) => (
-												<a
-													key={link.href}
-													href={link.href}
-													target='_blank'
-													rel='noopener noreferrer'
-													className='text-sm font-bold tracking-wide uppercase underline underline-offset-4 hover:opacity-80 transition-opacity'
+										{item.previewImage && (
+											<div className='relative aspect-[1200/630] overflow-hidden md:aspect-auto md:min-h-full'>
+												<Image
+													src={item.previewImage}
+													alt=''
+													fill
+													sizes='(max-width: 768px) 100vw, 256px'
+													className='object-cover transition-transform duration-300 group-hover:scale-[1.02]'
+												/>
+											</div>
+										)}
+										<div className='p-4 lg:p-5'>
+											<div className='mb-2 flex flex-wrap items-baseline justify-between gap-2'>
+												<span className='text-xs font-bold tracking-widest uppercase opacity-75'>
+													{item.outlet}
+												</span>
+												<time
+													dateTime={item.publishedAt}
+													className='text-xs tracking-wide opacity-75'
 												>
-													{link.label} ↗
-												</a>
-											))}
+													{formatBlogDate(item.publishedAt)}
+												</time>
+											</div>
+											<h2 className='text-lg lg:text-xl font-bold mb-2'>
+												{item.title.toUpperCase()}
+											</h2>
+											<p className='text-xs lg:text-sm opacity-90 leading-relaxed mb-3'>
+												{item.excerpt}
+											</p>
+											<div className='flex flex-wrap gap-x-6 gap-y-2'>
+												{item.links.map((link) => (
+													<a
+														key={link.href}
+														href={link.href}
+														target='_blank'
+														rel='noopener noreferrer'
+														className='text-xs font-bold tracking-wide uppercase underline underline-offset-4 hover:opacity-80 transition-opacity'
+													>
+														{link.label} ↗
+													</a>
+												))}
+											</div>
 										</div>
 									</article>
 								</li>
@@ -189,7 +202,7 @@ export default function PressPage() {
 					{/* Brand assets */}
 					<section
 						aria-label='Brand assets'
-						className='mt-20 lg:mt-28'
+						className='mt-20 pb-16 lg:mt-28 lg:pb-24'
 					>
 						<header className='text-center mb-10 lg:mb-14'>
 							<h2 className='text-3xl lg:text-5xl font-bold mb-4'>

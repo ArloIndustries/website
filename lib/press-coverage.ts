@@ -11,6 +11,7 @@ export type PressCoverage = {
 	/** ISO date (YYYY-MM-DD) */
 	publishedAt: string;
 	excerpt: string;
+	previewImage?: string;
 	links: PressCoverageLink[];
 };
 
@@ -23,6 +24,7 @@ export const pressCoverage: PressCoverage[] = [
 		publishedAt: '2026-07-27',
 		excerpt:
 			'Deo Arlo joins Ignite to discuss replacing 100-year-old radar assumptions with a passive sensor mesh, why sensing, not interceptors, is the real bottleneck in counter-drone defense, and what Ukraine teaches about battlefield innovation.',
+		previewImage: '/about/ignite-preview.png',
 		links: [
 			{
 				label: 'Read the article',

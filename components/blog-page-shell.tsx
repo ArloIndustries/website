@@ -29,7 +29,7 @@ export default function BlogPageShell({ children }: BlogPageShellProps) {
 		>
 			<SiteHeader />
 
-			<div className='relative z-10 flex-grow px-6 py-8 lg:py-16 pb-16 lg:pb-24'>
+			<div className='relative z-10 flex-grow px-6 py-8 pb-48 lg:py-16 lg:pb-64'>
 				{children}
 			</div>
 		</div>

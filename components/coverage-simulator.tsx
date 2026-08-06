@@ -1,7 +1,7 @@
 'use client';
 
 /**
- * CoverageSimulator — interactive deployment planner.
+ * CoverageSimulator, interactive deployment planner.
  *
  * Draw an area on the satellite map and the planner computes how many Arlo
  * sensor nodes are needed to cover it: nodes are packed on a hexagonal
