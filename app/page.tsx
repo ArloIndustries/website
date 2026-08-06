@@ -45,7 +45,7 @@ const CAPABILITIES = [
 	{
 		index: '03',
 		title: 'RESILIENT & SCALABLE',
-		body: 'Not a single point of failure. System maintains coverage even when some nodes are impacted. Man-portable, quick to deploy, GNSS-denied capable, and up to 10x cheaper than alternatives.',
+		body: 'Not a single point of failure. System maintains coverage even when some nodes are impacted. Man-portable, quick to deploy, GNSS-denied capable, and up to 10x more cost-effective than alternatives.',
 	},
 ];
 
