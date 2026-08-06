@@ -115,7 +115,7 @@ export default function PressPage() {
 		>
 			<SiteHeader />
 
-			<div className='relative z-10 flex-grow px-6 pb-16 lg:px-12 lg:pb-24'>
+			<div className='relative z-10 flex-grow px-6 pt-8 pb-16 lg:px-12 lg:pt-16 lg:pb-24'>
 				<div className='max-w-6xl mx-auto'>
 					<header className='text-center mb-10 lg:mb-14'>
 						<h1 className='text-4xl lg:text-6xl font-bold mb-4'>PRESS</h1>

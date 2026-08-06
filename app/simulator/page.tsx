@@ -28,7 +28,7 @@ export default function SimulatorPage() {
 			className={`flex h-[100dvh] flex-col overflow-hidden ${THEME_SURFACE_CLASS}`}
 		>
 			<SiteHeader />
-			<div className='px-6 pb-3 lg:px-12'>
+			<div className='px-6 pt-8 pb-3 lg:px-12 lg:pt-16'>
 				<div className='group relative z-[700] inline-block'>
 					<button
 						type='button'
