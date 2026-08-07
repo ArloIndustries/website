@@ -42,11 +42,18 @@ export default function MentatPage() {
 				</header>
 
 				<div className='mx-auto mb-8 lg:mb-12 w-full'>
-					<img
+					<video
 						src={MENTAT_VID_URL}
-						alt='Mentat mesh visualisation'
-						draggable={false}
-						className='w-full h-auto'
+						autoPlay
+						muted
+						loop
+						playsInline
+						preload='auto'
+						controlsList='nodownload'
+						disablePictureInPicture
+						onContextMenu={(event) => event.preventDefault()}
+						className='h-auto w-full bg-black'
+						aria-label='Mentat mesh visualisation'
 					/>
 				</div>
 
