@@ -195,13 +195,14 @@ img {
 	height: 3px;
 	background: rgba(239, 68, 68, 0.35);
 	outline: none;
+	touch-action: none;
 }
 
 .arlo-slider::-webkit-slider-thumb {
 	-webkit-appearance: none;
 	appearance: none;
-	width: 14px;
-	height: 14px;
+	width: 18px;
+	height: 18px;
 	background: #ef4444;
 	cursor: pointer;
 	border: 2px solid #000;
@@ -209,10 +210,36 @@ img {
 }
 
 .arlo-slider::-moz-range-thumb {
-	width: 14px;
-	height: 14px;
+	width: 18px;
+	height: 18px;
 	background: #ef4444;
 	cursor: pointer;
 	border: 2px solid #000;
 	border-radius: 0;
+}
+
+@media (min-width: 768px) {
+	.arlo-slider::-webkit-slider-thumb {
+		width: 14px;
+		height: 14px;
+	}
+
+	.arlo-slider::-moz-range-thumb {
+		width: 14px;
+		height: 14px;
+	}
+}
+
+/* Keep Leaflet chrome clear of the mobile bottom dock */
+@media (max-width: 767px) {
+	.leaflet-top.leaflet-right {
+		top: 0.5rem;
+		right: 0.5rem;
+	}
+
+	.leaflet-control-attribution {
+		max-width: calc(100vw - 1rem);
+		font-size: 9px !important;
+		margin: 0 0 0.25rem 0.25rem !important;
+	}
 }

@@ -200,6 +200,7 @@ export default function CoverageSimulator() {
 	const [redundancy, setRedundancy] = useState(2);
 	const [stats, setStats] = useState<Stats | null>(null);
 	const [nodes, setNodes] = useState<LatLng[]>([]);
+	const [controlsOpen, setControlsOpen] = useState(false);
 
 	/* ---------- map init ---------- */
 	useEffect(() => {
@@ -211,8 +212,9 @@ export default function CoverageSimulator() {
 			zoomControl: false,
 			attributionControl: true,
 			doubleClickZoom: false,
+			tapTolerance: 25,
 		});
-		L.control.zoom({ position: 'bottomright' }).addTo(map);
+		L.control.zoom({ position: 'topright' }).addTo(map);
 
 		L.tileLayer(
 			'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
@@ -232,7 +234,10 @@ export default function CoverageSimulator() {
 
 		map.on('click', (e: L.LeafletMouseEvent) => {
 			if (!drawingRef.current) return;
-			draftPointsRef.current = [...draftPointsRef.current, [e.latlng.lat, e.latlng.lng]];
+			draftPointsRef.current = [
+				...draftPointsRef.current,
+				[e.latlng.lat, e.latlng.lng],
+			];
 			setDraftCount(draftPointsRef.current.length);
 			renderDraft();
 		});
@@ -245,12 +250,29 @@ export default function CoverageSimulator() {
 		// demo: preload the first preset so the simulator shows a result immediately
 		setPolygon(PRESETS[0].area);
 
+		const onResize = () => {
+			map.invalidateSize({ animate: false });
+		};
+		window.addEventListener('resize', onResize);
+		// layout settles after header/chrome paint
+		requestAnimationFrame(onResize);
+
 		return () => {
+			window.removeEventListener('resize', onResize);
 			map.remove();
 			mapRef.current = null;
 		};
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
+
+	useEffect(() => {
+		const map = mapRef.current;
+		if (!map) return;
+		const id = window.setTimeout(() => {
+			map.invalidateSize({ animate: false });
+		}, 180);
+		return () => window.clearTimeout(id);
+	}, [controlsOpen, drawing]);
 
 	/* ---------- drawing ---------- */
 	const renderDraft = useCallback(() => {
@@ -275,6 +297,7 @@ export default function CoverageSimulator() {
 	const finishDrawingInternal = useCallback(() => {
 		drawingRef.current = false;
 		setDrawing(false);
+		mapRef.current?.dragging.enable();
 		const pts = draftPointsRef.current;
 		if (pts.length >= 3) {
 			setPolygon(pts);
@@ -294,11 +317,14 @@ export default function CoverageSimulator() {
 		draftLayerRef.current?.clearLayers();
 		drawingRef.current = true;
 		setDrawing(true);
+		setControlsOpen(false);
+		mapRef.current?.dragging.disable();
 	}, []);
 
 	const cancelDrawing = useCallback(() => {
 		drawingRef.current = false;
 		setDrawing(false);
+		mapRef.current?.dragging.enable();
 		draftPointsRef.current = [];
 		setDraftCount(0);
 		draftLayerRef.current?.clearLayers();
@@ -396,134 +422,165 @@ export default function CoverageSimulator() {
 			);
 		});
 
-		map.fitBounds(L.latLngBounds(polygon.map((p) => L.latLng(p[0], p[1]))).pad(0.25));
+		map.fitBounds(L.latLngBounds(polygon.map((p) => L.latLng(p[0], p[1]))), {
+			paddingTopLeft: [16, 16],
+			paddingBottomRight:
+				typeof window !== 'undefined' && window.innerWidth < 768
+					? [16, 140]
+					: [16, 100],
+		});
 	}, [polygon, radiusKm, redundancy]);
 
 	/* ---------- export ---------- */
 	/* ---------- UI ---------- */
 	const panelBtn =
-		'w-full border border-red-500/70 px-3 py-2 text-left text-sm font-bold tracking-wider text-red-500 transition-colors hover:bg-red-500 hover:text-black disabled:opacity-40 disabled:hover:bg-transparent disabled:hover:text-red-500';
+		'border border-red-500/70 px-3 py-2.5 text-sm font-bold tracking-wider text-red-500 transition-colors hover:bg-red-500 hover:text-black disabled:opacity-40 disabled:hover:bg-transparent disabled:hover:text-red-500 active:bg-red-500 active:text-black';
+
+	const statsItems = [
+		{
+			label: 'AREA',
+			value: stats ? `${stats.areaKm2.toFixed(1)} KM²` : '--',
+		},
+		{
+			label: 'NODES',
+			value: stats ? `${stats.nodeCount}${stats.truncated ? '+' : ''}` : '--',
+			highlight: true,
+		},
+		{
+			label: 'SPACING',
+			value: stats ? `${Math.round(stats.spacingM)} M` : '--',
+		},
+		{
+			label: 'COVER',
+			value: stats ? `${redundancy}× / ${radiusKm.toFixed(1)}KM` : '--',
+		},
+	];
+
+	const sliders = (
+		<>
+			<div className='flex flex-col gap-1.5'>
+				<label className='flex items-center justify-between text-xs tracking-wider'>
+					<span>DETECTION RADIUS</span>
+					<span className='font-bold text-red-400'>{radiusKm.toFixed(2)} KM</span>
+				</label>
+				<input
+					type='range'
+					min={0.25}
+					max={3}
+					step={0.05}
+					value={radiusKm}
+					onChange={(e) => setRadiusKm(parseFloat(e.target.value))}
+					className='arlo-slider'
+				/>
+				<div className='text-xs leading-snug opacity-75'>
+					Assured range against small UAS.
+				</div>
+			</div>
+
+			<div className='flex flex-col gap-1.5'>
+				<label className='flex items-center justify-between text-xs tracking-wider'>
+					<span>REDUNDANCY</span>
+					<span className='font-bold text-red-400'>{redundancy}×</span>
+				</label>
+				<input
+					type='range'
+					min={1}
+					max={4}
+					step={1}
+					value={redundancy}
+					onChange={(e) => setRedundancy(parseInt(e.target.value, 10))}
+					className='arlo-slider'
+				/>
+				<div className='text-xs leading-snug opacity-75'>
+					Overlapping nodes per target.
+				</div>
+			</div>
+		</>
+	);
+
+	const presets = (
+		<div className='flex flex-col gap-1.5'>
+			<div className='text-xs tracking-wider opacity-70'>PRESET SCENARIOS</div>
+			<div className='grid grid-cols-4 gap-1 sm:grid-cols-2'>
+				{PRESETS.map((p, i) => (
+					<button
+						key={p.label}
+						type='button'
+						className={`${panelBtn} !px-1.5 text-[10px] !text-center sm:!px-2 sm:text-xs`}
+						onClick={() => {
+							loadPreset(i);
+							setControlsOpen(false);
+						}}
+					>
+						{p.label}
+					</button>
+				))}
+			</div>
+		</div>
+	);
+
+	const drawingControls = !drawing ? (
+		<button
+			type='button'
+			className={`${panelBtn} w-full text-center`}
+			onClick={startDrawing}
+		>
+			▸ DRAW AREA
+		</button>
+	) : (
+		<div className='flex flex-col gap-2 border border-red-500/40 bg-black/40 p-3'>
+			<div className='text-xs leading-relaxed opacity-85'>
+				Tap the map to place vertices ({draftCount} placed). Need at least 3,
+				then press FINISH.
+			</div>
+			<div className='grid grid-cols-2 gap-2'>
+				<button
+					type='button'
+					className={`${panelBtn} text-center`}
+					onClick={finishDrawingInternal}
+					disabled={draftCount < 3}
+				>
+					FINISH
+				</button>
+				<button
+					type='button'
+					className={`${panelBtn} text-center`}
+					onClick={cancelDrawing}
+				>
+					CANCEL
+				</button>
+			</div>
+		</div>
+	);
 
 	return (
-		<div className='relative h-full w-full overflow-hidden'>
+		<div className='relative h-full w-full overflow-hidden touch-manipulation'>
 			<div ref={mapDivRef} className='absolute inset-0 z-0 bg-black' />
 
-			{/* control panel */}
-			<div className='absolute left-4 top-4 z-[500] flex w-[300px] max-w-[calc(100vw-2rem)] flex-col gap-4 border-2 border-red-500 bg-black/85 p-4 text-red-500 backdrop-blur-sm max-h-[calc(100%-2rem)] overflow-y-auto'>
+			{/* Desktop control panel */}
+			<div className='absolute left-4 top-4 z-[500] hidden w-[300px] max-h-[calc(100%-2rem)] flex-col gap-4 overflow-y-auto border-2 border-red-500 bg-black/85 p-4 text-red-500 backdrop-blur-sm md:flex'>
 				<div>
 					<div className='text-xs tracking-[0.3em] opacity-70'>ARLO INDUSTRIES</div>
 					<div className='text-lg font-black tracking-wider'>COVERAGE PLANNER</div>
 				</div>
 
-				<div className='my-3 flex flex-col'>
-					{!drawing ? (
-						<button className={`${panelBtn} text-center`} onClick={startDrawing}>
-							▸ DRAW COVERAGE AREA
-						</button>
-					) : (
-						<div className='flex flex-col gap-2 border border-red-500/40 p-3 bg-black/40'>
-							<div className='text-xs leading-relaxed opacity-85'>
-								Click map to drop vertices ({draftCount} placed).
-								Double-click or press FINISH to close the area.
-							</div>
-							<div className='flex gap-2'>
-								<button
-									className={`${panelBtn} text-center`}
-									onClick={finishDrawingInternal}
-									disabled={draftCount < 3}
-								>
-									FINISH
-								</button>
-								<button className={`${panelBtn} text-center`} onClick={cancelDrawing}>
-									CANCEL
-								</button>
-							</div>
-						</div>
-					)}
-				</div>
+				<div className='flex flex-col'>{drawingControls}</div>
+				{sliders}
+				{presets}
 
-				<div className='flex flex-col gap-1.5'>
-					<label className='flex items-center justify-between text-xs tracking-wider'>
-						<span>DETECTION RADIUS</span>
-						<span className='font-bold text-red-400'>{radiusKm.toFixed(2)} KM</span>
-					</label>
-					<input
-						type='range'
-						min={0.25}
-						max={3}
-						step={0.05}
-						value={radiusKm}
-						onChange={(e) => setRadiusKm(parseFloat(e.target.value))}
-						className='arlo-slider'
-					/>
-					<div className='text-xs leading-snug opacity-75'>
-						Assured range against small UAS.
-					</div>
-				</div>
-
-				<div className='flex flex-col gap-1.5'>
-					<label className='flex items-center justify-between text-xs tracking-wider'>
-						<span>REDUNDANCY</span>
-						<span className='font-bold text-red-400'>{redundancy}×</span>
-					</label>
-					<input
-						type='range'
-						min={1}
-						max={4}
-						step={1}
-						value={redundancy}
-						onChange={(e) => setRedundancy(parseInt(e.target.value, 10))}
-						className='arlo-slider'
-					/>
-					<div className='text-xs leading-snug opacity-75'>
-						Overlapping nodes per target.
-					</div>
-				</div>
-
-				<div className='flex flex-col gap-1.5'>
-					<div className='text-xs tracking-wider opacity-70'>PRESET SCENARIOS</div>
-					<div className='grid grid-cols-2 gap-1'>
-						{PRESETS.map((p, i) => (
-							<button
-								key={p.label}
-								className={`${panelBtn} !px-2 text-xs !text-center`}
-								onClick={() => loadPreset(i)}
-							>
-								{p.label}
-							</button>
-						))}
-					</div>
-				</div>
-
-				<button className={`${panelBtn} text-center`} onClick={clearAll}>
+				<button
+					type='button'
+					className={`${panelBtn} w-full text-center`}
+					onClick={clearAll}
+				>
 					CLEAR
 				</button>
 			</div>
 
-			{/* stats readout */}
-			<div className='absolute bottom-4 left-1/2 z-[500] w-[min(680px,calc(100vw-2rem))] -translate-x-1/2'>
-				<div className='grid grid-cols-2 gap-px border-2 border-red-500 bg-red-500/60 sm:grid-cols-4'>
-					{[
-						{
-							label: 'AREA',
-							value: stats ? `${stats.areaKm2.toFixed(2)} KM²` : '--',
-						},
-						{
-							label: 'NODES REQUIRED',
-							value: stats
-								? `${stats.nodeCount}${stats.truncated ? '+' : ''}`
-								: '--',
-							highlight: true,
-						},
-						{
-							label: 'NODE SPACING',
-							value: stats ? `${Math.round(stats.spacingM)} M` : '--',
-						},
-						{
-							label: 'REDUNDANCY',
-							value: stats ? `${redundancy}× / ${radiusKm.toFixed(2)} KM` : '--',
-						},
-					].map((s) => (
+			{/* Desktop stats */}
+			<div className='absolute bottom-4 left-1/2 z-[500] hidden w-[min(680px,calc(100vw-2rem))] -translate-x-1/2 md:block'>
+				<div className='grid grid-cols-4 gap-px border-2 border-red-500 bg-red-500/60'>
+					{statsItems.map((s) => (
 						<div key={s.label} className='bg-black/90 px-3 py-2 backdrop-blur-sm'>
 							<div className='text-[10px] tracking-[0.2em] text-red-500/70'>
 								{s.label}
@@ -540,12 +597,107 @@ export default function CoverageSimulator() {
 				</div>
 				{stats?.truncated && (
 					<div className='mt-1 bg-black/80 px-2 py-1 text-center text-[11px] text-red-400'>
-						Area exceeds the {MAX_NODES}-node display limit. Shrink the area
-						or increase detection radius.
+						Area exceeds the {MAX_NODES}-node display limit. Shrink the area or
+						increase detection radius.
 					</div>
 				)}
 			</div>
 
+			{/* Mobile bottom dock */}
+			<div className='absolute inset-x-0 bottom-0 z-[500] md:hidden'>
+				<div className='border-t-2 border-red-500 bg-black/92 text-red-500 backdrop-blur-md'>
+					{/* Compact stats */}
+					<div className='grid grid-cols-4 gap-px border-b border-red-500/40 bg-red-500/40'>
+						{statsItems.map((s) => (
+							<div key={s.label} className='bg-black/95 px-1.5 py-1.5 text-center'>
+								<div className='text-[9px] tracking-[0.12em] text-red-500/70'>
+									{s.label}
+								</div>
+								<div
+									className={`truncate font-black tracking-wide ${
+										s.highlight ? 'text-base text-red-400' : 'text-sm text-red-500'
+									}`}
+								>
+									{s.value}
+								</div>
+							</div>
+						))}
+					</div>
+
+					{stats?.truncated && (
+						<div className='border-b border-red-500/30 px-3 py-1 text-center text-[10px] text-red-400'>
+							Over {MAX_NODES} nodes — shrink area or raise radius.
+						</div>
+					)}
+
+					{/* Drawing banner when active */}
+					{drawing && (
+						<div className='border-t border-red-500/40 px-3 py-2 text-xs leading-relaxed opacity-90'>
+							Tap map to place points ({draftCount}). Finish with 3+.
+						</div>
+					)}
+
+					{/* Expanded controls */}
+					{controlsOpen && !drawing && (
+						<div className='max-h-[42dvh] space-y-3 overflow-y-auto overscroll-contain border-t border-red-500/40 px-3 py-3'>
+							{sliders}
+							{presets}
+						</div>
+					)}
+
+					{/* Action bar */}
+					<div className='grid grid-cols-3 gap-2 px-3 py-2.5 pb-[max(0.625rem,env(safe-area-inset-bottom))]'>
+						{!drawing ? (
+							<button
+								type='button'
+								className={`${panelBtn} text-center text-xs`}
+								onClick={startDrawing}
+							>
+								▸ DRAW
+							</button>
+						) : (
+							<button
+								type='button'
+								className={`${panelBtn} text-center text-xs`}
+								onClick={finishDrawingInternal}
+								disabled={draftCount < 3}
+							>
+								FINISH
+							</button>
+						)}
+						{!drawing ? (
+							<button
+								type='button'
+								aria-expanded={controlsOpen}
+								className={`${panelBtn} text-center text-xs ${
+									controlsOpen ? 'bg-red-500 text-black' : ''
+								}`}
+								onClick={() => setControlsOpen((open) => !open)}
+							>
+								{controlsOpen ? 'HIDE' : 'CONTROLS'}
+							</button>
+						) : (
+							<button
+								type='button'
+								className={`${panelBtn} text-center text-xs`}
+								onClick={cancelDrawing}
+							>
+								CANCEL
+							</button>
+						)}
+						<button
+							type='button'
+							className={`${panelBtn} text-center text-xs`}
+							onClick={() => {
+								clearAll();
+								setControlsOpen(false);
+							}}
+						>
+							CLEAR
+						</button>
+					</div>
+				</div>
+			</div>
 		</div>
 	);
 }
