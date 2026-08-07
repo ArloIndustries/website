@@ -10,7 +10,8 @@ import { getPressCoverageSorted } from '@/lib/press-coverage';
 import { formatPressLabel, pressAssetUrl } from '@/lib/press';
 import { THEME_CARD_BORDER_CLASS, THEME_SURFACE_CLASS } from '@/lib/theme';
 
-const VISIBLE_ASSET_COUNT = 6;
+const VISIBLE_ASSET_COUNT_MOBILE = 4;
+const VISIBLE_ASSET_COUNT_DESKTOP = 6;
 
 /** Outlined button that inverts on hover; matches page accent per theme */
 const OUTLINE_BUTTON_COLOR_CLASS =
@@ -21,8 +22,25 @@ export default function PressPage() {
 	const [loadingFiles, setLoadingFiles] = useState(true);
 	const [downloadingAll, setDownloadingAll] = useState(false);
 	const [showAllAssets, setShowAllAssets] = useState(false);
+	const [visibleAssetCount, setVisibleAssetCount] = useState(
+		VISIBLE_ASSET_COUNT_DESKTOP,
+	);
 
 	const coverage = getPressCoverageSorted();
+
+	useEffect(() => {
+		const media = window.matchMedia('(min-width: 1024px)');
+		const update = () => {
+			setVisibleAssetCount(
+				media.matches
+					? VISIBLE_ASSET_COUNT_DESKTOP
+					: VISIBLE_ASSET_COUNT_MOBILE,
+			);
+		};
+		update();
+		media.addEventListener('change', update);
+		return () => media.removeEventListener('change', update);
+	}, []);
 
 	useEffect(() => {
 		let cancelled = false;
@@ -107,7 +125,7 @@ export default function PressPage() {
 
 	const visibleFiles = showAllAssets
 		? files
-		: files.slice(0, VISIBLE_ASSET_COUNT);
+		: files.slice(0, visibleAssetCount);
 
 	return (
 		<div
@@ -215,38 +233,38 @@ export default function PressPage() {
 
 						{!loadingFiles && files.length > 0 && (
 							<>
-								<ul className='grid grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6'>
+								<ul className='grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5 lg:gap-6'>
 									{visibleFiles.map((filename) => (
 										<li
 											key={filename}
-											className={`flex flex-col border-2 ${borderColor} ${cardBg}`}
+											className={`flex min-w-0 flex-col border-2 ${borderColor} ${cardBg}`}
 										>
-											<div className='relative aspect-[4/3] flex items-center justify-center bg-white p-6'>
+											<div className='relative aspect-square overflow-hidden bg-zinc-200 dark:bg-zinc-800 sm:aspect-[4/3]'>
 												<Image
 													src={pressAssetUrl(filename)}
 													alt={formatPressLabel(filename)}
-													width={400}
-													height={300}
+													fill
 													draggable={false}
-													className='max-h-full w-auto h-auto object-contain'
+													sizes='(max-width: 1024px) 50vw, 33vw'
+													className='object-contain p-3 sm:p-5 lg:p-6'
 													unoptimized
 												/>
 											</div>
-											<div className='p-4 flex flex-col gap-3 flex-grow'>
-												<div>
-													<p className='font-bold text-sm lg:text-base leading-tight'>
+											<div className='flex flex-grow flex-col gap-2 p-3 sm:gap-3 sm:p-4'>
+												<div className='min-w-0'>
+													<p className='truncate text-xs font-bold leading-tight sm:text-sm lg:text-base'>
 														{formatPressLabel(filename)}
 													</p>
-													<p className='text-xs opacity-70 mt-1 break-all'>
+													<p className='mt-1 hidden truncate text-xs opacity-70 sm:block'>
 														{filename}
 													</p>
 												</div>
 												<a
 													href={pressAssetUrl(filename)}
 													download={filename}
-													className={`mt-auto inline-flex items-center justify-center gap-2 px-4 py-2 text-sm font-bold tracking-wide uppercase border-2 transition-colors ${OUTLINE_BUTTON_COLOR_CLASS}`}
+													className={`mt-auto inline-flex items-center justify-center gap-1.5 px-2.5 py-2 text-[11px] font-bold tracking-wide uppercase border-2 transition-colors sm:gap-2 sm:px-4 sm:text-sm ${OUTLINE_BUTTON_COLOR_CLASS}`}
 												>
-													<Download className='w-4 h-4' />
+													<Download className='h-3.5 w-3.5 sm:h-4 sm:w-4' />
 													Download
 												</a>
 											</div>
@@ -254,7 +272,7 @@ export default function PressPage() {
 									))}
 								</ul>
 
-								{files.length > VISIBLE_ASSET_COUNT && (
+								{files.length > visibleAssetCount && (
 									<div className='mt-8 flex justify-center'>
 										<button
 											type='button'
