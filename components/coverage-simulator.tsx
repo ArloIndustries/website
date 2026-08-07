@@ -605,11 +605,11 @@ export default function CoverageSimulator() {
 
 			{/* Mobile bottom dock */}
 			<div className='absolute inset-x-0 bottom-0 z-[500] md:hidden'>
-				<div className='border-t-2 border-red-500 bg-black/92 text-red-500 backdrop-blur-md'>
+				<div className='border-t-2 border-red-500 bg-black/95 text-red-500 backdrop-blur-xl supports-[backdrop-filter]:bg-black/90'>
 					{/* Compact stats */}
 					<div className='grid grid-cols-4 gap-px border-b border-red-500/40 bg-red-500/40'>
 						{statsItems.map((s) => (
-							<div key={s.label} className='bg-black/95 px-1.5 py-1.5 text-center'>
+							<div key={s.label} className='bg-black px-1.5 py-1.5 text-center'>
 								<div className='text-[9px] tracking-[0.12em] text-red-500/70'>
 									{s.label}
 								</div>
