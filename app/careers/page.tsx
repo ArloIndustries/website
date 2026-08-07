@@ -5,7 +5,6 @@ import Link from 'next/link';
 import { ExternalLink } from 'lucide-react';
 import BlogPageShell from '@/components/blog-page-shell';
 import { careersImageUrl, pickCareersImages, YC_JOBS_URL } from '@/lib/careers';
-import { THEME_CARD_BORDER_CLASS } from '@/lib/theme';
 import { useEffect, useState } from 'react';
 
 export default function CareersPage() {
@@ -32,7 +31,6 @@ export default function CareersPage() {
 	}, []);
 
 	const highlightClass = 'font-bold';
-	const borderColor = THEME_CARD_BORDER_CLASS;
 	const { hero: heroImage, gallery: galleryImages } = pickCareersImages(images);
 	const photoClass = 'object-cover grayscale';
 
@@ -64,9 +62,7 @@ export default function CareersPage() {
 
 				{heroImage && (
 					<figure className='w-full mb-14 lg:mb-20 text-center'>
-						<div
-							className={`relative w-full aspect-[16/10] border-2 overflow-hidden ${borderColor}`}
-						>
+						<div className='relative w-full aspect-[16/10] overflow-hidden'>
 							<Image
 								src={careersImageUrl(heroImage)}
 								alt='Arlo Industries team'
@@ -109,7 +105,7 @@ export default function CareersPage() {
 						{galleryImages.map((filename) => (
 							<figure
 								key={filename}
-								className={`relative aspect-[4/3] border-2 overflow-hidden ${borderColor}`}
+								className='relative aspect-[4/3] overflow-hidden'
 							>
 								<Image
 									src={careersImageUrl(filename)}

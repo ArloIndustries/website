@@ -1,7 +1,8 @@
 'use client';
 
 import dynamic from 'next/dynamic';
-import { useState } from 'react';
+import { useEffect, useId, useRef, useState } from 'react';
+import { Info } from 'lucide-react';
 import SiteHeader from '@/components/site-header';
 import { THEME_SURFACE_CLASS } from '@/lib/theme';
 
@@ -22,6 +23,28 @@ const CoverageSimulator = dynamic(
 
 export default function SimulatorPage() {
 	const [isMethodNoteOpen, setIsMethodNoteOpen] = useState(false);
+	const noteId = useId();
+	const noteRef = useRef<HTMLDivElement>(null);
+
+	useEffect(() => {
+		if (!isMethodNoteOpen) return;
+
+		const onPointerDown = (event: PointerEvent) => {
+			if (!noteRef.current?.contains(event.target as Node)) {
+				setIsMethodNoteOpen(false);
+			}
+		};
+		const onKeyDown = (event: KeyboardEvent) => {
+			if (event.key === 'Escape') setIsMethodNoteOpen(false);
+		};
+
+		document.addEventListener('pointerdown', onPointerDown);
+		document.addEventListener('keydown', onKeyDown);
+		return () => {
+			document.removeEventListener('pointerdown', onPointerDown);
+			document.removeEventListener('keydown', onKeyDown);
+		};
+	}, [isMethodNoteOpen]);
 
 	return (
 		<div
@@ -29,33 +52,43 @@ export default function SimulatorPage() {
 		>
 			<SiteHeader />
 			<div className='px-6 pt-8 pb-3 lg:px-12 lg:pt-16'>
-				<div className='group relative z-[700] inline-block'>
-					<button
-						type='button'
-						aria-expanded={isMethodNoteOpen}
-						aria-describedby='coverage-method-note'
-						onClick={() => setIsMethodNoteOpen((open) => !open)}
-						className='cursor-help text-left'
-					>
-						<h1 className='text-2xl font-black tracking-tight lg:text-3xl'>
-							COVERAGE SIMULATOR
-						</h1>
-					</button>
+				<div className='relative z-[700] flex items-center gap-2'>
+					<h1 className='text-2xl font-black tracking-tight lg:text-3xl'>
+						COVERAGE SIMULATOR
+					</h1>
 					<div
-						id='coverage-method-note'
-						role='note'
-						className={`absolute left-0 top-full mt-3 w-[min(28rem,calc(100vw-3rem))] origin-top-left border-2 border-red-500 bg-black/95 p-4 text-sm font-mono leading-relaxed text-red-400 shadow-[0_0_18px_rgba(239,68,68,0.35)] backdrop-blur-md transition-all duration-200 ${
-							isMethodNoteOpen
-								? 'visible scale-100 opacity-100'
-								: 'invisible scale-95 opacity-0 group-hover:visible group-hover:scale-100 group-hover:opacity-100 group-focus-within:visible group-focus-within:scale-100 group-focus-within:opacity-100'
-						}`}
+						ref={noteRef}
+						className='group relative'
+						onMouseEnter={() => setIsMethodNoteOpen(true)}
+						onMouseLeave={() => setIsMethodNoteOpen(false)}
 					>
-						<span className='mb-2 block text-xs font-black tracking-widest text-red-500'>
-							SIMULATION NOTE
-						</span>
-						This simulator uses a simplified equidistant grid for rapid coverage
-						estimates. Actual deployment uses a comprehensive positioning model
-						that accounts for terrain, elevation, and line-of-sight constraints.
+						<button
+							type='button'
+							aria-expanded={isMethodNoteOpen}
+							aria-controls={noteId}
+							aria-label='Simulation note'
+							onClick={() => setIsMethodNoteOpen((open) => !open)}
+							className='inline-flex h-7 w-7 items-center justify-center text-current opacity-70 transition-opacity hover:opacity-100 focus-visible:opacity-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-current'
+						>
+							<Info className='h-5 w-5' strokeWidth={2.25} aria-hidden />
+						</button>
+						<div
+							id={noteId}
+							role='note'
+							className={`absolute left-1/2 top-full z-[700] mt-3 w-[min(28rem,calc(100vw-3rem))] -translate-x-1/2 origin-top border-2 border-red-500 bg-black/95 p-4 text-sm font-mono leading-relaxed text-red-400 shadow-[0_0_18px_rgba(239,68,68,0.35)] backdrop-blur-md transition-all duration-200 sm:left-0 sm:translate-x-0 sm:origin-top-left ${
+								isMethodNoteOpen
+									? 'visible scale-100 opacity-100'
+									: 'invisible scale-95 opacity-0'
+							}`}
+						>
+							<span className='mb-2 block text-xs font-black tracking-widest text-red-500'>
+								SIMULATION NOTE
+							</span>
+							This simulator uses a simplified equidistant grid for rapid
+							coverage estimates. Actual deployment uses a comprehensive
+							positioning model that accounts for terrain, elevation, and
+							line-of-sight constraints.
+						</div>
 					</div>
 				</div>
 				<p className='relative z-[600] my-4 max-w-3xl text-sm opacity-70 lg:my-6 lg:text-base'>

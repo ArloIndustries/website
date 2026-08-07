@@ -53,7 +53,7 @@ export default function YcLaunchBody({ highlightClass }: YcLaunchBodyProps) {
 			</p>
 
 			<figure>
-				<div className='relative aspect-[3/2] overflow-hidden border-2 border-current'>
+				<div className='relative aspect-[3/2] overflow-hidden'>
 					<Image
 						src='/about/demoday.jpg'
 						alt='Deo Arlo presenting Arlo Industries at Y Combinator Demo Day'

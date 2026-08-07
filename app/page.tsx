@@ -196,7 +196,7 @@ export default function Component() {
 											key={quoteIndex}
 											text={QUOTES[quoteIndex]}
 											speed={30}
-											cursorClassName='text-black dark:text-red-500'
+											cursorClassName='text-white'
 										/>
 									</span>
 								</h1>
@@ -270,7 +270,7 @@ export default function Component() {
 			{/* About */}
 			<section className='relative z-10 border-t-2 border-red-500/40 bg-black px-6 py-24 text-white lg:px-12 lg:py-32'>
 				<div className='mx-auto grid max-w-6xl items-center gap-10 md:grid-cols-2 lg:gap-16'>
-					<div className='relative aspect-[4/3] w-full max-w-md justify-self-center overflow-hidden border-2 border-red-500/60 md:aspect-auto md:h-full md:self-stretch md:justify-self-start'>
+					<div className='relative aspect-[4/3] w-full max-w-md justify-self-center overflow-hidden md:aspect-auto md:h-full md:self-stretch md:justify-self-start'>
 						<Image
 							src='/about/YC.jpeg'
 							alt='Deo Arlo at Y Combinator'

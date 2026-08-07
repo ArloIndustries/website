@@ -237,7 +237,7 @@ export default function PressPage() {
 									{visibleFiles.map((filename) => (
 										<li
 											key={filename}
-											className={`flex min-w-0 flex-col border-2 ${borderColor} ${cardBg}`}
+											className={`flex min-w-0 flex-col ${cardBg}`}
 										>
 											<div className='relative aspect-square overflow-hidden bg-zinc-200 dark:bg-zinc-800 sm:aspect-[4/3]'>
 												<Image

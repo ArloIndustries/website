@@ -4,7 +4,7 @@ type OurStoryBodyProps = {
 	highlightClass: string;
 };
 
-const videoClass = 'my-8 h-auto w-full border-2 border-current bg-black';
+const videoClass = 'my-8 h-auto w-full bg-black';
 
 const blockDownload = {
 	controlsList: 'nodownload',
