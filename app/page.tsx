@@ -313,7 +313,7 @@ export default function Component() {
 							<span className={textColor}>Y COMBINATOR</span>
 						</div>
 						<div className='flex items-center justify-between pt-2.5'>
-							<span>OFFICES</span>
+							<span>BASES</span>
 							<span className={textColor}>New York City · KYIV</span>
 						</div>
 					</div>
