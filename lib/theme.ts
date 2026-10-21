@@ -6,11 +6,11 @@
 
 /** Page background + text colours shared by full-page surfaces */
 export const THEME_SURFACE_CLASS =
-	'bg-red-600 text-black dark:bg-black dark:text-red-500';
+	'bg-white text-black dark:bg-black dark:text-red-500';
 
 /** Card border colour shared by blog and press list cards */
-export const THEME_CARD_BORDER_CLASS = 'border-red-800 dark:border-red-900';
+export const THEME_CARD_BORDER_CLASS = 'border-black/20 dark:border-red-900';
 
-/** Outline frame; hover fills red with black text (matches GET IN TOUCH). */
+/** Outline frame; hover fills red. Light: black on white. Dark: red on black. */
 export const OUTLINE_CTA_CLASS =
-	'transition-colors border-2 bg-transparent border-white/90 text-white hover:bg-red-500 hover:text-black hover:border-red-500 dark:border-red-500 dark:text-red-500';
+	'transition-colors border-2 bg-transparent border-black text-black hover:bg-red-500 hover:text-white hover:border-red-500 dark:border-red-500 dark:text-red-500 dark:hover:bg-red-500 dark:hover:text-black';

@@ -8,7 +8,7 @@ interface NewsletterSignupProps {
 }
 
 const BACK_BUTTON_CLASS =
-	'text-sm font-medium underline hover:no-underline transition-all cursor-pointer bg-transparent border-none text-white/70 hover:text-white dark:text-gray-400 dark:hover:text-white';
+	'text-sm font-medium underline hover:no-underline transition-all cursor-pointer bg-transparent border-none text-black/60 hover:text-black dark:text-gray-400 dark:hover:text-white';
 
 export default function NewsletterSignup({
 	className = '',
@@ -96,9 +96,9 @@ export default function NewsletterSignup({
 						required
 						className='
 							min-w-0 flex-1 px-3 py-2.5 text-sm font-medium
-							bg-black/30 text-white placeholder-red-200/45
-							dark:bg-black dark:placeholder-gray-400
-							border-2 border-r-0 border-white/90 dark:border-red-500
+							bg-white text-black placeholder-black/40
+							dark:bg-black dark:text-red-500 dark:placeholder-gray-400
+							border-2 border-r-0 border-black dark:border-red-500
 							focus:outline-none focus:ring-2 focus:ring-red-500 focus:z-10
 							transition-colors
 						'
@@ -131,7 +131,7 @@ export default function NewsletterSignup({
 					<p
 						className={`
 						text-xs font-medium mb-2
-						text-white
+						text-black dark:text-white
 					`}
 						style={{ fontFamily: 'Inter, sans-serif' }}
 					>
@@ -150,7 +150,7 @@ export default function NewsletterSignup({
 			{status === 'error' && (
 				<div className='text-center'>
 					<p
-						className='text-xs font-medium mb-2 text-red-100 dark:text-red-400'
+						className='text-xs font-medium mb-2 text-red-600 dark:text-red-400'
 						style={{ fontFamily: 'Inter, sans-serif' }}
 					>
 						{errorMessage || 'Oops! Something went wrong, please try again'}

@@ -1,20 +1,17 @@
 'use client';
 
 import Link from 'next/link';
-import Image from 'next/image';
-import { Button } from '@/components/ui/button';
 import dynamic from 'next/dynamic';
 import { useState, useEffect, useRef } from 'react';
 import { Typewriter } from '@/components/ui/typewriter';
 import AnimatedLogo from '@/components/animated-logo';
-import HomeCtaColumn from '@/components/home-cta-column';
 import SiteHeader from '@/components/site-header';
 import { THEME_SURFACE_CLASS } from '@/lib/theme';
 import { useMountedTheme } from '@/lib/use-mounted-theme';
 
-// Dynamically import the 3D defense-grid scene to avoid SSR issues
-const DefenseGridBackground = dynamic(
-	() => import('@/components/defense-grid'),
+// Dynamically import the 3D terrain to avoid SSR issues
+const MeshTerrainBackground = dynamic(
+	() => import('@/components/mesh-terrain'),
 	{
 		ssr: false,
 		loading: () => (
@@ -35,24 +32,23 @@ const CAPABILITIES = [
 	{
 		index: '01',
 		title: 'PASSIVE & UNDETECTABLE',
-		body: 'Zero RF emissions. Nothing to jam, nothing to detect, nothing for anti-radiation weapons to home on. Your defences see the sky without ever revealing themselves.',
+		body: 'Zero RF emissions means nothing to jam, detect, or home on — your defences see the sky without revealing themselves.',
 	},
 	{
 		index: '02',
 		title: 'REAL-TIME 3D TRACKING',
-		body: 'Live 3D position, velocity, and heading for every target, from a single low-RCS drone to a full swarm. Low-latency data that feeds straight into your interceptors and effectors.',
+		body: 'Live 3D position, velocity, and heading for every target, from a single drone to a full swarm, feeding straight into interceptors.',
 	},
 	{
 		index: '03',
 		title: 'RESILIENT & SCALABLE',
-		body: 'Not a single point of failure. System maintains coverage even when some nodes are impacted. Man-portable, quick to deploy, GNSS-denied capable, and up to 10x more cost-effective than alternatives.',
+		body: 'A man-portable mesh that stays up when nodes are hit, works GNSS-denied, and costs up to 10x less than alternatives.',
 	},
 ];
 
 const FOOTER_LINKS = [
 	{ label: 'HOME', href: '/' },
-	{ label: 'SIMULATOR', href: '/simulator' },
-	{ label: 'PRESS', href: '/press' },
+	{ label: 'MEDIA', href: '/press' },
 	{
 		label: 'CONTACT',
 		href: 'https://www.linkedin.com/in/deoarlo/',
@@ -65,7 +61,6 @@ const BRAND_MARK_STEPS = ['h-px', 'h-0.5', 'h-1', 'h-2', 'h-4', 'h-8', 'h-16'];
 
 const SECTION_HEADING_CLASS =
 	'text-[clamp(1.45rem,5vw,3rem)] font-black leading-tight tracking-tight lg:text-5xl';
-const BODY_COPY_CLASS = 'text-base font-normal leading-relaxed lg:text-lg';
 
 type TypewriterHeadingOnViewProps = {
 	text: string;
@@ -164,66 +159,45 @@ export default function Component() {
 	const sectionBorder = 'border-black/30 dark:border-red-500/40';
 	const mutedText = 'text-black/70 dark:text-red-500/70';
 	const footerLinkClass =
-		'transition-colors hover:text-red-800 dark:hover:text-white';
+		'transition-colors hover:text-red-500 dark:hover:text-white';
+	const terrainColor = isDark ? '#660000' : '#ffffff';
 
 	return (
 		<div
 			className={`min-h-screen flex flex-col ${THEME_SURFACE_CLASS} relative transition-colors duration-300`}
 		>
-			{/* Hero, full viewport with the live defense-grid simulation */}
+			{/* Hero, full viewport with the flying wireframe terrain */}
 			<section className='relative flex min-h-[100svh] flex-col overflow-hidden'>
-				{isMounted && <DefenseGridBackground isDark={isDark} />}
+				{isMounted && (
+					<MeshTerrainBackground
+						color={terrainColor}
+						additive={isDark}
+					/>
+				)}
 
 				<SiteHeader />
 
-				<main className='relative z-10 flex-grow flex flex-col lg:flex-row items-center justify-center lg:justify-between gap-8 lg:gap-0 px-6 lg:px-12 py-12 lg:py-24'>
-					{/* Left Content - Title */}
-					<div className='flex-1 max-w-2xl z-10'>
-						<div className='relative w-fit'>
-							<div
-								aria-hidden
-								className='arlo-hero-veil absolute -inset-5 lg:-inset-8 backdrop-blur-md bg-red-600/45 dark:bg-black/45'
-							/>
-							<div
-								className='relative cursor-pointer'
-								onClick={handleNextQuote}
-							>
-								<h1 className='text-4xl lg:text-6xl xl:text-7xl font-black leading-tight tracking-tight'>
-									{/* full text stays in the DOM for crawlers and screen readers */}
-									<span className='sr-only'>{QUOTES[quoteIndex]}</span>
-									<span aria-hidden>
-										<Typewriter
-											key={quoteIndex}
-											text={QUOTES[quoteIndex]}
-											speed={30}
-											cursorClassName='text-white'
-										/>
-									</span>
-								</h1>
-							</div>
-							<p
-								className={`relative mt-6 max-w-xl ${BODY_COPY_CLASS} ${mutedText}`}
-							>
-								A decentralised grid of passive nodes delivering real-time 3D
-								tracking of drones and missiles. Nothing to jam. Nothing to
-								detect.
-							</p>
-							<div className='relative mt-8 flex flex-wrap items-center gap-4'>
-								<Button
-									variant='outline'
-									size='lg'
-									asChild
-									className='rounded-none font-bold tracking-wider text-sm lg:text-base bg-transparent transition-colors border-red-900 text-red-900 hover:bg-white hover:text-black hover:border-white dark:border-red-500 dark:text-red-500 dark:hover:bg-red-500 dark:hover:text-black dark:hover:border-red-500'
-								>
-									<Link href='/simulator'>▸ PLAN YOUR COVERAGE</Link>
-								</Button>
-							</div>
-						</div>
-					</div>
-
-					{/* Right Content, YC upvote + newsletter */}
-					<div className='flex-1 max-w-md z-10 flex flex-col items-center justify-center w-full'>
-						<HomeCtaColumn />
+				<main className='relative z-10 flex flex-1 items-center px-6 py-12 lg:px-12 lg:py-24'>
+					<div
+						className='relative z-10 w-fit max-w-4xl cursor-pointer'
+						onClick={handleNextQuote}
+					>
+						<h1 className='text-4xl lg:text-6xl xl:text-7xl font-black leading-tight tracking-tight'>
+							{/* full text stays in the DOM for crawlers and screen readers */}
+							<span className='sr-only'>{QUOTES[quoteIndex]}</span>
+							<span aria-hidden>
+								<Typewriter
+									key={quoteIndex}
+									text={QUOTES[quoteIndex]}
+									speed={30}
+									cursorClassName={
+										isMounted && isDark
+											? 'text-white'
+											: 'text-red-500'
+									}
+								/>
+							</span>
+						</h1>
 					</div>
 				</main>
 
@@ -264,47 +238,6 @@ export default function Component() {
 							</p>
 						</div>
 					))}
-				</div>
-			</section>
-
-			{/* About */}
-			<section className='relative z-10 border-t-2 border-red-500/40 bg-black px-6 py-24 text-white lg:px-12 lg:py-32'>
-				<div className='mx-auto grid max-w-6xl items-center gap-10 md:grid-cols-2 lg:gap-16'>
-					<div className='relative aspect-[4/3] w-full max-w-md justify-self-center overflow-hidden md:aspect-auto md:h-full md:self-stretch md:justify-self-start'>
-						<Image
-							src='/about/YC.jpeg'
-							alt='Deo Arlo at Y Combinator'
-							fill
-							draggable={false}
-							sizes='(max-width: 768px) 100vw, 448px'
-							className='object-cover object-[center_42%]'
-						/>
-					</div>
-
-					<div>
-						<p className='mb-4 text-sm font-black tracking-[0.24em] text-red-500'>
-							ABOUT US
-						</p>
-						<TypewriterHeadingOnView
-							text='Built from first-hand experience'
-							className={SECTION_HEADING_CLASS}
-							cursorClassName='text-red-500'
-							threshold={0.2}
-						/>
-						<p className={`mt-6 max-w-xl text-white/75 ${BODY_COPY_CLASS}`}>
-							Founder Deo Arlo spent six over years in Israel&apos;s research
-							and high-tech ecosystem, studied at the Technion while living
-							through repeated conflict. That first-hand experience shaped our
-							mission: passive, decentralised sensing built to protect people,
-							borders, and critical infrastructure.
-						</p>
-						<Link
-							href='/blog/our-story'
-							className='mt-8 inline-flex border-2 border-red-500 px-6 py-3 text-sm font-black tracking-widest text-red-500 transition-colors hover:bg-red-500 hover:text-black'
-						>
-							READ OUR STORY
-						</Link>
-					</div>
 				</div>
 			</section>
 
@@ -381,7 +314,7 @@ export default function Component() {
 						</div>
 						<div className='flex items-center justify-between pt-2.5'>
 							<span>OFFICES</span>
-							<span className={textColor}>San Francisco · KYIV</span>
+							<span className={textColor}>New York City · KYIV</span>
 						</div>
 					</div>
 				</div>

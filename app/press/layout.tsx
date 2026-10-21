@@ -1,9 +1,9 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-	title: 'Press & Media',
+	title: 'Media',
 	description:
-		'Media coverage of Arlo Industries, plus official logos and brand assets for publication.',
+		'Media coverage of Arlo Industries, plus a press kit and merch shop.',
 };
 
 export default function PressLayout({

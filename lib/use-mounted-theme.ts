@@ -9,12 +9,12 @@ import { useEffect, useState } from 'react';
  * content can be server-rendered.
  */
 export function useMountedTheme() {
-	const { theme } = useTheme();
+	const { resolvedTheme } = useTheme();
 	const [isMounted, setIsMounted] = useState(false);
 
 	useEffect(() => {
 		setIsMounted(true);
 	}, []);
 
-	return { isMounted, isDark: theme === 'dark' };
+	return { isMounted, isDark: resolvedTheme === 'dark' };
 }

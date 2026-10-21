@@ -5,8 +5,6 @@ import { SITE_URL } from '@/lib/site';
 export default function sitemap(): MetadataRoute.Sitemap {
 	const pages: MetadataRoute.Sitemap = [
 		{ url: `${SITE_URL}/`, priority: 1 },
-		{ url: `${SITE_URL}/mentat`, priority: 0.9 },
-		{ url: `${SITE_URL}/simulator`, priority: 0.8 },
 		{ url: `${SITE_URL}/blog`, priority: 0.7 },
 		{ url: `${SITE_URL}/press`, priority: 0.6 },
 		{ url: `${SITE_URL}/careers`, priority: 0.6 },

@@ -26,6 +26,12 @@ const nextConfig = {
 	typescript: {
 		ignoreBuildErrors: false,
 	},
+	async redirects() {
+		return [
+			{ source: '/mentat', destination: '/', permanent: false },
+			{ source: '/simulator', destination: '/', permanent: false },
+		];
+	},
 	async headers() {
 		return [
 			{
