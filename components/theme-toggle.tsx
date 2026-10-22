@@ -25,7 +25,7 @@ export default function ThemeToggle() {
 			onClick={() => setTheme(isDark ? 'light' : 'dark')}
 			disabled={!mounted}
 			aria-label={label}
-			className="relative isolate shrink-0 rounded-none p-2 text-black transition-colors hover:text-red-500 dark:text-red-500 dark:hover:text-red-700 dark:before:absolute dark:before:-inset-1 dark:before:-z-10 dark:before:bg-black/35 dark:before:backdrop-blur-md dark:before:content-['']"
+			className='relative shrink-0 rounded-none p-2 text-red-500 transition-colors hover:text-white'
 		>
 			{!mounted ? (
 				<span className='block h-5 w-5' aria-hidden />

@@ -58,18 +58,16 @@ export default function SiteHeader({ trailing }: SiteHeaderProps) {
 		};
 	}, [mobileMenuOpen]);
 
-	const navBackdropClass =
-		"isolate before:absolute before:-inset-x-2 before:-inset-y-1 before:-z-10 before:content-[''] dark:before:bg-black/35 dark:before:backdrop-blur-md";
 	const navUnderlineClass =
 		"relative after:absolute after:-bottom-1 after:left-0 after:h-0.5 after:w-full after:origin-left after:scale-x-0 after:bg-red-500 after:transition-transform after:duration-300 after:content-[''] hover:after:scale-x-100";
-	const navLinkClass = `font-bold tracking-wide text-base lg:text-lg px-2 py-1 hover:text-red-500 dark:hover:text-red-700 transition-colors ${navBackdropClass} ${navUnderlineClass}`;
+	const navLinkClass = `font-bold tracking-wide text-base lg:text-lg px-2 py-1 text-red-500 transition-colors hover:text-white ${navUnderlineClass}`;
 	const mobileNavItemClass =
 		'text-black dark:text-red-500 hover:bg-red-500 hover:text-white dark:hover:bg-red-500 dark:hover:text-black';
 
 	return (
 		<>
 			<header
-				className={`relative flex items-center justify-between gap-4 pt-8 pb-4 px-6 lg:px-12 ${
+				className={`relative flex items-center justify-between gap-4 bg-black px-6 pb-4 pt-8 text-red-500 lg:px-12 ${
 					mobileMenuOpen ? 'z-40' : 'z-10'
 				}`}
 			>
@@ -107,7 +105,7 @@ export default function SiteHeader({ trailing }: SiteHeaderProps) {
 					<Button
 						variant='ghost'
 						size='icon'
-						className='md:hidden shrink-0 rounded-none text-black dark:text-red-500 hover:bg-red-500/20'
+						className='md:hidden shrink-0 rounded-none text-red-500 hover:bg-red-500/20 hover:text-white'
 						onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
 						aria-expanded={mobileMenuOpen}
 						aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
